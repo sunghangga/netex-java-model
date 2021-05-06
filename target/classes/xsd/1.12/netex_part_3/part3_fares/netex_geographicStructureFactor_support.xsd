@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_geographicStructureFactor_support">
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ====GEOGRAPHICAL UNIT.================================================== -->
+  <xsd:simpleType name="GeographicalUnitIdType">
+    <xsd:restriction base="FareUnitIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeographicalUnitRef" type="GeographicalUnitRefStructure" substitutionGroup="FareUnitRef"/>
+  <xsd:complexType name="GeographicalUnitRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareUnitRefStructure">
+        <xsd:attribute name="ref" type="GeographicalUnitIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====GEOGRAPHICAL INTERVAL================================================== -->
+  <xsd:simpleType name="GeographicalIntervalIdType">
+    <xsd:restriction base="FareIntervalIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeographicalIntervalRef" type="GeographicalIntervalRefStructure" substitutionGroup="FareIntervalRef"/>
+  <xsd:complexType name="GeographicalIntervalRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareIntervalRefStructure">
+        <xsd:attribute name="ref" type="GeographicalIntervalIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====GEOGRAPHICAL STRUCTURE FACTOR========================================== -->
+  <xsd:simpleType name="GeographicalStructureFactorIdType">
+    <xsd:restriction base="FareStructureFactorIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeographicalStructureFactorRef" type="GeographicalStructureFactorRefStructure" substitutionGroup="FareStructureFactorRef"/>
+  <xsd:complexType name="GeographicalStructureFactorRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareStructureFactorRefStructure">
+        <xsd:attribute name="ref" type="GeographicalStructureFactorIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === GEOGRAPHICAL UNIT PRICE.============================================= -->
+  <xsd:simpleType name="GeographicalUnitPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeographicalUnitPriceRef" type="GeographicalUnitPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="GeographicalUnitPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="GeographicalUnitPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === GEOGRAPHICAL INTERVAL PRICE.============================================= -->
+  <xsd:simpleType name="GeographicalIntervalPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeographicalIntervalPriceRef" type="GeographicalIntervalPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="GeographicalIntervalPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="GeographicalIntervalPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="IntervalTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="stop"/>
+      <xsd:enumeration value="tariffZone"/>
+      <xsd:enumeration value="distance"/>
+      <xsd:enumeration value="section"/>
+      <xsd:enumeration value="coupon"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

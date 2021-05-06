@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterCharging_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === CHARGING POLICY PARAMETER============================================== -->
+  <xsd:simpleType name="ChargingPolicyIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ChargingPolicyRef" type="ChargingPolicyRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="ChargingPolicyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="ChargingPolicyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TravelCreditPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="allowTravel"/>
+      <xsd:enumeration value="blockAllTravel"/>
+      <xsd:enumeration value="blockPayAsYouGoTravel"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TravelBillingPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="billAsYouGo"/>
+      <xsd:enumeration value="billOnThreshold"/>
+      <xsd:enumeration value="billAtFareDayEnd"/>
+      <xsd:enumeration value="billAtPeriodEnd"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === PENALTY POLICY PARAMETER============================================== -->
+  <xsd:simpleType name="PenaltyPolicyIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PenaltyPolicyRef" type="PenaltyPolicyRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="PenaltyPolicyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="PenaltyPolicyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="SameStationReentryPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="blocked"/>
+      <xsd:enumeration value="newFare"/>
+      <xsd:enumeration value="maximumFare"/>
+      <xsd:enumeration value="allowed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PenaltyPolicyTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="noTicket"/>
+      <xsd:enumeration value="noCheckin"/>
+      <xsd:enumeration value="noCheckOut"/>
+      <xsd:enumeration value="noValidation"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === SUBSCRIBING PARAMETER============================================== -->
+  <xsd:simpleType name="SubscribingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SubscribingRef" type="SubscribingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="SubscribingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="SubscribingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SubscriptionTermTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="variable"/>
+      <xsd:enumeration value="openEnded"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SubscriptionRenewalPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="automatic"/>
+      <xsd:enumeration value="manual"/>
+      <xsd:enumeration value="automaticOnConfirmation"/>
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

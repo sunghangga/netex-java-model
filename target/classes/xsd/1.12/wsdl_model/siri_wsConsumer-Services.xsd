@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
+<!-- edited with XMLSPY v2011 (http://www.xmlspy.com) by Christophe Duquesne (Aurige- www.aurigetech.com) -->
+<xsd:schema xmlns="http://wsdl.siri.org.uk" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://wsdl.siri.org.uk" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.3" id="siriWS">
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="../siri.xsd"/>
+  <!-- ProductionTimetable -->
+  <xsd:complexType name="WsProductionTimetableNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:ProductionTimetableDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyProductionTimetable" type="WsProductionTimetableNotificationStructure"/>
+  <!-- EstimatedTimetable -->
+  <xsd:complexType name="WsEstimatedTimetableNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:EstimatedTimetableDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyEstimatedTimetable" type="WsEstimatedTimetableNotificationStructure"/>
+  <!-- StopTimetable -->
+  <xsd:complexType name="WsStopTimetableNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:StopTimetableDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyStopTimetable" type="WsStopTimetableNotificationStructure"/>
+  <!-- StopMonitoring -->
+  <xsd:complexType name="WsStopMonitoringNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:StopMonitoringDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyStopMonitoring" type="WsStopMonitoringNotificationStructure"/>
+  <!-- ConnectionTimetable -->
+  <xsd:complexType name="WsConnectionTimetableNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:ConnectionTimetableDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyConnectionTimetable" type="WsConnectionTimetableNotificationStructure"/>
+  <!-- ConnectionMonitoring -->
+  <xsd:complexType name="WsConnectionMonitoringNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:ConnectionMonitoringDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyConnectionMonitoring" type="WsConnectionMonitoringNotificationStructure"/>
+  <!-- GeneralMessage -->
+  <xsd:complexType name="WsGeneralMessageNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:GeneralMessageDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyGeneralMessage" type="WsGeneralMessageNotificationStructure"/>
+  <!-- FacilityMonitoring -->
+  <xsd:complexType name="WsFacilityMonitoringNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:FacilityMonitoringDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyFacilityMonitoring" type="WsFacilityMonitoringNotificationStructure"/>
+  <!-- SituationExchange -->
+  <xsd:complexType name="WsSituationExchangeNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:SituationExchangeDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifySituationExchange" type="WsSituationExchangeNotificationStructure"/>
+  <!-- VehicleMonitoring -->
+  <xsd:complexType name="WsVehicleMonitoringNotificationStructure">
+    <xsd:sequence>
+      <xsd:element name="ServiceDeliveryInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Notification" type="siri:VehicleMonitoringDeliveriesStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="SiriExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="NotifyVehicleMonitoring" type="WsVehicleMonitoringNotificationStructure"/>
+</xsd:schema>

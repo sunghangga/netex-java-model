@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri_location">
+  <!--======WGS84=======================================================================================-->
+  <xsd:simpleType name="LongitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-180"/>
+      <xsd:maxInclusive value="180"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LatitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-90"/>
+      <xsd:maxInclusive value="90"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AltitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-1000"/>
+      <xsd:maxInclusive value="+5000"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:group name="WgsGroup">
+    <xsd:sequence>
+      <xsd:element name="Longitude" type="LongitudeType"/>
+      <xsd:element name="Latitude" type="LatitudeType"/>
+      <xsd:element name="Altitude" type="AltitudeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="CoordinatesStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:NMTOKENS"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SrsNameType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="SrsName" type="SrsNameType"/>
+  <!--====== LOCATIONe ============================================================-->
+  <xsd:complexType name="LocationStructure">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element name="Longitude" type="LongitudeType"/>
+          <xsd:element name="Latitude" type="LatitudeType"/>
+        </xsd:sequence>
+        <xsd:element name="Coordinates" type="CoordinatesStructure"/>
+      </xsd:choice>
+      <xsd:element name="Precision" type="DistanceType" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:NMTOKEN"/>
+    <xsd:attribute name="srsName" type="SrsNameType"/>
+  </xsd:complexType>
+  <xsd:complexType name="BoundingBoxStructure">
+    <xsd:sequence>
+      <xsd:element name="UpperLeft" type="LocationStructure"/>
+      <xsd:element name="LowerRight" type="LocationStructure"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LineShapeStructure">
+    <xsd:sequence>
+      <xsd:element name="Point" type="LocationStructure" minOccurs="2" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--======Distance ============================================================-->
+  <xsd:simpleType name="DistanceType">
+    <xsd:restriction base="xsd:nonNegativeInteger"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="VelocityType">
+    <xsd:restriction base="xsd:nonNegativeInteger"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="AbsoluteBearingType">
+    <xsd:restriction base="xsd:float"/>
+  </xsd:simpleType>
+</xsd:schema>

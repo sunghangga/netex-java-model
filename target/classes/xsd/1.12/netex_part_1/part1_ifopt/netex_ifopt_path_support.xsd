@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_path_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_site_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pathLinkRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PathLinkRef"/>
+          <xsd:element ref="PathLinkRefByValue"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PathLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PathLinkRef" type="PathLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="PathLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="PathLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PathLinkRefByValue" type="PathLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="PathLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="PointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="PointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="PathPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PathJunctionIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PathJunctionRef" type="PathJunctionRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="PathJunctionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="PathJunctionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="navigationPathRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="NavigationPathRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="NavigationPathIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="NavigationPathRef" type="NavigationPathRefStructure" substitutionGroup="LinkSequenceRef"/>
+  <xsd:complexType name="NavigationPathRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkSequenceRefStructure">
+        <xsd:attribute name="ref" type="NavigationPathIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AccessSummaryIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="PathDirectionEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="oneWay"/>
+      <xsd:enumeration value="twoWay"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TransitionEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="up"/>
+      <xsd:enumeration value="down"/>
+      <xsd:enumeration value="level"/>
+      <xsd:enumeration value="upAndDown"/>
+      <xsd:enumeration value="downAndUp"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PathHeadingEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="left"/>
+      <xsd:enumeration value="right"/>
+      <xsd:enumeration value="forward"/>
+      <xsd:enumeration value="back"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NavigationTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="hallToQuay"/>
+      <xsd:enumeration value="hallToStreet"/>
+      <xsd:enumeration value="quayToHall"/>
+      <xsd:enumeration value="quayToQuay"/>
+      <xsd:enumeration value="quayToStreet"/>
+      <xsd:enumeration value="streetToHall"/>
+      <xsd:enumeration value="streetToQuay"/>
+      <xsd:enumeration value="streetToSpace"/>
+      <xsd:enumeration value="spaceToStreet"/>
+      <xsd:enumeration value="spaceToHall"/>
+      <xsd:enumeration value="hallToSpace"/>
+      <xsd:enumeration value="spaceToSpace"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TiltTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="strongLeftTilt"/>
+      <xsd:enumeration value="mediumLeftTilt"/>
+      <xsd:enumeration value="nearlyFlat"/>
+      <xsd:enumeration value="mediumRightTilt"/>
+      <xsd:enumeration value="strongRightTilt"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FlooringTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="carpet"/>
+      <xsd:enumeration value="concrete"/>
+      <xsd:enumeration value="asphalt"/>
+      <xsd:enumeration value="cork"/>
+      <xsd:enumeration value="fibreglassGrating"/>
+      <xsd:enumeration value="glazedCeramicTiles"/>
+      <xsd:enumeration value="plasticMatting"/>
+      <xsd:enumeration value="ceramicTiles"/>
+      <xsd:enumeration value="rubber"/>
+      <xsd:enumeration value="steelPlate"/>
+      <xsd:enumeration value="vinyl"/>
+      <xsd:enumeration value="wood"/>
+      <xsd:enumeration value="stone"/>
+      <xsd:enumeration value="grass"/>
+      <xsd:enumeration value="earth"/>
+      <xsd:enumeration value="gravel"/>
+      <xsd:enumeration value="uneven"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BorderTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="wall"/>
+      <xsd:enumeration value="grass"/>
+      <xsd:enumeration value="earth"/>
+      <xsd:enumeration value="barrier"/>
+      <xsd:enumeration value="road"/>
+      <xsd:enumeration value="cyclingLane"/>
+      <xsd:enumeration value="step"/>
+      <xsd:enumeration value="rail"/>
+      <xsd:enumeration value="plants"/>
+      <xsd:enumeration value="trees"/>
+      <xsd:enumeration value="mud"/>
+      <xsd:enumeration value="solidEdge"/>
+      <xsd:enumeration value="water"/>
+      <xsd:enumeration value="gravel"/>
+      <xsd:enumeration value="noPhysicalBorder"/>
+      <xsd:enumeration value="otherPhysicalBorder"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PlaceInSequenceIdType">
+    <xsd:restriction base="PointInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PlaceInSequenceRef" type="PlaceInSequenceRefStructure" substitutionGroup="PointInSequenceRef"/>
+  <xsd:complexType name="PlaceInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointInSequenceRefStructure">
+        <xsd:attribute name="ref" type="PlaceInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PathLinkInSequenceIdType">
+    <xsd:restriction base="LinkInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PathLinkInSequenceRef" type="PathLinkInSequenceRefStructure" substitutionGroup="LinkInSequenceRef"/>
+  <xsd:complexType name="PathLinkInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkInSequenceRefStructure">
+        <xsd:attribute name="ref" type="PathLinkInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PathLinkViewIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+</xsd:schema>

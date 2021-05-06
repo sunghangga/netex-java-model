@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleType_version">
+  <xsd:include schemaLocation="netex_vehicleType_support.xsd"/>
+  <xsd:include schemaLocation="netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="netex_equipmentVehiclePassenger_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleType" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleType_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleTypeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleTypeIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleType_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleTypeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleTypeGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:group ref="VehicleTypePropertiesGroup"/>
+      <xsd:element name="IncludedIn" type="VehicleTypeRefStructure" minOccurs="0"/>
+      <xsd:element name="ClassifiedAsRef" type="VehicleModelRefStructure" minOccurs="0"/>
+      <xsd:element name="facilities" type="serviceFacilitySets_RelStructure" minOccurs="0"/>
+      <xsd:group ref="VehicleRequirementsGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleTypePropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="ReversingDirection" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="SelfPropelled" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="TypeOfFuel" type="TypeOfFuelEnumeration" minOccurs="0"/>
+      <xsd:element name="EuroClass" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="PassengerCapacity" type="PassengerCapacityStructure" minOccurs="0"/>
+      <xsd:element name="capacities" type="passengerCapacities_RelStructure" minOccurs="0"/>
+      <xsd:group ref="VehicleAccessibilityRequirementsGroup"/>
+      <xsd:group ref="VehicleDimensionsGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleDimensionsGroup">
+    <xsd:sequence>
+      <xsd:element name="Length" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Width" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Height" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Weight" type="WeightType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleRequirementsGroup">
+    <xsd:sequence>
+      <xsd:element name="canCarry" type="passengerCarryingRequirements_RelStructure" minOccurs="0"/>
+      <xsd:element name="canManoeuvre" type="vehicleManoeuvringRequirements_RelStructure" minOccurs="0"/>
+      <xsd:element name="satisfiesFacilityRequirements" type="facilityRequirements_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleAccessibilityRequirementsGroup">
+    <xsd:sequence>
+      <xsd:element name="LowFloor" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="HasLiftOrRamp" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="HasHoist" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="BoardingHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="GapToPlatform" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleRequirement" type="VehicleRequirement_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="VehicleRequirement_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleRequirementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleRequirementGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="passengerCarryingRequirements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PassengerCarryingRequirementRef"/>
+          <xsd:element ref="PassengerCarryingRequirement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PassengerCarryingRequirement" substitutionGroup="VehicleRequirement">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerCarryingRequirement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleRequirementGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerCarryingRequirementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerCarryingRequirementIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerCarryingRequirement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VehicleRequirement_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PassengerCarryingRequirementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PassengerCarryingRequirementGroup">
+    <xsd:sequence>
+      <xsd:element ref="PassengerCapacity" minOccurs="0"/>
+      <xsd:group ref="VehicleAccessibilityRequirementsGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="passengerCapacities_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PassengerCapacityRef"/>
+          <xsd:element ref="PassengerCapacity" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PassengerCapacity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerCapacityStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerCapacityGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerCapacityIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerCapacityStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="PassengerCapacityGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PassengerCapacityGroup">
+    <xsd:sequence>
+      <xsd:element name="FareClass" type="FareClassEnumeration" default="any" minOccurs="0"/>
+      <xsd:group ref="CapacityGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CapacityGroup">
+    <xsd:sequence>
+      <xsd:element name="TotalCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="SeatingCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="StandingCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="SpecialPlaceCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="PushchairCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="WheelchairPlaceCapacity" type="NumberOfPassengers" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PassengerCarryingRequirementsView" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerCarryingRequirement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleRequirementGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerCarryingRequirementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerCarryingRequirementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerCarryingPassengerCarrying_ViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:group ref="PassengerCarryingRequirementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="vehicleManoeuvringRequirements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="VehicleManoeuvringRequirementRef"/>
+          <xsd:element ref="VehicleManoeuvringRequirement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleManoeuvringRequirement" substitutionGroup="VehicleRequirement">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleManoeuvringRequirement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleRequirementGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleManoeuvringRequirementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleManoeuvringRequirementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleManoeuvringRequirement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VehicleRequirement_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleManoeuvringRequirementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleManoeuvringRequirementGroup">
+    <xsd:sequence>
+      <xsd:element name="Reversible" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="MinimumTurningCircle" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MinimumOvertakingWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MinimumLength" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleManoeuvringRequirementCapacityGroup">
+    <xsd:sequence>
+      <xsd:element name="SeatingCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="StandingCapacity" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="SpecialPlaceCapacity" type="NumberOfPassengers" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="facilityRequirements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FacilityRequirementRef"/>
+          <xsd:element ref="FacilityRequirement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FacilityRequirement" substitutionGroup="VehicleRequirement">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FacilityRequirement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleRequirementGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FacilityRequirementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FacilityRequirementIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FacilityRequirement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VehicleRequirement_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FacilityRequirementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FacilityRequirementGroup">
+    <xsd:sequence>
+      <xsd:element name="facilitySets" type="serviceFacilitySets_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Vehicle" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Vehicle_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Vehicle_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="RegistrationNumber" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:group ref="VehicleCodeGroup"/>
+      <xsd:element ref="OperatorRef" minOccurs="0"/>
+      <xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+      <xsd:element name="actualVehicleEquipments" type="equipments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleCodeGroup">
+    <xsd:sequence>
+      <xsd:element name="OperationalNumber" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleModel" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleModel_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="VehicleModelGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleModelIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleModel_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:group ref="VehicleModelGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleModelGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Manufacturer" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleEquipmentProfile" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleEquipmentProfile_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="VehicleEquipmentProfileGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleEquipmentProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleEquipmentProfile_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:group ref="VehicleEquipmentProfileGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleEquipmentProfileGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="EquipmentRef" minOccurs="0"/>
+      <xsd:element name="Units" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="Manufacturer" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PurposeOfEquipmentProfileRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PurposeOfEquipmentProfile" abstract="false" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PurposeOfEquipmentProfile_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PurposeOfEquipmentProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PurposeOfEquipmentProfile_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

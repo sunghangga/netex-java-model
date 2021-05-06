@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<!-- 2007 03 23 Add repeating name -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_flexibleStopPlace_version">
+  <xsd:include schemaLocation="netex_ifopt_flexibleStopPlace_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_stopPlace_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SITE FRAME)=================================================== -->
+  <xsd:complexType name="flexibleStopPlacesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="FlexibleStopPlace" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="flexibleStopPlaces_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FlexibleStopPlaceRef"/>
+          <xsd:element ref="FlexibleStopPlace" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlexibleStopPlace" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FlexibleStopPlace_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteElementNamesGroup"/>
+              <xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0"/>
+              <xsd:group ref="FlexibleStopPlaceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FlexibleStopPlaceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FlexibleStopPlace_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteElementNamesGroup"/>
+          <xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0"/>
+          <xsd:group ref="FlexibleStopPlaceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FlexibleStopPlaceGroup">
+    <xsd:sequence>
+      <xsd:group ref="StopIdentifierGroup"/>
+      <xsd:group ref="FlexibleAreasGroup"/>
+      <xsd:element name="lines" type="lineRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FlexibleAreasGroup">
+    <xsd:sequence>
+      <xsd:element name="areas" minOccurs="0">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded">
+            <xsd:element ref="FlexibleArea"/>
+            <xsd:element ref="FlexibleAreaRef"/>
+            <xsd:element ref="HailAndRideArea"/>
+            <xsd:element ref="HailAndRideAreaRef"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:group name="FlexibleSiteElementGroup">
+    <xsd:sequence>
+      <xsd:group ref="SiteElementNamesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="flexibleQuays_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FlexibleQuayRef"/>
+          <xsd:element ref="FlexibleQuay"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlexibleQuay" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FlexibleQuay_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="FlexibleQuayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FlexibleQuayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FlexibleQuay_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FlexibleQuayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FlexibleQuayGroup">
+    <xsd:sequence>
+      <xsd:group ref="FlexibleSiteComponentGroup"/>
+      <xsd:element name="BoardingUse" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="AlightingUse" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="PublicCode" type="PublicCodeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FlexibleSiteComponentGroup">
+    <xsd:sequence>
+      <xsd:group ref="SiteElementNamesGroup"/>
+      <xsd:element ref="FlexibleStopPlaceRef" minOccurs="0"/>
+      <xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FlexibleQuayIdentifierGroup">
+    <xsd:sequence>
+      <xsd:element name="PlateCode" type="PlateCodeType" minOccurs="0"/>
+      <xsd:element name="CleardownCode" type="CleardownCodeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="flexibleAreas_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FlexibleAreaRef"/>
+          <xsd:element ref="FlexibleArea"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlexibleArea" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FlexibleArea_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="FlexibleQuayGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FlexibleAreaGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FlexibleAreaIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FlexibleArea_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FlexibleQuay_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FlexibleAreaGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FlexibleAreaGroup">
+    <xsd:sequence>
+      <xsd:element name="destinations" type="destinationDisplayViews_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="hailAndRideAreas_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="HailAndRideAreaRef"/>
+          <xsd:element ref="HailAndRideArea" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="HailAndRideArea" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="HailAndRideArea_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="FlexibleQuayGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="HailAndRideAreaGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="HailAndRideAreaIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="HailAndRideArea_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FlexibleQuay_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="HailAndRideAreaGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="HailAndRideAreaGroup">
+    <xsd:sequence>
+      <xsd:element name="BearingCompass" type="CompassBearing16Enumeration" minOccurs="0"/>
+      <xsd:element name="BearingDegrees" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="destinations" type="destinationDisplayViews_RelStructure" minOccurs="0"/>
+      <xsd:element name="StartPointRef" type="PointRefStructure"/>
+      <xsd:element name="EndPointRef" type="PointRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="HailAndRideAreaDescriptorGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

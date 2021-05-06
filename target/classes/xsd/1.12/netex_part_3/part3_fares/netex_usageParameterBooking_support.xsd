@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterBooking_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <xsd:group name="UsageParameterBookingRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="PurchaseWindowRef" minOccurs="0"/>
+      <xsd:element ref="ReservingRef" minOccurs="0"/>
+      <xsd:element ref="CancellingRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === BOOKING============================================ -->
+  <!-- === PURCHASE WINDOW PARAMETER====================================================== -->
+  <xsd:simpleType name="PurchaseWindowIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PurchaseWindowRef" type="PurchaseWindowRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="PurchaseWindowRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="PurchaseWindowIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PurchaseActionEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="purchase"/>
+      <xsd:enumeration value="orderWithoutPayment"/>
+      <xsd:enumeration value="reserve"/>
+      <xsd:enumeration value="payForPreviousOrder"/>
+      <xsd:enumeration value="subscribe"/>
+      <xsd:enumeration value="payInstallment"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === RESERVING PARAMETER====================================================== -->
+  <xsd:simpleType name="ReservingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ReservingRef" type="ReservingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="ReservingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="ReservingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === RESERVING PARAMETER====================================================== -->
+  <xsd:simpleType name="CancellingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CancellingRef" type="CancellingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="CancellingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="CancellingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

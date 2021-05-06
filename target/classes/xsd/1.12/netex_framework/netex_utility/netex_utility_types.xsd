@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_utility_types">
+  <!--====Basic Types =======================================================================-->
+  <xsd:simpleType name="PopulatedStringType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PhoneType">
+    <xsd:restriction base="xsd:normalizedString"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmailAddressType">
+    <xsd:restriction base="xsd:normalizedString"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PrivateCode" type="PrivateCodeStructure"/>
+  <xsd:complexType name="PrivateCodeStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="type" type="xsd:normalizedString"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="AccountingCode" type="PrivateCodeStructure"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimeZoneOffsetType">
+    <xsd:restriction base="xsd:decimal"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="DayOffsetType">
+    <xsd:restriction base="xsd:integer"/>
+  </xsd:simpleType>
+  <xsd:element name="Locale" type="LocaleStructure"/>
+  <xsd:complexType name="LocaleStructure">
+    <xsd:sequence>
+      <xsd:element name="TimeZoneOffset" type="TimeZoneOffsetType" minOccurs="0"/>
+      <xsd:element name="TimeZone" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="SummerTimeZoneOffset" type="TimeZoneOffsetType" minOccurs="0"/>
+      <xsd:element name="SummerTimeZone" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="DefaultLanguage" type="xsd:language" minOccurs="0"/>
+      <xsd:element name="languages" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="LanguageUsage" type="LanguageUsageStructure" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="LanguageListOfEnumerations">
+    <xsd:list itemType="xsd:language"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="LanguageUseEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="normallyUsed"/>
+      <xsd:enumeration value="understood"/>
+      <xsd:enumeration value="native"/>
+      <xsd:enumeration value="spoken"/>
+      <xsd:enumeration value="written"/>
+      <xsd:enumeration value="read"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="allUses"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LanguageUseListOfEnumerations">
+    <xsd:list itemType="LanguageUseEnumeration"/>
+  </xsd:simpleType>
+  <xsd:complexType name="LanguageUsageStructure">
+    <xsd:sequence>
+      <xsd:element name="Language" type="xsd:language"/>
+      <xsd:element name="LanguageUse" type="LanguageUseListOfEnumerations"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="PresentationStructure">
+    <xsd:sequence>
+      <xsd:element name="Colour" type="ColourValueType" minOccurs="0"/>
+      <xsd:element name="ColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="ColourSystem" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="BackGroundColour" type="ColourValueType" minOccurs="0"/>
+      <xsd:element name="BackgroundColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextColour" type="ColourValueType" minOccurs="0"/>
+      <xsd:element name="TextColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextFont" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextFontName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextLanguage" type="xsd:language" minOccurs="0"/>
+      <xsd:element name="infoLinks" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="infoLinks_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="ColourValueType">
+    <xsd:restriction base="xsd:hexBinary">
+      <xsd:maxLength value="6"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="PrintPresentationStructure">
+    <xsd:sequence>
+      <xsd:element name="Colour" type="PrintColourValueType" minOccurs="0"/>
+      <xsd:element name="ColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="ColourSystem" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="BackGroundColour" type="ColourValueType" minOccurs="0"/>
+      <xsd:element name="BackgroundColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextColour" type="PrintColourValueType" minOccurs="0"/>
+      <xsd:element name="TextColourName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextFont" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextFontName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="TextLanguage" type="xsd:language" minOccurs="0"/>
+      <xsd:element name="FontSize" type="FontSizeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="PrintColourValueType">
+    <xsd:restriction base="xsd:normalizedString"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="FontSizeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="verySmall"/>
+      <xsd:enumeration value="small"/>
+      <xsd:enumeration value="meduim"/>
+      <xsd:enumeration value="large"/>
+      <xsd:enumeration value="veryLarge"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CurrencyType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:minLength value="3"/>
+      <xsd:maxLength value="3"/>
+      <xsd:pattern value="[A-Z][A-Z][A-Z]"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CurrencyListOfEnumerations">
+    <xsd:list itemType="CurrencyType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PercentageType">
+    <xsd:restriction base="xsd:decimal"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfInfolinkEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="contact"/>
+      <xsd:enumeration value="resource"/>
+      <xsd:enumeration value="info"/>
+      <xsd:enumeration value="image"/>
+      <xsd:enumeration value="document"/>
+      <xsd:enumeration value="timetableDocument"/>
+      <xsd:enumeration value="fareSheet"/>
+      <xsd:enumeration value="dataLicence"/>
+      <xsd:enumeration value="map"/>
+      <xsd:enumeration value="icon"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="infoLinks_RelStructure">
+    <xsd:sequence>
+      <xsd:element ref="InfoLink" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="InfoLink" type="InfoLinkStructure"/>
+  <xsd:complexType name="InfoLinkStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:anyURI">
+        <xsd:attribute name="typeOfInfoLink">
+          <xsd:simpleType>
+            <xsd:list itemType="TypeOfInfolinkEnumeration"/>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

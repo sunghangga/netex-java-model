@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_accessRightParameter_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_farePrice_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ====ACCESS RIGHT PARAMETER ASSIGNMENT======================================================== -->
+  <xsd:simpleType name="AccessRightParameterAssignmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="AccessRightParameterAssignmentRefStructure" abstract="true">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="AccessRightParameterAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ChargingBasisEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="normalFare"/>
+      <xsd:enumeration value="discounted"/>
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="various"/>
+      <xsd:enumeration value="any"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PlaceUseEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="startAt"/>
+      <xsd:enumeration value="endAt"/>
+      <xsd:enumeration value="via"/>
+      <xsd:enumeration value="restrictTo"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === VALIDITY PARAMETER====================================================== -->
+  <xsd:simpleType name="ValidityParameterAssignmentIdType">
+    <xsd:restriction base="AccessRightParameterAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="ValidityParameterAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessRightParameterAssignmentRefStructure">
+        <xsd:attribute name="ref" type="ValidityParameterAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === GENERIC PARAMETER====================================================== -->
+  <xsd:simpleType name="GenericParameterAssignmentIdType">
+    <xsd:restriction base="ValidityParameterAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="GenericParameterAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ValidityParameterAssignmentRefStructure">
+        <xsd:attribute name="ref" type="GenericParameterAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === VALIDITY PARAMETER====================================================== -->
+  <xsd:simpleType name="ControlParameterAssignmentIdType">
+    <xsd:restriction base="AccessRightParameterAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="ControlParameterAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessRightParameterAssignmentRefStructure">
+        <xsd:attribute name="ref" type="ControlParameterAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === DEVICE PARAMETER====================================================== -->
+  <xsd:simpleType name="DeviceParameterAssignmentIdType">
+    <xsd:restriction base="AccessRightParameterAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="DeviceParameterAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessRightParameterAssignmentRefStructure">
+        <xsd:attribute name="ref" type="DeviceParameterAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF ACCESS RIGHT ASSIGNMENT ================================================== -->
+  <xsd:complexType name="TypeOfAccessRightAssignmentRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfAccessRightAssignmentRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfAccessRightAssignmentIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfAccessRightAssignmentRef" type="TypeOfAccessRightAssignmentRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfAccessRightAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfAccessRightAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

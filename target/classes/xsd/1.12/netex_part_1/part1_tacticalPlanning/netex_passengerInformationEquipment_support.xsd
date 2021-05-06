@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_passengerInformationEquipment_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DisplayAssignmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DisplayAssignmentRef" type="DisplayAssignmentRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="DisplayAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="version" type="VersionIdType" use="optional"/>
+        <xsd:attribute name="order" type="xsd:integer" use="optional" default="1"/>
+        <xsd:attribute name="ref" type="DisplayAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="DisplayAssignmentTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="arrivals"/>
+      <xsd:enumeration value="departures"/>
+      <xsd:enumeration value="all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =========================================================== -->
+  <xsd:simpleType name="PassengerInformationEquipmentIdType">
+    <xsd:restriction base="InstalledEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerInformationEquipmentRef" type="PassengerInformationEquipmentRefStructure" substitutionGroup="InstalledEquipmentRef"/>
+  <xsd:complexType name="PassengerInformationEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InstalledEquipmentRefStructure">
+        <xsd:attribute name="ref" type="PassengerInformationEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ============================================================= -->
+  <xsd:simpleType name="LogicalDisplayIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LogicalDisplayRef" type="LogicalDisplayRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="LogicalDisplayRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LogicalDisplayIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ============================================================== -->
+  <xsd:simpleType name="TypeOfPassengerInformationEquipmentIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfPassengerInformationEquipmentRef" type="TypeOfPassengerInformationEquipmentRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfPassengerInformationEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfPassengerInformationEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

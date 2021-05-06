@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 2207 04 11 recode x,llang to work arround spy bug -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_version_support">
+  <xsd:include schemaLocation="netex_entity_support.xsd"/>
+  <!--==== VERSION=======================================================================-->
+  <xsd:simpleType name="VersionIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!--====Version Enumerations =================================================================== -->
+  <xsd:simpleType name="StatusEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="active"/>
+      <xsd:enumeration value="inactive"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ModificationEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="new"/>
+      <xsd:enumeration value="revise"/>
+      <xsd:enumeration value="delete"/>
+      <xsd:enumeration value="unchanged"/>
+      <xsd:enumeration value="delta"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="VersionStatusEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="draft"/>
+      <xsd:enumeration value="versioned"/>
+      <xsd:enumeration value="deprecated"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="VersionTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="point"/>
+      <xsd:enumeration value="baseline"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ==== Modification Detail Definitions =================================================================== -->
+  <xsd:attributeGroup name="BasicModificationDetailsGroup">
+    <xsd:attribute name="created" type="xsd:dateTime" use="optional"/>
+    <xsd:attribute name="changed" type="xsd:dateTime" use="optional"/>
+    <xsd:attribute name="modification" type="ModificationEnumeration" use="optional" default="new"/>
+    <xsd:attribute name="version" type="VersionIdType" use="optional"/>
+    <xsd:attribute name="status" type="StatusEnumeration" use="optional" default="active"/>
+    <xsd:attribute name="derivedFromVersionRef" type="VersionIdType" use="optional"/>
+    <xsd:attribute name="compatibleWithVersionFrameVersionRef" type="VersionIdType" use="optional"/>
+    <xsd:attribute name="derivedFromObjectRef" type="ObjectIdType" use="optional"/>
+  </xsd:attributeGroup>
+  <xsd:attributeGroup name="ReferenceModificationDetailsGroup">
+    <xsd:attribute name="created" type="xsd:dateTime" use="optional"/>
+    <xsd:attribute name="changed" type="xsd:dateTime" use="optional"/>
+    <xsd:attribute name="version" type="VersionIdType" use="optional"/>
+  </xsd:attributeGroup>
+  <xsd:attributeGroup name="DocumentModificationDetailsGroup">
+    <xsd:attribute name="lang" type="xsd:language" use="optional"/>
+    <xsd:attribute name="created" type="xsd:dateTime" use="required"/>
+    <xsd:attribute name="lastUpdated" type="xsd:dateTime" use="required"/>
+    <xsd:attribute name="modification" type="ModificationEnumeration" use="required"/>
+    <xsd:attribute name="version" type="VersionIdType" use="required"/>
+    <xsd:attribute name="baseVersionRef" type="VersionIdType" use="optional"/>
+    <xsd:attribute name="fileName" type="xsd:normalizedString" use="required"/>
+  </xsd:attributeGroup>
+  <!-- ==== TYPE OF VERSION =================================================================== -->
+  <xsd:simpleType name="TypeOfVersionIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+</xsd:schema>

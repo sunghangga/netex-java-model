@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_version">
+  <xsd:include schemaLocation="netex_usageParameterTravel_support.xsd"/>
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==== ROUND TRIP ================================================ -->
+  <xsd:element name="RoundTrip" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoundTrip_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoundTripGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoundTripIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoundTrip_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoundTripGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoundTripGroup">
+    <xsd:sequence>
+      <xsd:element name="TripType" type="RoundTripTypeEnumeration" default="single" minOccurs="0"/>
+      <xsd:element name="DoubleSingleFare" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ShortTrip" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="IsRequired" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== ROUTING ================================================ -->
+  <xsd:element name="Routing" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Routing_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoutingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoutingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Routing_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoutingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoutingGroup">
+    <xsd:sequence>
+      <xsd:element name="IsRestricted" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ReturnRouteIdentical" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ForwardsOnly" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="CrossBorder" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== STEP LIMIT ================================================ -->
+  <xsd:element name="StepLimit" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="StepLimit_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StepLimitGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="StepLimitIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="StepLimit_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="StepLimitGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="StepLimitGroup">
+    <xsd:sequence>
+      <xsd:element name="Restricted" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AdjustmentUnits" type="StepLimitUnitEnumeration" minOccurs="0"/>
+      <xsd:element name="MinimumNumberOfSteps" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfSteps" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfTrips" type="xsd:nonNegativeInteger" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== FREQUENCY OF USE ================================================= -->
+  <xsd:element name="FrequencyOfUse" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FrequencyOfUse_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FrequencyOfUseGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FrequencyOfUseIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FrequencyOfUse_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FrequencyOfUseGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FrequencyOfUseGroup">
+    <xsd:sequence>
+      <xsd:element name="FrequencyOfUseType" type="FrequencyOfUseTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="MinimalFrequency" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximalFrequency" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="FrequencyInterval" type="xsd:duration" minOccurs="0"/>
+      <xsd:element ref="TimeIntervalRef" minOccurs="0"/>
+      <xsd:element name="DiscountBasis" type="DiscountBasisEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====USAGE VALIDITY PERIOD.================================================ -->
+  <xsd:element name="UsageValidityPeriod" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="UsageValidityPeriod_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageValidityPeriodGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="UsageValidityPeriodIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="UsageValidityPeriod_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="UsageValidityPeriodGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="UsageValidityPeriodGroup">
+    <xsd:sequence>
+      <xsd:element name="ValidityPeriodType" type="UsageValidityTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="UsageTrigger" type="UsageTriggerEnumeration" minOccurs="0"/>
+      <xsd:element name="UsageEnd" type="UsageEndEnumeration" minOccurs="0"/>
+      <xsd:element name="StandardDuration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="ActivationMeans" type="ActivationMeansEnumeration" minOccurs="0"/>
+      <xsd:group ref="UsageValidityPeriodFixedPeriodGroup"/>
+      <xsd:group ref="UsageValidityPeriodStartConstraintGroup"/>
+      <xsd:element name="BlackoutUse" type="BlackoutStartEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="UsageValidityPeriodFixedPeriodGroup">
+    <xsd:sequence>
+      <xsd:element name="StartDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="StartTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="EndTime" type="xsd:time" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="UsageValidityPeriodStartConstraintGroup">
+    <xsd:sequence>
+      <xsd:element name="UsageStartConstraintType" type="UsageStartConstraintTypeEnumeration" default="variable" minOccurs="0"/>
+      <xsd:element name="startOnlyOn" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="dayTypes_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="FixedStartWindow" type="FixedStartWindowStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="FixedStartWindowStructure">
+    <xsd:sequence>
+      <xsd:element name="MaximumServicesBefore" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="FlexiblePeriodBefore" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumServicesAfter" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="FlexiblePeriodAfter" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ====SUSPENDING.================================================ -->
+  <xsd:element name="Suspending" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Suspending_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SuspendingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SuspendingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Suspending_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SuspendingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SuspendingGroup">
+    <xsd:sequence>
+      <xsd:element name="SuspensionPolicy" type="SuspensionPolicyListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="QualificationPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="QualificationPercent" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="MinimumSuspensionPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumSuspensionPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfSuspensionsPerTerm" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== INTERCHANGING ================================================ -->
+  <xsd:element name="Interchanging" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Interchanging_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="InterchangingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="InterchangingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Interchanging_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="InterchangingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="InterchangingGroup">
+    <xsd:sequence>
+      <xsd:element name="CanInterchange" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="FromMode" type="VehicleModeEnumeration" minOccurs="0"/>
+      <xsd:element name="ToMode" type="VehicleModeEnumeration" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfInterchanges" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximumTimeToMakeATransfer" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="CanBreakJourney" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="CrossBorder" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RegisterBreakOfJourney" type="RegisterBreakOfJourneyEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== MINIMUM STAY ================================================ -->
+  <xsd:element name="MinimumStay" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="MinimumStay_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="MinimumStayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="MinimumStayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="MinimumStay_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="MinimumStayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="MinimumStayGroup">
+    <xsd:sequence>
+      <xsd:element name="MinimumStayType" type="MinimumStayTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="RequiresNightsAway" type="DaysOfWeekListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="MinimumNumberOfNightsAway" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfNightsAway" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

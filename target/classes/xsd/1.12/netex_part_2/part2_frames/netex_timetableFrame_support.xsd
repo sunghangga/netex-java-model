@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_timetableFrame_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_versionFrame_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="TimetableFrameRef" type="TimetableFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:simpleType name="TimetableFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="TimetableFrameRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="TimetableFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleScheduleFrameRef" type="VehicleScheduleFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:simpleType name="VehicleScheduleFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="VehicleScheduleFrameRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="VehicleScheduleFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="DriverScheduleFrameRef" type="DriverScheduleFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:simpleType name="DriverScheduleFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="DriverScheduleFrameRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="DriverScheduleFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

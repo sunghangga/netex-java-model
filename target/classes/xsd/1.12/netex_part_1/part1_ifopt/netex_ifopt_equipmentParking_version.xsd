@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentParking_version">
+  <xsd:include schemaLocation="netex_ifopt_equipmentParking_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="CycleStorageEquipment" substitutionGroup="PlaceEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CycleStorageEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CycleStorageEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CycleStorageEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CycleStorageEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PlaceEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CycleStorageEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CycleStorageEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="NumberOfSpaces" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="CycleStorageType" type="CycleStorageEnumeration" minOccurs="0"/>
+      <xsd:element name="Cage" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Covered" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="VehicleChargingEquipment" substitutionGroup="PlaceEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleChargingEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleChargingEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleChargingEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleChargingEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PlaceEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleChargingEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleChargingEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="FreeRecharging" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ReservationRequired" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ReservationUrl" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

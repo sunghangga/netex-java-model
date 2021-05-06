@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_servicePattern_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_place_support.xsd"/>
+  <xsd:include schemaLocation="../part1_networkDescription/netex_timingPattern_support.xsd"/>
+  <xsd:include schemaLocation="netex_journeyPattern_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ScheduledStopPointIdType">
+    <xsd:restriction base="TimingPointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ScheduledStopPointRef" type="ScheduledStopPointRefStructure" substitutionGroup="TimingPointRef"/>
+  <xsd:complexType name="ScheduledStopPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TimingPointRefStructure">
+        <xsd:attribute name="ref" type="ScheduledStopPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="scheduledStopPointRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ScheduledStopPointRef"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ConnectionIdType">
+    <xsd:restriction base="TransferIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ConnectionRef" type="ConnectionRefStructure" substitutionGroup="TransferRef"/>
+  <xsd:complexType name="ConnectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TransferRefStructure">
+        <xsd:attribute name="ref" type="ConnectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceLinkIdType">
+    <xsd:restriction base="TimingLinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceLinkRef" type="ServiceLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="ServiceLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TimingLinkRefStructure">
+        <xsd:attribute name="ref" type="ServiceLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ServiceLinkRefByValue" type="ServiceLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="ServiceLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="ScheduledStopPointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="ScheduledStopPointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="ScheduledStopPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServicePatternIdType">
+    <xsd:restriction base="JourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServicePatternRef" type="ServicePatternRefStructure" substitutionGroup="JourneyPatternRef"/>
+  <xsd:complexType name="ServicePatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="ServicePatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceJourneyPatternIdType">
+    <xsd:restriction base="JourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceJourneyPatternRef" type="ServiceJourneyPatternRefStructure" substitutionGroup="JourneyPatternRef"/>
+  <xsd:complexType name="ServiceJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="ServiceJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ServiceJourneyPatternTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="passenger"/>
+      <xsd:enumeration value="garageRunOut"/>
+      <xsd:enumeration value="garageRunIn"/>
+      <xsd:enumeration value="turningManoeuvre"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="StopPointInJourneyPatternIdType">
+    <xsd:restriction base="PointInJourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StopPointInJourneyPatternRef" type="StopPointInJourneyPatternRefStructure" substitutionGroup="PointInJourneyPatternRef"/>
+  <xsd:complexType name="StopPointInJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointInJourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="StopPointInJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceLinkInSequenceIdType">
+    <xsd:restriction base="LinkInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceLinkInSequenceRef" type="ServiceLinkInSequenceRefStructure" substitutionGroup="LinkInSequenceRef"/>
+  <xsd:complexType name="ServiceLinkInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkInSequenceRefStructure">
+        <xsd:attribute name="ref" type="LinkInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceLinkInJourneyPatternIdType">
+    <xsd:restriction base="ServiceLinkInSequenceIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="StopAreaIdType">
+    <xsd:restriction base="ZoneIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StopAreaRef" type="StopAreaRefStructure" substitutionGroup="ZoneRef"/>
+  <xsd:complexType name="StopAreaRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ZoneRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="stopAreaRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element name="StopAreaRef" type="StopAreaRefStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ============================================================= -->
+  <xsd:simpleType name="StopUseEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="access"/>
+      <xsd:enumeration value="interchangeOnly"/>
+      <xsd:enumeration value="passthrough"/>
+      <xsd:enumeration value="noBoardingOrAlighting"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RequestMethodTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="noneRequired"/>
+      <xsd:enumeration value="handSignal"/>
+      <xsd:enumeration value="turnOnLight"/>
+      <xsd:enumeration value="stopButton"/>
+      <xsd:enumeration value="phoneCall"/>
+      <xsd:enumeration value="mobileApp"/>
+      <xsd:enumeration value="sms"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ============================================================= -->
+  <xsd:simpleType name="DynamicAdvertisementEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="always"/>
+      <xsd:enumeration value="never"/>
+      <xsd:enumeration value="onlyIfOrdered"/>
+      <xsd:enumeration value="onlyIfSignedOn"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

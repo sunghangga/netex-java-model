@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_accessRightParameter_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceCalendar_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_site_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_vehicleJourney_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_support.xsd"/>
+  <xsd:include schemaLocation="netex_validableElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_qualityStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_distanceMatrixElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParametersAll_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesOfferPackageEntitlement_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
+  <xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_accessRightParameter_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="accessRightParameterAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:choice>
+          <xsd:element ref="AccessRightParameterAssignment_" maxOccurs="unbounded"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="validityParameterAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="ValidityParameterAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
+  <xsd:complexType name="accessRightParameterAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="AccessRightParameterAssignment_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AccessRightParameterAssignment_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="Assignment_"/>
+  <xsd:element name="AccessRightParameterAssignment" type="AccessRightParameterAssignment_VersionStructure" abstract="false" substitutionGroup="AccessRightParameterAssignment_"/>
+  <xsd:complexType name="AccessRightParameterAssignment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AccessRightParameterAssignmentGroup">
+    <xsd:sequence>
+      <xsd:group ref="AccessRightParameterAssignmentPropertiesGroup"/>
+      <xsd:group ref="ParameterAssignmentScopeGroup"/>
+      <xsd:group ref="UsageValidityParameterGroup"/>
+      <xsd:group ref="AccessRightParameterValidityParameterGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="AccessRightParameterAssignmentPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="IsAllowed" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element ref="TypeOfAccessRightAssignmentRef" minOccurs="0"/>
+      <xsd:element name="ChargingBasis" type="ChargingBasisEnumeration" default="any" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParameterAssignmentScopeGroup">
+    <xsd:sequence>
+      <xsd:element ref="ValidableElementRef" minOccurs="0"/>
+      <xsd:element ref="ControllableElementRef" minOccurs="0"/>
+      <xsd:group ref="FareProductRefGroup" minOccurs="0"/>
+      <xsd:element ref="TariffRef" minOccurs="0"/>
+      <xsd:element ref="FareStructureElementRef" minOccurs="0"/>
+      <xsd:element ref="FareElementInSequenceRef" minOccurs="0"/>
+      <xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+      <xsd:element ref="DistanceMatrixElementInverseRef" minOccurs="0"/>
+      <xsd:element ref="DistanceMatrixElementView" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfDistanceMatrixElementsRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfSalesOfferPackagesRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="UsageValidityParameterGroup">
+    <xsd:sequence>
+      <xsd:element name="LimitationGroupingType" type="BooleanOperatorEnumeration" default="AND" minOccurs="0"/>
+      <xsd:element name="LimitationSetSelectionType" type="SetOperatorEnumeration" minOccurs="0"/>
+      <xsd:element name="limitations" type="usageParameters_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="AccessRightParameterValidityParameterGroup">
+    <xsd:sequence>
+      <xsd:element name="ValidityParameterAssignmentType" type="RelativeOperatorEnumeration" default="EQ" minOccurs="0"/>
+      <xsd:element name="ValidityParameterGroupingType" type="BooleanOperatorEnumeration" default="AND" minOccurs="0"/>
+      <xsd:element name="ValidityParameterSetSelectionType" type="SetOperatorEnumeration" minOccurs="0"/>
+      <xsd:element name="temporalValidityParameters" type="temporalValidityParameters_RelStructure" minOccurs="0"/>
+      <xsd:element name="validityParameters" type="validityParameters_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
+  <xsd:complexType name="temporalValidityParameters_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:group ref="TemporalValidityParametersGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TemporalValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="DayTypeRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfTimebandsRef" minOccurs="0"/>
+      <xsd:element ref="OperatingDayRef" minOccurs="0"/>
+      <xsd:element ref="OperatingPeriodRef" minOccurs="0"/>
+      <xsd:element ref="ValidityConditionRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="validityParameters_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence maxOccurs="unbounded">
+          <xsd:group ref="ScopingValidityParametersGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ScopingValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:group ref="OrganisationValidityParametersGroup"/>
+      <xsd:group ref="NetworkValidityParametersGroup"/>
+      <xsd:group ref="RouteValidityParametersGroup"/>
+      <xsd:group ref="ServiceValidityParametersGroup"/>
+      <xsd:group ref="FareValidityParametersGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OrganisationValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element name="VehicleModes" type="VehicleModeListOfEnumerations" minOccurs="0"/>
+      <xsd:element ref="TransportSubmode" minOccurs="0"/>
+      <xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
+      <xsd:group ref="OneOrAllOperatorsRefGroup" minOccurs="0"/>
+      <xsd:group ref="OneOrAllAuthoritiesRefGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="NetworkValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="GroupOfLinesRef" minOccurs="0"/>
+      <xsd:element ref="LineRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+      <xsd:element ref="TariffZoneRef" minOccurs="0"/>
+      <xsd:element ref="FareZoneRef" minOccurs="0"/>
+      <xsd:element ref="FareSectionRef" minOccurs="0"/>
+      <xsd:element ref="ScheduledStopPointRef" minOccurs="0"/>
+      <xsd:group ref="PlaceValidityParametersGroup"/>
+      <xsd:group ref="SiteValidityParametersGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SiteValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="SiteElementRef" minOccurs="0"/>
+      <xsd:element ref="PointOfInterestClassificationRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PlaceValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element name="PlaceUse" type="PlaceUseEnumeration" minOccurs="0"/>
+      <xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+      <xsd:element ref="AddressRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="RouteValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element name="RoutingType" type="RoutingTypeEnumeration" default="both" minOccurs="0"/>
+      <xsd:element name="Directions" type="RelativeDirectionEnumeration" minOccurs="0"/>
+      <xsd:element ref="SeriesConstraintRef" minOccurs="0"/>
+      <xsd:element ref="ServiceJourneyPatternRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ServiceValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:group ref="ClassOfUseValidityParametersGroup"/>
+      <xsd:group ref="FacilityValidityParametersGroup"/>
+      <xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
+      <xsd:sequence minOccurs="0">
+        <xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+        <xsd:element ref="TrainNumberRef" minOccurs="0"/>
+        <xsd:element ref="GroupOfServicesRef" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
+      <xsd:group ref="SeatingValidityParametersGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SeatingValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="TrainElementRef" minOccurs="0"/>
+      <xsd:element ref="TrainComponentLabelAssignmentRef" minOccurs="0"/>
+      <xsd:element ref="PassengerSeatRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ClassOfUseValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+      <xsd:element ref="FareClass" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FacilityValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="FacilitySetRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:group ref="TariffValidityParametersGroup"/>
+      <xsd:group ref="ProductValidityParametersGroup"/>
+      <xsd:group ref="SalesOfferValidityParametersGroup"/>
+      <xsd:group ref="DistributionParametersGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareStructureElementRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ProductValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="PricingRuleRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfPricingRuleRef" minOccurs="0"/>
+      <xsd:element ref="ChargingMomentRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfUsageParameterRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SalesOfferValidityParametersGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfSalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfMachineReadabilityRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistributionParametersGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="DistributionChannelRef" minOccurs="0"/>
+        <xsd:element ref="GroupOfDistributionChannelsRef" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element ref="FulfilmentMethodRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====VALIDITY PARAMETER ASSIGNMENT=================================================== -->
+  <xsd:complexType name="validityParameterAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="AccessRightParameterAssignment_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidityParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidityParameterAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityParameterAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityParameterAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ValidityParameterAssignment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessRightParameterAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ValidityParameterAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ValidityParameterAssignmentGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TimeIntervalRef"/>
+        <xsd:element ref="TimeStructureFactorRef"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="GeographicalIntervalRef"/>
+        <xsd:element ref="GeographicalStructureFactorRef"/>
+      </xsd:choice>
+      <xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== SPECIFIC PARAMETER ASSIGNMENT=================================================== -->
+  <xsd:group name="OptimisedOneManyAssignmentGroup">
+    <xsd:choice>
+      <xsd:element name="validityParameterAssignments" type="genericParameterAssignments_RelStructure"/>
+      <xsd:element ref="GenericParameterAssignment"/>
+      <xsd:element ref="GenericParameterAssignmentInContext"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:complexType name="genericParameterAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GenericParameterAssignment"/>
+          <xsd:element ref="GenericParameterAssignmentInContext"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GenericParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GenericParameterAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GenericParameterAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GenericParameterAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GenericParameterAssignment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityParameterAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GenericParameterAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GenericParameterAssignmentGroup">
+    <xsd:sequence>
+      <xsd:group ref="GenericParameterAssignmentIncludesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="GenericParameterAssignmentIncludesGroup">
+    <xsd:sequence>
+      <xsd:element name="IncludesGroupingType" type="BooleanOperatorEnumeration" default="OR" minOccurs="0"/>
+      <xsd:element name="includes" type="genericParameterAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="GenericParameterAssignmentInContext" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GenericParameterAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GenericParameterAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GenericParameterAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ====TYPE OF TRAVEL DOCUMENT======================================== -->
+  <xsd:complexType name="TypeOfAccessRightAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfAccessRightAssignmentRef"/>
+          <xsd:element ref="TypeOfAccessRightAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfAccessRightAssignment" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfAccessRightAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfAccessRightAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfAccessRightAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

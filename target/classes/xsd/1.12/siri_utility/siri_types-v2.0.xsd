@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.siri.org.uk/siri" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="siri_types">
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../wsdl/xml/xml.xsd"/>
+  <!--==== Basic Types =======================================================================-->
+  <xsd:simpleType name="VersionString">
+    <xsd:restriction base="xsd:NMTOKEN"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="PopulatedStringType">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="NaturalLanguageStringStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="PopulatedStringType">
+        <xsd:attribute ref="xml:lang" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PopulatedPlaceNameType">
+    <xsd:restriction base="PopulatedStringType">
+      <xsd:pattern value="[^,\[\]\{\}\?$%\^=@#;:]+"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="NaturalLanguagePlaceNameStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="PopulatedPlaceNameType">
+        <xsd:attribute ref="xml:lang" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="IdType">
+    <xsd:restriction base="xsd:NMTOKEN"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="DurationType">
+    <xsd:restriction base="xsd:duration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="PositiveDurationType">
+    <xsd:restriction base="DurationType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="PhoneType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="EmailAddressType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+</xsd:schema>

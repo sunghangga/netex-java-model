@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_mode_support">
+  <xsd:include schemaLocation="../netex_responsibility/netex_relationship.xsd"/>
+  <!--======Out of Vehicle==================================================================================-->
+  <xsd:element name="AccessMode" type="AccessModeEnumeration"/>
+  <xsd:simpleType name="AccessModeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="foot"/>
+      <xsd:enumeration value="bicycle"/>
+      <xsd:enumeration value="boat"/>
+      <xsd:enumeration value="car"/>
+      <xsd:enumeration value="taxi"/>
+      <xsd:enumeration value="shuttle"/>
+      <xsd:enumeration value="ski"/>
+      <xsd:enumeration value="skate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AccessModeListOfEnumerations">
+    <xsd:list itemType="AccessModeEnumeration"/>
+  </xsd:simpleType>
+  <!--======Vehicle===================================================================================-->
+  <xsd:element name="VehicleMode" type="AllModesEnumeration"/>
+  <xsd:simpleType name="VehicleModeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="air"/>
+      <xsd:enumeration value="bus"/>
+      <xsd:enumeration value="coach"/>
+      <xsd:enumeration value="ferry"/>
+      <xsd:enumeration value="metro"/>
+      <xsd:enumeration value="rail"/>
+      <xsd:enumeration value="trolleyBus"/>
+      <xsd:enumeration value="tram"/>
+      <xsd:enumeration value="water"/>
+      <xsd:enumeration value="cableway"/>
+      <xsd:enumeration value="funicular"/>
+      <xsd:enumeration value="lift"/>
+      <xsd:enumeration value="snowAndIce"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="VehicleModeListOfEnumerations">
+    <xsd:list itemType="VehicleModeEnumeration"/>
+  </xsd:simpleType>
+  <!--======Modes===================================================================================-->
+  <xsd:simpleType name="ContinuousModeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="walk"/>
+      <xsd:enumeration value="car"/>
+      <xsd:enumeration value="taxi"/>
+      <xsd:enumeration value="cycle"/>
+      <xsd:enumeration value="drt"/>
+      <xsd:enumeration value="movingWalkway"/>
+      <xsd:enumeration value="through"/>
+      <xsd:enumeration value="ski"/>
+      <xsd:enumeration value="skate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ContinuousModeListOfEnumerations">
+    <xsd:list itemType="ContinuousModeEnumeration"/>
+  </xsd:simpleType>
+  <!--======Modes===================================================================================-->
+  <xsd:element name="RoadVehicleMode" type="AllModesEnumeration"/>
+  <xsd:simpleType name="RoadVehicleModeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="bus"/>
+      <xsd:enumeration value="coach"/>
+      <xsd:enumeration value="trolleyBus"/>
+      <xsd:enumeration value="tram"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RoadVehicleModeListOfEnumerations">
+    <xsd:list itemType="RoadVehicleModeEnumeration"/>
+  </xsd:simpleType>
+  <!--======Modes===================================================================================-->
+  <xsd:element name="AllVehicleModes" type="AllVehicleModesOfTransportEnumeration"/>
+  <xsd:simpleType name="AllModesEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="all"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="air"/>
+      <xsd:enumeration value="bus"/>
+      <xsd:enumeration value="trolleyBus"/>
+      <xsd:enumeration value="tram"/>
+      <xsd:enumeration value="coach"/>
+      <xsd:enumeration value="rail"/>
+      <xsd:enumeration value="intercityRail"/>
+      <xsd:enumeration value="urbanRail"/>
+      <xsd:enumeration value="metro"/>
+      <xsd:enumeration value="water"/>
+      <xsd:enumeration value="cableway"/>
+      <xsd:enumeration value="funicular"/>
+      <xsd:enumeration value="lift"/>
+      <xsd:enumeration value="snowAndIce"/>
+      <xsd:enumeration value="taxi"/>
+      <xsd:enumeration value="selfDrive"/>
+      <xsd:enumeration value="foot"/>
+      <xsd:enumeration value="bicycle"/>
+      <xsd:enumeration value="motorcycle"/>
+      <xsd:enumeration value="car"/>
+      <xsd:enumeration value="shuttle"/>
+      <!-- NOT IN tpeg -->
+      <!-- NOT IN tpeg -->
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AllVehicleModesListOfEnumeration">
+    <xsd:list itemType="AllVehicleModesOfTransportEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="AllVehicleModesOfTransportEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="all"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="bus"/>
+      <xsd:enumeration value="trolleyBus"/>
+      <xsd:enumeration value="tram"/>
+      <xsd:enumeration value="coach"/>
+      <xsd:enumeration value="rail"/>
+      <xsd:enumeration value="intercityRail"/>
+      <xsd:enumeration value="urbanRail"/>
+      <xsd:enumeration value="metro"/>
+      <xsd:enumeration value="air"/>
+      <xsd:enumeration value="water"/>
+      <xsd:enumeration value="cableway"/>
+      <xsd:enumeration value="funicular"/>
+      <xsd:enumeration value="snowAndIce"/>
+      <xsd:enumeration value="taxi"/>
+      <xsd:enumeration value="selfDrive"/>
+      <!-- NOT IN tpeg -->
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--========================================================================================-->
+  <!--======Modes - Open values===================================================================================-->
+  <xsd:complexType name="openTransportModeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="OpenTransportModeRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="OpenTransportModeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OpenTransportModeRef" type="OpenTransportModeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="OpenTransportModeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="OpenTransportModeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======Modes===================================================================================-->
+  <xsd:simpleType name="SubmodeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SubmodeRef" type="SubmodeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="SubmodeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="SubmodeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======Modes===================================================================================-->
+  <xsd:complexType name="modeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ModeRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ModeRef" type="ModeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ModeRefStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SubmodeRefStructure">
+        <xsd:attribute name="mode" type="AllVehicleModesOfTransportEnumeration" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--======STOP PLACE Types for different modes ======================================================================================-->
+  <xsd:simpleType name="StopTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="onstreetBus"/>
+      <xsd:enumeration value="onstreetTram"/>
+      <xsd:enumeration value="airport"/>
+      <xsd:enumeration value="railStation"/>
+      <xsd:enumeration value="metroStation"/>
+      <xsd:enumeration value="busStation"/>
+      <xsd:enumeration value="coachStation"/>
+      <xsd:enumeration value="tramStation"/>
+      <xsd:enumeration value="harbourPort"/>
+      <xsd:enumeration value="ferryPort"/>
+      <xsd:enumeration value="ferryStop"/>
+      <xsd:enumeration value="liftStation"/>
+      <xsd:enumeration value="vehicleRailInterchange"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

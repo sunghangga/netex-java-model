@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_topographicPlace_version">
+  <!-- ======================================================================= -->
+  <!-- ===IFOPT Name Space includes (Which also may Reference SIRI) ============================================================== -->
+  <xsd:include schemaLocation="netex_address_version.xsd"/>
+  <xsd:include schemaLocation="netex_access_version.xsd"/>
+  <xsd:include schemaLocation="netex_topographicPlace_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="topographicPlacesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TopographicPlace" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="topographicPlaces_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence maxOccurs="unbounded">
+          <xsd:element ref="TopographicPlaceRef"/>
+          <xsd:element ref="TopographicPlace" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="groupsOfPlacesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfPlaces" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TopographicPlace" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TopographicPlace_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="TopographicDescriptiveGroup"/>
+              <xsd:group ref="TopographicRelationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TopographicPlaceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TopographicPlace_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TopographicDescriptiveGroup"/>
+          <xsd:group ref="TopographicRelationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TopographicDescriptiveGroup">
+    <xsd:sequence>
+      <xsd:element name="IsoCode" type="SubdivisionIdType" minOccurs="0"/>
+      <xsd:element name="Descriptor" type="TopographicPlaceDescriptor_VersionedChildStructure"/>
+      <xsd:element name="alternativeDescriptors" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="topographicPlaceDescriptors_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TopographicPlaceType" type="TopographicPlaceTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="PlaceCentre" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="PostCode" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TopographicRelationGroup">
+    <xsd:sequence>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element name="otherCountries" type="countryRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="ParentTopographicPlaceRef" type="TopographicPlaceRefStructure" minOccurs="0"/>
+      <xsd:element name="adjacentPlaces" type="topographicPlaceRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="containedIn" type="topographicPlaceRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="accesses" type="accesses_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TOPOGRAPHIC PLACE========================================= -->
+  <xsd:complexType name="topographicPlaceDescriptors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="TopographicPlaceDescriptor" type="TopographicPlaceDescriptor_VersionedChildStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TopographicPlaceDescriptor_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="Name" type="MultilingualString"/>
+          <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="Qualify" minOccurs="0">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="QualifierName" type="MultilingualString"/>
+                <xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==GROUP OF PLACEs=========================================================== -->
+  <xsd:element name="GroupOfPlaces" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfPlaces_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPlacesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfPlacesIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfPlaces_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfPlacesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfPlacesGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="placeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element name="MainPlaceRef" type="PlaceRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TopographicPlaceView" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TopographicPlace_DerivedViewStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TopographicPlace_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="QualifierName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element ref="CountryRef" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TopographicProjection" abstract="false" substitutionGroup="Projection">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TopographicProjection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ProjectionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TopographicProjectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ProjectionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TopographicProjection_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Projection_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TopographicProjectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TopographicProjectionGroup">
+    <xsd:sequence>
+      <xsd:element name="ProjectedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element ref="CountryRef"/>
+        <xsd:element ref="TopographicPlaceRef"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

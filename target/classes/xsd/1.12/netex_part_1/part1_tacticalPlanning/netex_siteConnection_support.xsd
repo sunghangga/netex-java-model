@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_siteConnection_support">
+  <xsd:include schemaLocation="netex_servicePattern_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="SiteConnectionIdType">
+    <xsd:restriction base="ConnectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SiteConnectionRef" type="SiteConnectionRefStructure" substitutionGroup="ConnectionRef"/>
+  <xsd:complexType name="SiteConnectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ConnectionRefStructure">
+        <xsd:attribute name="ref" type="SiteConnectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DefaultConnectionIdType">
+    <xsd:restriction base="ConnectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DefaultConnectionRef" type="DefaultConnectionRefStructure" substitutionGroup="ConnectionRef"/>
+  <xsd:complexType name="DefaultConnectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ConnectionRefStructure">
+        <xsd:attribute name="ref" type="DefaultConnectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

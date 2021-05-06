@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_passingTimes_support">
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyTiming_support.xsd"/>
+  <!-- ==CLOSELY COUPLED ===================================================== -->
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PassingTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassingTimeRef" type="PassingTimeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PassingTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="PassingTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TargetPassingTimeIdType">
+    <xsd:restriction base="PassingTimeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TargetPassingTimeRef" type="TargetPassingTimeRefStructure" substitutionGroup="PassingTimeRef"/>
+  <xsd:complexType name="TargetPassingTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassingTimeRefStructure">
+        <xsd:attribute name="ref" type="TargetPassingTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ObservedPassingTimeIdType">
+    <xsd:restriction base="PassingTimeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ObservedPassingTimeRef" type="ObservedPassingTimeRefStructure" substitutionGroup="PassingTimeRef"/>
+  <xsd:complexType name="ObservedPassingTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassingTimeRefStructure">
+        <xsd:attribute name="ref" type="ObservedPassingTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="EstimatedPassingTimeIdType">
+    <xsd:restriction base="PassingTimeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="EstimatedPassingTimeRef" type="EstimatedPassingTimeRefStructure" substitutionGroup="PassingTimeRef"/>
+  <xsd:complexType name="EstimatedPassingTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassingTimeRefStructure">
+        <xsd:attribute name="ref" type="EstimatedPassingTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimetabledPassingTimeIdType">
+    <xsd:restriction base="PassingTimeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimetabledPassingTimeRef" type="TimetabledPassingTimeRefStructure" substitutionGroup="PassingTimeRef"/>
+  <xsd:complexType name="TimetabledPassingTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassingTimeRefStructure">
+        <xsd:attribute name="ref" type="TimetabledPassingTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

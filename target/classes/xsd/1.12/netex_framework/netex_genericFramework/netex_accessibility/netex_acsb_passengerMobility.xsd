@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_acsb_passengerMobility">
+  <xsd:include schemaLocation="../../netex_responsibility/netex_responsibility_version.xsd"/>
+  <xsd:include schemaLocation="netex_acsb_support.xsd"/>
+  <!--======Needs================================================================================-->
+  <xsd:element name="PassengerAccessibilityNeeds" type="PassengerAccessibilityNeedsStructure"/>
+  <xsd:complexType name="PassengerAccessibilityNeedsStructure">
+    <xsd:sequence>
+      <xsd:element name="AccompaniedByCarer" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="userNeeds" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="UserNeed" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="suitabilities" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="Suitability" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--======USER Needs================================================================================-->
+  <xsd:element name="UserNeed">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="UserNeed_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UserNeedGroup"/>
+              <xsd:element name="Excluded" type="xsd:boolean" minOccurs="0"/>
+              <xsd:element name="NeedRanking" type="xsd:integer" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="UserNeedIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="UserNeed_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="UserNeedGroup"/>
+          <xsd:element name="Excluded" type="xsd:boolean" minOccurs="0"/>
+          <xsd:element name="NeedRanking" type="xsd:integer" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="UserNeedGroup">
+    <xsd:choice>
+      <xsd:element name="MobilityNeed" type="MobilityEnumeration"/>
+      <xsd:element name="PsychosensoryNeed" type="PyschosensoryNeedEnumeration"/>
+      <xsd:element name="MedicalNeed">
+        <xsd:simpleType>
+          <xsd:restriction base="MedicalNeedEnumeration"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="EncumbranceNeed" type="EncumbranceEnumeration"/>
+    </xsd:choice>
+  </xsd:group>
+  <!--======USEr need types=====================================================================================-->
+  <xsd:simpleType name="MobilityList">
+    <xsd:list itemType="MobilityEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="MobilityEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="wheelchair"/>
+      <xsd:enumeration value="assistedWheelchair"/>
+      <xsd:enumeration value="motorizedWheelchair"/>
+      <xsd:enumeration value="mobilityScooter"/>
+      <xsd:enumeration value="roadMobilityScooter"/>
+      <xsd:enumeration value="walkingFrame"/>
+      <xsd:enumeration value="restrictedMobility"/>
+      <xsd:enumeration value="otherMobilityNeed"/>
+      <xsd:enumeration value="normal"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PyschosensoryNeedEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="visualImpairment"/>
+      <xsd:enumeration value="auditoryImpairment"/>
+      <xsd:enumeration value="cognitiveInputImpairment"/>
+      <xsd:enumeration value="averseToLifts"/>
+      <xsd:enumeration value="averseToEscalators"/>
+      <xsd:enumeration value="averseToConfinedSpaces"/>
+      <xsd:enumeration value="averseToCrowds"/>
+      <xsd:enumeration value="otherPsychosensoryNeed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="MedicalNeedEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="allergic"/>
+      <xsd:enumeration value="heartCondition"/>
+      <xsd:enumeration value="otherMedicalNeed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EncumbranceEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="luggageEncumbered"/>
+      <xsd:enumeration value="pushchair"/>
+      <xsd:enumeration value="baggageTrolley"/>
+      <xsd:enumeration value="oversizeBaggage"/>
+      <xsd:enumeration value="guideDog"/>
+      <xsd:enumeration value="otherAnimal"/>
+      <xsd:enumeration value="otherEncumbranceNeed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--======Suitability==================================================================================-->
+  <xsd:complexType name="suitabilities_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Suitability" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Suitability">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Suitability_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UserNeedGroup"/>
+              <xsd:element name="Excluded" type="xsd:boolean" minOccurs="0"/>
+              <xsd:element name="NeedRanking" type="xsd:integer" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Suitable" type="SuitableEnumeration"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SuitabilityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Suitability_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UserNeed_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="Suitable" type="SuitableEnumeration"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SuitableEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="suitable"/>
+      <xsd:enumeration value="notSuitable"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--======Point=======================================================================================-->
+</xsd:schema>

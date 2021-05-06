@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_pointOfInterest_version">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_ifopt_pointOfInterest_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_navigationPath_version.xsd"/>
+  <!-- ============================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointsOfInterestInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOfInterest" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestClassificationInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="pointOfInterestClassifications" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="pointOfInterestClassificationsInFrame_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="pointOfInterestClassificationHierarchies" type="pointOfInterestClassificationHierarchiesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="pointOfInterestClassificationsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOfInterestClassification" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="pointOfInterestClassificationHierarchiesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOfInterestClassificationHierarchy" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterestClassification" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterestClassification_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointOfInterestClassificationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestClassificationIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterestClassification_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PointOfInterestClassificationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestClassificationGroup">
+    <xsd:sequence>
+      <xsd:element name="alternativeDescriptors" type="classificationDescriptors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="classificationDescriptors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="ClassificationDescriptor" type="ClassificationDescriptor_VersionStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ClassificationDescriptor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ClassificationDescriptorGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterestClassificationHierarchy" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterestClassificationHierarchy_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointOfInterestClassificationHierarchyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestHierarchyIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterestClassificationHierarchy_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PointOfInterestClassificationHierarchyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestClassificationHierarchyGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="pointOfInterestClassificationHierarchyMembers_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointOfInterestClassificationHierarchyMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="ClassificationHierarchyMember" type="PointOfInterestClassificationHierarchyMemberStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestClassificationHierarchyMemberGroup">
+    <xsd:sequence>
+      <xsd:element ref="PointOfInterestHierarchyRef" minOccurs="0"/>
+      <xsd:element name="ParentClassificationRef" type="PointOfInterestClassificationRefStructure"/>
+      <xsd:element name="PointOfInterestClassificationRef" type="PointOfInterestClassificationRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="PointOfInterestClassificationHierarchyMemberStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="PointOfInterestClassificationHierarchyMemberGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterest" substitutionGroup="Site">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterest_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointOfInterestGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterest_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Site_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PointOfInterestGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestGroup">
+    <xsd:sequence>
+      <xsd:group ref="PointOfInterestPropertyGroup"/>
+      <xsd:group ref="PointOfInterestTopographicGroup"/>
+      <xsd:group ref="SiteAccessGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PointOfInterestTopographicGroup">
+    <xsd:sequence>
+      <xsd:element name="nearTopographicPlaces" type="topographicPlaceRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PointOfInterestPropertyGroup">
+    <xsd:sequence>
+      <xsd:element name="classifications" type="pointOfInterestClassificationsViews_RelStructure" minOccurs="0"/>
+      <xsd:element name="spaces" type="pointOfInterestSpaces_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterestComponent" type="PointOfInterestComponent_VersionStructure" abstract="true" substitutionGroup="SiteElement"/>
+  <xsd:complexType name="PointOfInterestComponent_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="SiteComponent_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointOfInterestSpaces_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="PointOfInterestSpaceRef" type="SiteComponentRefStructure"/>
+          <xsd:element ref="PointOfInterestSpace"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PointOfInterestSpace" substitutionGroup="SiteComponent">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterestSpace_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointOfInterestSpaceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestSpaceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterestSpace_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PointOfInterestComponent_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PointOfInterestSpaceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PointOfInterestSpaceGroup">
+    <xsd:sequence>
+      <xsd:group ref="PointOfInterestSpaceDescriptorGroup"/>
+      <xsd:element name="ParentPointOfInterestSpaceRef" type="PointOfInterestSpaceRefStructure" minOccurs="0"/>
+      <xsd:element name="entrances" type="pointOfInterestEntrances_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PointOfInterestSpaceDescriptorGroup">
+    <xsd:sequence>
+      <xsd:element name="AccessSpaceType" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="AccessSpaceTypeEnumeration">
+            <xsd:enumeration value="other"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="PointOfInterestSpaceType" type="PointOfInterestSpaceTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="PassageType" type="PassageTypeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointOfInterestEntrances_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="PointOfInterestEntranceRef" type="SiteComponentRefStructure"/>
+          <xsd:element ref="PointOfInterestEntrance"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PointOfInterestEntrance" abstract="false" substitutionGroup="Entrance">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterestEntrance_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteEntranceGroup"/>
+              <xsd:group ref="ExternalEntranceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestEntranceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterestEntrance_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="SiteEntrance_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterestVehicleEntrance" abstract="false" substitutionGroup="Entrance">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOfInterestVehicleEntrance_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteEntranceGroup"/>
+              <xsd:group ref="ExternalEntranceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOfInterestEntranceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOfInterestVehicleEntrance_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="SiteEntrance_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointOfInterestView" type="PointOfInterest_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView"/>
+  <xsd:complexType name="PointOfInterest_DerivedViewStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOfInterestRef" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="placeTypes" type="typeOfPlaceRefs_RelStructure" minOccurs="0"/>
+          <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointOfInterestClassificationsViews_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PointOfInterestClassificationRef"/>
+          <xsd:element ref="PointOfInterestClassificationView"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PointOfInterestClassificationView" type="PointOfInterestClassification_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView"/>
+  <xsd:complexType name="PointOfInterestClassification_DerivedViewStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOfInterestClassificationRef" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

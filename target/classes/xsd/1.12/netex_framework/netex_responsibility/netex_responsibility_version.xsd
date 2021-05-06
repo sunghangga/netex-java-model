@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_responsibility">
+  <xsd:include schemaLocation="netex_version_version.xsd"/>
+  <xsd:include schemaLocation="netex_responsibility_support.xsd"/>
+  <xsd:include schemaLocation="netex_validityCondition_version.xsd"/>
+  <xsd:include schemaLocation="netex_alternativeText_version.xsd"/>
+  <!--CLOSE COUPLED with netex_version_version-->
+  <!--CLOSE COUPLED with netex_validityCondition_version-->
+  <!-- === Data Managed Object============================================ -->
+  <xsd:element name="DataManagedObject" type="DataManagedObjectStructure" abstract="true" substitutionGroup="EntityInVersion"/>
+  <xsd:complexType name="DataManagedObjectStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="EntityInVersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DataManagedObjectGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="responsibilitySetRef" type="ResponsibilitySetIdType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DataManagedObjectGroup">
+    <xsd:sequence>
+      <xsd:element ref="keyList" minOccurs="0"/>
+      <xsd:element ref="Extensions" minOccurs="0"/>
+      <xsd:element ref="BrandingRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="VersionedChild" type="VersionedChildStructure" abstract="true" substitutionGroup="EntityInVersion"/>
+  <xsd:complexType name="VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="EntityInVersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VersionedChildGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VersionedChildGroup">
+    <xsd:sequence>
+      <xsd:element ref="Extensions" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="DerivedView" type="DerivedViewStructure" abstract="true"/>
+  <!-- ====Simple derived View============================================================== -->
+  <xsd:complexType name="DerivedViewStructure" abstract="true">
+    <xsd:sequence>
+      <xsd:group ref="DerivedViewGroup"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="ObjectIdType"/>
+  </xsd:complexType>
+  <xsd:group name="DerivedViewGroup">
+    <xsd:sequence>
+      <xsd:element ref="BrandingRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="DataManagedObjectView" type="DataManagedObject_ViewStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="DataManagedObject_ViewStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="keyList" type="KeyListStructure">
+    <!--  1.02 correction  ======================================= -->
+    <xsd:unique name="KeyValuePair">
+      <xsd:selector xpath=".//netex:KeyValue"/>
+      <xsd:field xpath="netex:Key"/>
+      <xsd:field xpath="netex:Value"/>
+    </xsd:unique>
+    <!--	END correction  =======================================  -->
+  </xsd:element>
+  <xsd:complexType name="KeyListStructure">
+    <xsd:sequence>
+      <xsd:element name="KeyValue" type="KeyValueStructure" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KeyValueStructure">
+    <xsd:sequence>
+      <xsd:element name="Key" type="xsd:normalizedString" maxOccurs="1"/>
+      <xsd:element name="Value" type="xsd:normalizedString" maxOccurs="1"/>
+    </xsd:sequence>
+    <xsd:attribute name="typeOfKey" type="xsd:normalizedString"/>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:attribute name="id" type="ObjectIdType"/>
+</xsd:schema>

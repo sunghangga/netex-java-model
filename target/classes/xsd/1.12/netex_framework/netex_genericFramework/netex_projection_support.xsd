@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="01." id="netex_projection_support">
+  <xsd:include schemaLocation="netex_spatialFeature_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ProjectionIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ProjectionRef" type="ProjectionRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PointProjectionRef" type="PointProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:complexType name="PointProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ProjectionRefStructure">
+        <xsd:attribute name="ref" type="PointProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LinkProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LinkProjectionRef" type="LinkProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:complexType name="LinkProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ProjectionRefStructure">
+        <xsd:attribute name="ref" type="LinkProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ZoneProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ZoneProjectionRef" type="ZoneProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:complexType name="ZoneProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ProjectionRefStructure">
+        <xsd:attribute name="ref" type="ZoneProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="LinkSequenceProjectionRef" type="LinkSequenceProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:simpleType name="LinkSequenceProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="LinkSequenceProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ProjectionRefStructure">
+        <xsd:attribute name="ref" type="LinkSequenceProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ComplexFeatureProjectionRef" type="ComplexFeatureProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:simpleType name="ComplexFeatureProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="ComplexFeatureProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ProjectionRefStructure">
+        <xsd:attribute name="ref" type="ComplexFeatureProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LineShapeIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfProjectionIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfProjectionRef" type="TypeOfProjectionRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfProjectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfProjectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

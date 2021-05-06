@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri_permissions">
+  <xsd:include schemaLocation="siri_types-v2.0.xsd"/>
+  <xsd:include schemaLocation="siri_utility-v1.1.xsd"/>
+  <xsd:include schemaLocation="siri_participant-v2.0.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====Permissions================================================= -->
+  <xsd:complexType name="AbstractTopicPermissionStructure">
+    <xsd:sequence>
+      <xsd:element name="Allow" type="xsd:boolean" default="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="AllowAll" type="xsd:boolean"/>
+  <xsd:complexType name="CapabilityAccessControlStructure">
+    <xsd:sequence>
+      <xsd:element name="RequestChecking" type="xsd:boolean" default="false"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="AbstractPermissionStructure">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="AllParticipants" type="EmptyType"/>
+        <xsd:element name="ParticipantRef" type="ParticipantRefStructure"/>
+      </xsd:choice>
+      <xsd:element name="GeneralCapabilities" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RequestResponse" type="xsd:boolean" default="true"/>
+            <xsd:element name="PublishSubscribe" type="xsd:boolean" default="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ====Discovery================================================ -->
+</xsd:schema>

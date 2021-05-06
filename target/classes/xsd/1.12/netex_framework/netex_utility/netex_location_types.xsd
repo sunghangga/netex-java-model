@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<!-- 2007 03 23 Revise projections -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_location_types">
+  <xsd:include schemaLocation="netex_units.xsd"/>
+  <!--fulll gml dependency-->
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gml_extract_all_objects_v_3_2_1.xsd"/>
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/geometryBasic0d1d-extract-v3_2_1.xsd"/>
+  <!--======WGS84=======================================================================================-->
+  <xsd:complexType name="LocationStructure">
+    <xsd:sequence>
+      <xsd:sequence>
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="Longitude" type="LongitudeType"/>
+          <xsd:element name="Latitude" type="LatitudeType"/>
+          <xsd:element name="Altitude" type="AltitudeType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:element ref="gml:pos" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:element name="Precision" type="DistanceType" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:normalizedString"/>
+    <xsd:attribute name="srsName" type="SrsNameType"/>
+  </xsd:complexType>
+  <xsd:simpleType name="LongitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-180"/>
+      <xsd:maxInclusive value="180"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LatitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-90"/>
+      <xsd:maxInclusive value="90"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AltitudeType">
+    <xsd:restriction base="xsd:decimal">
+      <xsd:minInclusive value="-1000"/>
+      <xsd:maxInclusive value="+5000"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:group name="WgsGroup">
+    <xsd:sequence>
+      <xsd:element name="Longitude" type="LongitudeType"/>
+      <xsd:element name="Latitude" type="LatitudeType"/>
+      <xsd:element name="Altitude" type="AltitudeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:simpleType name="SrsNameType">
+    <xsd:restriction base="xsd:normalizedString"/>
+  </xsd:simpleType>
+  <xsd:element name="SrsName" type="SrsNameType"/>
+  <!--======Other Location related types=======================================================-->
+  <xsd:complexType name="BoundingBoxStructure">
+    <xsd:sequence>
+      <xsd:element name="UpperLeft" type="LocationStructure"/>
+      <xsd:element name="LowerRight" type="LocationStructure"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="AbsoluteBearingType">
+    <xsd:restriction base="xsd:float"/>
+  </xsd:simpleType>
+  <!--======Compas Points======================================================================================-->
+  <xsd:simpleType name="CompassBearing16Enumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="SW"/>
+      <xsd:enumeration value="SE"/>
+      <xsd:enumeration value="NW"/>
+      <xsd:enumeration value="NE"/>
+      <xsd:enumeration value="W"/>
+      <xsd:enumeration value="E"/>
+      <xsd:enumeration value="S"/>
+      <xsd:enumeration value="N"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CompassBearing8Enumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="SW"/>
+      <xsd:enumeration value="SE"/>
+      <xsd:enumeration value="NW"/>
+      <xsd:enumeration value="NE"/>
+      <xsd:enumeration value="W"/>
+      <xsd:enumeration value="E"/>
+      <xsd:enumeration value="S"/>
+      <xsd:enumeration value="N"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

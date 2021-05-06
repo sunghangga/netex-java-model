@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<!-- 2207 04 11 recode x,llang to work arround spy bug -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_entity_version">
+  <xsd:include schemaLocation="netex_entity_support.xsd"/>
+  <!-- ==== Entity ================================================================ -->
+  <xsd:element name="Entity" type="EntityStructure" abstract="true"/>
+  <xsd:complexType name="EntityStructure" abstract="true">
+    <xsd:attribute name="nameOfClass" type="NameOfClass" use="optional"/>
+    <xsd:attribute name="id" type="ObjectIdType" use="optional"/>
+  </xsd:complexType>
+  <!-- ====Namespace =================================================================== -->
+  <xsd:element name="Codespace" abstract="false">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CodespaceStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Xmlns" type="CodespaceIdType"/>
+              <xsd:element name="XmlnsUrl" type="xsd:anyURI" minOccurs="0"/>
+              <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CodespaceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CodespaceStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="EntityStructure">
+        <xsd:sequence>
+          <xsd:element name="Xmlns" type="CodespaceIdType"/>
+          <xsd:element name="XmlnsUrl" type="xsd:anyURI" minOccurs="0"/>
+          <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="dataSourceRef" type="DataSourceIdType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

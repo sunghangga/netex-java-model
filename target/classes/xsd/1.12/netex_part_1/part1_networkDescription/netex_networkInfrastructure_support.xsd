@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_networkInfrastructure_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLink_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="InfrastructurePointIdType">
+    <xsd:restriction base="PointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InfrastructurePointRef" type="InfrastructurePointRefStructure" abstract="true" substitutionGroup="PointRef"/>
+  <xsd:complexType name="InfrastructurePointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointRefStructure">
+        <xsd:attribute name="ref" type="InfrastructurePointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RailwayPointIdType">
+    <xsd:restriction base="InfrastructurePointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RailwayPointRef" type="RailwayPointRefStructure" abstract="false" substitutionGroup="InfrastructurePointRef"/>
+  <xsd:complexType name="RailwayPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructurePointRefStructure">
+        <xsd:attribute name="ref" type="RailwayPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RoadPointIdType">
+    <xsd:restriction base="InfrastructurePointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoadPointRef" type="RoadPointRefStructure" abstract="false" substitutionGroup="InfrastructurePointRef"/>
+  <xsd:complexType name="RoadPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructurePointRefStructure">
+        <xsd:attribute name="ref" type="RoadPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="WirePointIdType">
+    <xsd:restriction base="InfrastructurePointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WirePointRef" type="WirePointRefStructure" abstract="false" substitutionGroup="InfrastructurePointRef"/>
+  <xsd:complexType name="WirePointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructurePointRefStructure">
+        <xsd:attribute name="ref" type="WirePointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ====Links========================================================== -->
+  <xsd:simpleType name="InfrastructureLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InfrastructureLinkRef" type="InfrastructureLinkRefStructure" abstract="true" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="InfrastructureLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="InfrastructureLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====Railway ============================================================ -->
+  <xsd:simpleType name="RailwayLinkIdType">
+    <xsd:restriction base="InfrastructureLinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RailwayLinkRef" type="RailwayLinkRefStructure" abstract="false" substitutionGroup="InfrastructureLinkRef"/>
+  <xsd:complexType name="RailwayLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructureLinkRefStructure">
+        <xsd:attribute name="ref" type="RailwayLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="RailwayLinkRefByValue" type="RailwayLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="RailwayLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="RailwayPointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="RailwayPointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="RailwayPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- === Road============================================================== -->
+  <xsd:simpleType name="RoadLinkIdType">
+    <xsd:restriction base="InfrastructureLinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoadLinkRef" type="RoadLinkRefStructure" abstract="false" substitutionGroup="InfrastructureLinkRef"/>
+  <xsd:complexType name="RoadLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructureLinkRefStructure">
+        <xsd:attribute name="ref" type="RoadLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="RoadLinkRefByValue" type="RoadLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="RoadLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="RoadPointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="RoadPointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="RoadPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====Wire=============================================================== -->
+  <xsd:simpleType name="WireLinkIdType">
+    <xsd:restriction base="InfrastructureLinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WireLinkRef" type="WireLinkRefStructure" abstract="false" substitutionGroup="InfrastructureLinkRef"/>
+  <xsd:complexType name="WireLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructureLinkRefStructure">
+        <xsd:attribute name="ref" type="WireLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="WireLinkRefByValue" type="WireLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="WireLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="WirePointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="WirePointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="WirePoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

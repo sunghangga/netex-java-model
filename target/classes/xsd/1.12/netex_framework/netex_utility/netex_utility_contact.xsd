@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_utility_contact">
+  <xsd:include schemaLocation="netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="netex_utility_xml.xsd"/>
+  <!--====Basic Types =======================================================================-->
+  <xsd:complexType name="ContactStructure" abstract="false">
+    <xsd:sequence>
+      <xsd:element name="ContactPerson" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Email" type="EmailAddressType" minOccurs="0"/>
+      <xsd:element name="Phone" type="PhoneType" minOccurs="0"/>
+      <xsd:element name="Fax" type="PhoneType" minOccurs="0"/>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="FurtherDetails" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="TelCountryCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{1,3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TelephoneNumberType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9 /-]{1,20}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TelephoneExtensionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{1,6}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="TelephoneContactStructure">
+    <xsd:sequence>
+      <xsd:element name="TelNationalNumber" type="TelephoneNumberType"/>
+      <xsd:element name="TelExtensionNumber" type="TelephoneExtensionType" minOccurs="0"/>
+      <xsd:element name="TelCountryCode" type="TelCountryCodeType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- === ContactDetails ======================================================== -->
+</xsd:schema>

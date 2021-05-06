@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_parkingTariff_version">
+  <xsd:include schemaLocation="netex_parkingTariff_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_parking_version.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_version.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_timeStructureFactor_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="ParkingTariffInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="parkingTariffs" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="parkingTariffsInFrame_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="parkingTariffsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ParkingTariff" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="ParkingTariff" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingTariff_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingTariffGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingTariffIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingTariff_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingTariffGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingTariffGroup">
+    <xsd:sequence>
+      <xsd:group ref="TariffDescriptionGroup"/>
+      <xsd:group ref="TariffOrganisationGroup" minOccurs="0"/>
+      <xsd:group ref="TariffTimeGroup"/>
+      <xsd:group ref="TariffQualityGroup"/>
+      <xsd:group ref="ParkingClassificationGroup"/>
+      <xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
+      <xsd:element name="AdditionalTax" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="parkingChargeBands" type="parkingChargeBands_RelStructure" minOccurs="0"/>
+      <xsd:group ref="TariffPriceGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingClassificationGroup">
+    <xsd:sequence>
+      <xsd:element name="ParkingUserType" type="ParkingUserEnumeration" minOccurs="0"/>
+      <xsd:element name="ParkingStayType" type="ParkingStayEnumeration" minOccurs="0"/>
+      <xsd:element name="ParkingVehicleTypes" type="ParkingVehicleListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="vehicleTypes" type="vehicleTypeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="appliesTo" type="parkingRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingChargeBands_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingChargeBandRef"/>
+          <xsd:element ref="ParkingChargeBand"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingChargeBand" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingChargeBand_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeStructureFactorGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingChargeBandGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingChargeBandIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingChargeBand_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TimeStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingChargeBandGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingChargeBandGroup">
+    <xsd:sequence>
+      <xsd:element ref="ParkingPropertiesRef" minOccurs="0"/>
+      <xsd:element name="ParkingVehicleType" type="ParkingVehicleEnumeration" minOccurs="0"/>
+      <xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+      <xsd:element name="MaximumStay" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="prices" type="farePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == PARKING TARIFPRICE.================================ -->
+  <xsd:complexType name="parkingPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingPriceRef"/>
+          <xsd:element ref="CellRef_"/>
+          <xsd:element name="ParkingPrice" type="ParkingPrice_VersionedChildStructure"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingPriceGroup">
+    <xsd:choice>
+      <xsd:element ref="ParkingTariffRef" minOccurs="0"/>
+      <xsd:element ref="ParkingChargeBand" minOccurs="0"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+</xsd:schema>

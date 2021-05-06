@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_networkInfrastructure_version">
+  <xsd:include schemaLocation="netex_networkInfrastructure_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLink_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="NetworkInfrastuctureInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="junctions" type="infrastructureJunctionsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="elements" type="infrastructureElementsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="infrastructureJunctionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="RailwayJunction"/>
+          <xsd:element ref="RoadJunction"/>
+          <xsd:element ref="WireJunction"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="infrastructureElementsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="RailwayElement"/>
+          <xsd:element ref="RoadElement"/>
+          <xsd:element ref="WireElement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="InfrastructurePoint" type="InfrastructurePoint_VersionStructure" abstract="true" substitutionGroup="Point"/>
+  <xsd:complexType name="InfrastructurePoint_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Point_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="InfrastructurePointGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RailwayJunction" abstract="false" substitutionGroup="InfrastructurePoint">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RailwayJunction_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RailwayPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RailwayJunction_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructurePoint_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="RoadJunction" abstract="false" substitutionGroup="InfrastructurePoint">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoadJunction_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoadPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoadJunction_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructurePoint_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="WireJunction" abstract="false" substitutionGroup="InfrastructurePoint">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="WireJunction_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="WirePointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="WireJunction_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructurePoint_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ====Links========================================================== -->
+  <xsd:element name="InfrastructureLink_" type="Link_VersionStructure" abstract="true" substitutionGroup="Link"/>
+  <xsd:element name="InfrastructureLink" abstract="true" substitutionGroup="Link">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="InfrastructureLink_VersionStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="InfrastructureLink_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:restriction base="Link_VersionStructure">
+        <xsd:sequence>
+          <xsd:sequence>
+            <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+          </xsd:sequence>
+          <xsd:sequence>
+            <xsd:group ref="DataManagedObjectGroup"/>
+          </xsd:sequence>
+          <xsd:sequence>
+            <xsd:group ref="LinkGroup"/>
+          </xsd:sequence>
+        </xsd:sequence>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====Railway ============================================================ -->
+  <xsd:element name="RailwayElement" abstract="false" substitutionGroup="InfrastructureLink_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RailwayElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="LinkGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RailwayElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RailwayLinkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RailwayElement_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructureLink_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RailwayElementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RailwayElementGroup">
+    <xsd:sequence>
+      <xsd:element name="FromPointRef" type="RailwayPointRefStructure"/>
+      <xsd:element name="ToPointRef" type="RailwayPointRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === Road============================================================== -->
+  <xsd:element name="RoadElement" substitutionGroup="InfrastructureLink_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoadElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="LinkGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoadElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoadLinkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoadElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructureLink_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoadElementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoadElementGroup">
+    <xsd:sequence>
+      <xsd:element name="FromPointRef" type="RoadPointRefStructure"/>
+      <xsd:element name="ToPointRef" type="RoadPointRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Wire=============================================================== -->
+  <xsd:element name="WireElement" abstract="false" substitutionGroup="InfrastructureLink_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="WireElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="LinkGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="WireElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="WireLinkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="WireElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructureLink_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="WireElementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="WireElementGroup">
+    <xsd:sequence>
+      <xsd:element name="FromPointRef" type="WirePointRefStructure"/>
+      <xsd:element name="ToPointRef" type="WirePointRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

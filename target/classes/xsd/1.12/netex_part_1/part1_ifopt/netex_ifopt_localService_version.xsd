@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_localService_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_localService_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_serviceFeature_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:group name="LocalServiceChoice">
+    <xsd:choice>
+      <xsd:element ref="AssistanceService"/>
+      <xsd:element ref="ComplaintsService"/>
+      <xsd:element ref="LostPropertyService"/>
+      <xsd:element ref="LuggageService"/>
+      <xsd:element ref="TicketingService"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ====Local Service=================================================================== -->
+  <xsd:complexType name="localServices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="LocalServiceRef"/>
+          <xsd:element ref="LocalService" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LocalService" type="LocalService_VersionStructure" abstract="true" substitutionGroup="Equipment"/>
+  <xsd:complexType name="LocalService_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Equipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="LocalServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LocalServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="typesOfServiceFeature" type="typeOfServiceFeatureRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TicketingService" substitutionGroup="LocalService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TicketingService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TicketingServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TicketingServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TicketingService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="LocalService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TicketingServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TicketingServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="VehicleModes" type="VehicleModeListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="TicketingServiceList" type="TicketingServiceFacilityListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="TicketTypeList" type="TicketTypeListOfEnumerations" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="TicketCounterService" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="OnlinePurchaseForCollection" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="OnlinePurchaseForETicket" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="OnlinePurchaseForSelfPrintTicket" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MobileDeviceTickets" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="AssistanceService" substitutionGroup="LocalService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AssistanceService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AssistanceServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AssistanceServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AssistanceService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="LocalService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AssistanceServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AssistanceServiceGroup">
+    <xsd:sequence>
+      <xsd:element ref="AssistanceFacilityList" minOccurs="0"/>
+      <xsd:element name="AssistanceAvailability" type="AssistanceAvailabilityEnumeration" minOccurs="0"/>
+      <xsd:element name="Staffing" type="StaffingEnumeration" minOccurs="0"/>
+      <xsd:element name="AccessibilityToolList" type="AccessibilityToolListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="Languages" type="LanguageListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="AccessibilityTrainedStaff" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EmergencyServiceList" type="EmergencyServiceListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="SafetyFacilityList" type="SafetyFacilityListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="LuggageService" substitutionGroup="LocalService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LuggageService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LuggageServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LuggageServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LuggageService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="LocalService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="LuggageServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LuggageServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="LuggageServiceFacilityList" type="LuggageServiceFacilityListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="LuggageTrolleys" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="WheelchairLuggageTrolleys" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="FreeToUse" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MaximumBagWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagDepth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagWeight" type="WeightType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="CustomerService" type="CustomerService_VersionStructure" abstract="false" substitutionGroup="LocalService"/>
+  <xsd:complexType name="CustomerService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="LocalService_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerServiceGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ComplaintsService" substitutionGroup="CustomerService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ComplaintsService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ComplaintsServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ComplaintsService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="CustomerService_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ComplaintsServiceGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="LeftLuggageService" substitutionGroup="CustomerService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LeftLuggageService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LeftLuggageServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LeftLuggageServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LeftLuggageService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="CustomerService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="LeftLuggageServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LeftLuggageServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="CounterService" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SelfServiceLockers" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="FeePerBag" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="LockerFee" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MaximumBagWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagDepth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagWeight" type="WeightType" minOccurs="0"/>
+      <xsd:element name="MaximumDuration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="LostPropertyService" substitutionGroup="CustomerService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LostPropertyService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="PropertyKeptForDuration" type="xsd:duration" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LostPropertyServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LostPropertyService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="CustomerService_VersionStructure">
+        <xsd:group ref="LostPropertyServiceGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LostPropertyServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="PropertyKeptForDuration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="MeetingPointService" substitutionGroup="CustomerService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="MeetingPointService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LocalServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="MeetingPointServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="MeetingPointServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="MeetingPointService_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="CustomerService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="MeetingPointServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="MeetingPointServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="MeetingPointServiceType" type="MeetingPointEnumeration"/>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

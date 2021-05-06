@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_travelDocument_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_support.xsd"/>
+  <!-- ====TRAVEL DOCUMENT.======================================================== -->
+  <xsd:simpleType name="TravelDocumentIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TravelDocumentRef" type="TravelDocumentRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TravelDocumentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TravelDocumentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====  TRAVEL DOCUMENT SECURITY LISTING .======================================================== -->
+  <xsd:complexType name="TravelDocumentSecurityListingRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TravelDocumentSecurityListingRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TravelDocumentSecurityListingIdType">
+    <xsd:restriction base="SecurityListingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TravelDocumentSecurityListingRef" type="TravelDocumentSecurityListingRefStructure" substitutionGroup="SecurityListingRef"/>
+  <xsd:complexType name="TravelDocumentSecurityListingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListingRefStructure">
+        <xsd:attribute name="ref" type="TravelDocumentSecurityListingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

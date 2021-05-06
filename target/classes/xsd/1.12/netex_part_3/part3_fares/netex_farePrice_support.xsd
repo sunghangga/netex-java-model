@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_farePrice_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_grouping_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===  PRICEABLE ELEMENT====================================================== -->
+  <!-- ===  PRICEABLE ELEMENT====================================================== -->
+  <xsd:complexType name="priceableObjectRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="PriceableObjectRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PriceableObjectIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PriceableObjectRef" type="PriceableObjectRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PriceableObjectRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PriceableObjectIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === FARE PRICE====================================================== -->
+  <xsd:simpleType name="FarePriceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FarePriceRef" type="FarePriceRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FarePriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FarePriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="RuleStepResultIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- === PRICE GROUP====================================================== -->
+  <xsd:simpleType name="PriceGroupIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PriceGroupRef" type="PriceGroupRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="PriceGroupRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="PriceGroupIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === DUmmy Cell Ref ====================================================== -->
+  <xsd:element name="CellRef_" type="VersionOfObjectRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+</xsd:schema>

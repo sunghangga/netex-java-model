@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleType_support">
+  <xsd:include schemaLocation="netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="vehicleTypeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="VehicleTypeRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="VehicleTypeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleTypeRef" type="VehicleTypeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleTypeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleTypeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleRequirementIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleRequirementRef" type="VehicleRequirementRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleRequirementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleRequirementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PassengerCarryingRequirementIdType">
+    <xsd:restriction base="VehicleRequirementIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerCarryingRequirementRef" type="PassengerCarryingRequirementRefStructure" substitutionGroup="VehicleRequirementRef"/>
+  <xsd:complexType name="PassengerCarryingRequirementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleRequirementRefStructure">
+        <xsd:attribute name="ref" type="PassengerCarryingRequirementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PassengerCapacityIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerCapacityRef" type="PassengerCapacityRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PassengerCapacityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PassengerCapacityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleManoeuvringRequirementIdType">
+    <xsd:restriction base="VehicleRequirementIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleManoeuvringRequirementRef" type="VehicleManoeuvringRequirementRefStructure" substitutionGroup="VehicleRequirementRef"/>
+  <xsd:complexType name="VehicleManoeuvringRequirementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleRequirementRefStructure">
+        <xsd:attribute name="ref" type="VehicleManoeuvringRequirementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FacilityRequirementIdType">
+    <xsd:restriction base="VehicleRequirementIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FacilityRequirementRef" type="FacilityRequirementRefStructure" substitutionGroup="VehicleRequirementRef"/>
+  <xsd:complexType name="FacilityRequirementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleRequirementRefStructure">
+        <xsd:attribute name="ref" type="FacilityRequirementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleRef" type="VehicleRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleModelIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleModelRef" type="VehicleModelRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleModelRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleModelIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleEquipmentProfileIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleEquipmentProfileRef" type="VehicleEquipmentProfileRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleEquipmentProfileRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleEquipmentProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfFuelEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="petrol"/>
+      <xsd:enumeration value="diesel"/>
+      <xsd:enumeration value="naturalGas"/>
+      <xsd:enumeration value="biodiesel"/>
+      <xsd:enumeration value="electricity"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="VehicleOrientationEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="forwards"/>
+      <xsd:enumeration value="backwards"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--=============================================================================-->
+  <xsd:simpleType name="PurposeOfEquipmentProfileIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PurposeOfEquipmentProfileRef" type="PurposeOfEquipmentProfileRefStructure" abstract="false" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="PurposeOfEquipmentProfileRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="PurposeOfEquipmentProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

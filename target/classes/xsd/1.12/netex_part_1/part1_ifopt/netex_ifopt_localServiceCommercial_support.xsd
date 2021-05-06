@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_localServiceCommercial_support">
+  <xsd:include schemaLocation="netex_ifopt_localService_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CommunicationServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CommunicationServiceRef" type="CommunicationServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="CommunicationServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="CommunicationServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="HireServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="HireServiceRef" type="HireServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="HireServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="HireServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="HireServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="cycleHire"/>
+      <xsd:enumeration value="motorcycleHire"/>
+      <xsd:enumeration value="carHire"/>
+      <xsd:enumeration value="recreationalDeviceHire"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="HireServiceListOfEnumerations">
+    <xsd:list itemType="HireServiceEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="MoneyServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="MoneyServiceRef" type="MoneyServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="MoneyServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="MoneyServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="MoneyServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="cashMachine"/>
+      <xsd:enumeration value="bank"/>
+      <xsd:enumeration value="insurance"/>
+      <xsd:enumeration value="bureauDeChange"/>
+      <xsd:enumeration value="customsOffice"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="MoneyServiceListOfEnumerations">
+    <xsd:list itemType="MoneyServiceEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RetailServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RetailServiceRef" type="RetailServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="RetailServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="RetailServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RetailServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="food"/>
+      <xsd:enumeration value="healthHygieneBeauty"/>
+      <xsd:enumeration value="newspaperTobacco"/>
+      <xsd:enumeration value="fashionAccessories"/>
+      <xsd:enumeration value="bankFinanceInsurance"/>
+      <xsd:enumeration value="tourism"/>
+      <xsd:enumeration value="photoBooth"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RetailServiceListOfEnumerations">
+    <xsd:list itemType="RetailServiceEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CateringServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CateringServiceRef" type="CateringServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="CateringServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="CateringServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

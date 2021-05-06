@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_generalFrame_version">
+  <xsd:include schemaLocation="netex_commonFrame_version.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_entity_entity.xsd"/>
+  <xsd:include schemaLocation="../netex_reusableComponents/netex_linkByValue_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="entityInVersionInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element ref="VersionOfObjectRef"/>
+            <xsd:element ref="LinkRefByValue"/>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="versionFrameMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="EntityInVersionInFrameRef" type="EntityInVersionInFrameRefStructure"/>
+          <xsd:element ref="DataManagedObject"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VersionFrameMembersGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="versionFrameMembers_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="GeneralFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeneralFrameRef" type="GeneralFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:complexType name="GeneralFrameRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="GeneralFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="GeneralFrame" abstract="false" substitutionGroup="CommonFrame">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="General_VersionFrameStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionFrameGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeneralFrameGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeneralFrameIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="General_VersionFrameStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Common_VersionFrameStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeneralFrameGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeneralFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="members" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="generalFrameMembers_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="generalFrameMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeneralFrameMember"/>
+          <xsd:element ref="DataManagedObject"/>
+          <xsd:element ref="Entity_Entity"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="GeneralFrameMemberIdType">
+    <xsd:restriction base="FrameMemberIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GeneralFrameMemberRef" type="GeneralFrameMemberRefStructure"/>
+  <xsd:complexType name="GeneralFrameMemberRefStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionOfObjectRefStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeneralFrameMember" type="GeneralFrameMemberStructure" abstract="false"/>
+  <xsd:complexType name="GeneralFrameMemberStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:group ref="GeneralFrameMemberGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeneralFrameMemberGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="VersionOfObjectRef"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

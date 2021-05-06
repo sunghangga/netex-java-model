@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<!-- 2207 04 11 recode x,llang to work arround spy bug -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_entity_support">
+  <!-- ==== Entity ================================================================ -->
+  <xsd:simpleType name="ObjectIdType">
+    <xsd:restriction base="xsd:normalizedString"/>
+  </xsd:simpleType>
+  <!-- ====Entity=================================================================== -->
+  <xsd:simpleType name="TypeOfValueIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="DataSourceIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="ValueSetIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ====Namespace =================================================================== -->
+  <xsd:simpleType name="CodespaceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CodespaceRef" type="CodespaceRefStructure"/>
+  <xsd:complexType name="CodespaceRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="ref" type="CodespaceIdType" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== Entity Class =================================================================== -->
+  <xsd:simpleType name="NameOfClass">
+    <xsd:restriction base="xsd:Name"/>
+  </xsd:simpleType>
+  <xsd:element name="ClassRef" type="ClassRefStructure"/>
+  <xsd:complexType name="ClassRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="nameOfClass" type="NameOfClass" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== Entity Class =================================================================== -->
+  <xsd:element name="ClassInFrameRef" type="ClassInFrameRefStructure" substitutionGroup="ClassRef"/>
+  <xsd:complexType name="ClassInFrameRefStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ClassRefStructure">
+        <xsd:attribute name="classRefType" type="ClassRefTypeEnumeration" default="members"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ClassRefTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="members"/>
+      <xsd:enumeration value="memberReferences"/>
+      <xsd:enumeration value="all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="MandatoryEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="required"/>
+      <xsd:enumeration value="optional"/>
+      <xsd:enumeration value="notAllowed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

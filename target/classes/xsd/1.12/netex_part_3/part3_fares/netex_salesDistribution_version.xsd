@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesDistribution_version">
+  <xsd:include schemaLocation="netex_salesDistribution_support.xsd"/>
+  <xsd:include schemaLocation="netex_typeOfTravelDocument_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_typeOfValue_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_country_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_equipmentTicketing_version.xsd"/>
+  <xsd:include schemaLocation="netex_farePrice_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="SalesDistributionInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="distributionChannels" type="distributionChannelsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfDistributionChannels" type="groupsOfDistributionChannelsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fulfilmentMethods" type="fulfilmentMethodsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="distributionChannelsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="DistributionChannel" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="groupsOfDistributionChannelsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfDistributionChannels" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="fulfilmentMethodsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FulfilmentMethod" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====DISTRIBUTION CHANNEL=================================================== -->
+  <xsd:element name="DistributionChannel" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DistributionChannel_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DistributionChannelGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DistributionChannelIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DistributionChannel_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DistributionChannelGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DistributionChannelGroup">
+    <xsd:sequence>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+      <xsd:element name="DistributionChannelType" type="DistributionChannelTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="IsObligatory" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RequiresEmailAddress" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0"/>
+      <xsd:element ref="OrganisationRef" minOccurs="0"/>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="DistributionRights" type="DistributionRightsListOfEnumerations" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element name="distributionPoints" type="pointRefs_RelStructure" minOccurs="0"/>
+        <xsd:element name="DistributionGroupRef" minOccurs="0">
+          <xsd:complexType>
+            <xsd:simpleContent>
+              <xsd:restriction base="GeneralGroupOfEntitiesRefStructure">
+                <xsd:attribute name="nameOfMemberClass" type="NameOfClass" use="optional"/>
+              </xsd:restriction>
+            </xsd:simpleContent>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====GROUP OF DISTRIBUTION CHANNELs=================================================== -->
+  <xsd:element name="GroupOfDistributionChannels" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfDistributionChannels_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfDistributionChannelsGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfDistributionChannelsIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfDistributionChannels_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfDistributionChannelsGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfDistributionChannelsGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="distributionChannelRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FULFILMENT METHOD ELEMENT.============================================= -->
+  <xsd:complexType name="fulfilmentMethods_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FulfilmentMethodRef"/>
+          <xsd:element ref="FulfilmentMethod"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FulfilmentMethod" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FulfilmentMethod_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FulfilmentMethodGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FulfilmentMethodIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FulfilmentMethod_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FulfilmentMethodGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FulfilmentMethodGroup">
+    <xsd:sequence>
+      <xsd:element name="FulfilmentMethodType" type="FulfilmentMethodTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="RequiresCard" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RequiresBookingReference" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="typesOfTravelDocument" type="TypeOfTravelDocumentRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="prices" type="fulfilmentMethodPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == FULFILMENT PRICEs.============================= -->
+  <xsd:complexType name="fulfilmentMethodPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FulfilmentMethodPriceRef"/>
+          <xsd:element name="FulfilmentMethodPrice" type="FulfilmentMethodPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FulfilmentMethodPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FulfilmentMethodPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FulfilmentMethodPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FulfilmentMethodPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FulfilmentMethodPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FulfilmentMethodPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FulfilmentMethodPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="FulfilmentMethodRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

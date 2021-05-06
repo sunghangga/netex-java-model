@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_interchange_support">
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_timeDemandType_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===JOURNEY MEETING===================================================== -->
+  <xsd:simpleType name="JourneyMeetingIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyMeetingRef" type="JourneyMeetingRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="JourneyMeetingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="JourneyMeetingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ReasonForMeetingEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="serviceFacility"/>
+      <xsd:enumeration value="joining"/>
+      <xsd:enumeration value="tariffSection"/>
+      <xsd:enumeration value="splitting"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="InterchangeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InterchangeRef" type="InterchangeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="InterchangeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="InterchangeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DefaultInterchangeIdType">
+    <xsd:restriction base="InterchangeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DefaultInterchangeRef" type="DefaultInterchangeRefStructure" substitutionGroup="InterchangeRef"/>
+  <xsd:complexType name="DefaultInterchangeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InterchangeRefStructure">
+        <xsd:attribute name="ref" type="DefaultInterchangeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceJourneyInterchangeIdType">
+    <xsd:restriction base="InterchangeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceJourneyInterchangeRef" type="ServiceJourneyInterchangeRefStructure" substitutionGroup="InterchangeRef"/>
+  <xsd:complexType name="ServiceJourneyInterchangeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InterchangeRefStructure">
+        <xsd:attribute name="ref" type="ServiceJourneyInterchangeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceJourneyPatternInterchangeIdType">
+    <xsd:restriction base="InterchangeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceJourneyPatternInterchangeRef" type="ServiceJourneyPatternInterchangeRefStructure" substitutionGroup="InterchangeRef"/>
+  <xsd:complexType name="ServiceJourneyPatternInterchangeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InterchangeRefStructure">
+        <xsd:attribute name="ref" type="ServiceJourneyPatternInterchangeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="InterchangeRuleIdType">
+    <xsd:restriction base="InterchangeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InterchangeRuleRef" type="InterchangeRuleRefStructure" substitutionGroup="InterchangeRef"/>
+  <xsd:complexType name="InterchangeRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InterchangeRefStructure">
+        <xsd:attribute name="ref" type="InterchangeRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ConnectionCertaintyEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="guaranteed"/>
+      <xsd:enumeration value="normallyGuaranteed"/>
+      <xsd:enumeration value="notGuaranteed"/>
+      <xsd:enumeration value="neverGuaranteed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="InterchangeRuleTimingIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InterchangeRuleTimingRef" type="InterchangeRuleTimingRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="InterchangeRuleTimingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="InterchangeRuleTimingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

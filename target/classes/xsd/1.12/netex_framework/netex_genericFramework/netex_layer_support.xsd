@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_layer_support">
+  <xsd:include schemaLocation="netex_grouping_support.xsd"/>
+  <!-- ===== Layer=============================================== -->
+  <xsd:complexType name="layerRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="LayerRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LayerIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LayerRef" type="LayerRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="LayerRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="LayerIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

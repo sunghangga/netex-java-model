@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentPassenger_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === PASSENGER EQUIPMENT ======================================= -->
+  <xsd:simpleType name="SanitaryEquipmentIdType">
+    <xsd:restriction base="PassengerEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SanitaryEquipmentRef" type="SanitaryEquipmentRefStructure" substitutionGroup="PassengerEquipmentRef"/>
+  <xsd:complexType name="SanitaryEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerEquipmentRefStructure">
+        <xsd:attribute name="ref" type="SanitaryEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PassengerSafetyEquipmentIdType">
+    <xsd:restriction base="PassengerEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerSafetyEquipmentRef" type="PassengerSafetyEquipmentRefStructure" substitutionGroup="PassengerEquipmentRef"/>
+  <xsd:complexType name="PassengerSafetyEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerEquipmentRefStructure">
+        <xsd:attribute name="ref" type="PassengerSafetyEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="HelpPointEquipmentIdType">
+    <xsd:restriction base="PassengerEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="HelpPointEquipmentRef" type="HelpPointEquipmentRefStructure" substitutionGroup="PassengerEquipmentRef"/>
+  <xsd:complexType name="HelpPointEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerEquipmentRefStructure">
+        <xsd:attribute name="ref" type="HelpPointEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RubbishDisposalEquipmentIdType">
+    <xsd:restriction base="PassengerEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RubbishDisposalEquipmentRef" type="RubbishDisposalEquipmentRefStructure" substitutionGroup="PassengerEquipmentRef"/>
+  <xsd:complexType name="RubbishDisposalEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerEquipmentRefStructure">
+        <xsd:attribute name="ref" type="RubbishDisposalEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AudioAnnouncementTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="onDemand"/>
+      <xsd:enumeration value="automatic"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AudioTriggerMethodEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="presenceDetector"/>
+      <xsd:enumeration value="mobileApp"/>
+      <xsd:enumeration value="internetPage"/>
+      <xsd:enumeration value="specificDevice"/>
+      <xsd:enumeration value="pushButton"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

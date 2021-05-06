@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareProduct_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units.xsd"/>
+  <xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_otherOrganisation_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_validableElement_version.xsd"/>
+  <xsd:include schemaLocation="netex_fareConditionSummary_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in FARE FRAME)=================================================== -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in FARE FRAME)=================================================== -->
+  <xsd:group name="FareProductsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="usageParameters" type="usageParametersInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="accessRightParameterAssignments" type="accessRightParameterAssignmentsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareProducts" type="fareProductsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="fareProductsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareProduct_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====FARE PRODUCT=================================================== -->
+  <xsd:element name="ServiceAccessRight_" type="DataManagedObjectStructure" abstract="false" substitutionGroup="PriceableObject_"/>
+  <xsd:element name="ServiceAccessRight" abstract="false" substitutionGroup="ServiceAccessRight_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ServiceAccessRight_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ServiceAccessRightIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ServiceAccessRight_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ServiceAccessRightGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ServiceAccessRightGroup">
+    <xsd:sequence>
+      <xsd:group ref="ProductDescriptionGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ProductDescriptionGroup">
+    <xsd:sequence>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="InfoUrl" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="documentLinks" type="infoLinks_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE PRODUCT=================================================== -->
+  <xsd:element name="FareProduct_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="ServiceAccessRight_"/>
+  <xsd:element name="FareProduct" abstract="true" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ServiceAccessRight_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareProductGroup">
+    <xsd:sequence>
+      <xsd:group ref="FareProductDescriptionGroup"/>
+      <xsd:group ref="FareProductRelationGroup"/>
+      <xsd:group ref="FareProductValidityGroup"/>
+      <xsd:group ref="FareProductPricingGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareProductDescriptionGroup">
+    <xsd:sequence>
+      <xsd:element ref="ChargingMomentRef" minOccurs="0"/>
+      <xsd:element name="ChargingMomentType" type="ChargingMomentEnumeration" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TypeOfFareProductRef"/>
+        <xsd:element name="typesOfFareProduct" type="typeOfFareProductRefs_RelStructure"/>
+      </xsd:choice>
+      <xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+      <xsd:element ref="ConditionSummary" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareProductValidityGroup">
+    <xsd:sequence>
+      <xsd:group ref="OptimisedOneManyAssignmentGroup" minOccurs="0"/>
+      <xsd:element name="validableElements" type="validableElements_RelStructure" minOccurs="0"/>
+      <xsd:element name="accessRightsInProduct" type="accessRightsInProduct_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareProductPricingGroup">
+    <xsd:sequence>
+      <xsd:element name="tariffs" type="tariffRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="prices" type="fareProductPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareProductRelationGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareProductRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF FARE PRODUCT======================================== -->
+  <xsd:complexType name="typeOfFareProducts_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfFareProductRef"/>
+          <xsd:element ref="TypeOfFareProduct"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfFareProduct" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFareProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFareProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfFareProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure">
+        <xsd:group ref="TypeOfFareProductGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfFareProductGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ==== SALES DISCOUNT RIGHT.=============================================== -->
+  <xsd:element name="SaleDiscountRight" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SaleDiscountRight_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SaleDiscountRightGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SaleDiscountRightIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SaleDiscountRight_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SaleDiscountRightGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SaleDiscountRightGroup">
+    <xsd:sequence>
+      <xsd:element name="ProductType" type="SaleDiscountRightEnumeration" minOccurs="0"/>
+      <xsd:group ref="OtherProductGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OtherProductGroup">
+    <xsd:choice>
+      <xsd:element ref="GeneralGroupOfEntitiesRef"/>
+      <xsd:element ref="GeneralGroupOfEntities"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ==== ENTITLEMENT PRODUCT.=============================================== -->
+  <xsd:element name="EntitlementProduct" abstract="false" substitutionGroup="ServiceAccessRight_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="EntitlementProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntitlementProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="EntitlementProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="EntitlementProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ServiceAccessRight_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="EntitlementProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="EntitlementProductGroup">
+    <xsd:sequence>
+      <xsd:element ref="GeneralOrganisationRef" minOccurs="0"/>
+      <xsd:element name="prices" type="fareProductPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== THIRD PARTY PRODUCT.=============================================== -->
+  <xsd:element name="ThirdPartyProduct" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ThirdPartyProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ThirdPartyProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ThirdPartyProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ThirdPartyProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ThirdPartyProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ThirdPartyProductGroup">
+    <xsd:sequence>
+      <xsd:group ref="OtherProductGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== USAGE DISCOUNT RIGHT.=============================================== -->
+  <xsd:element name="UsageDiscountRight" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="UsageDiscountRight_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageDiscountRightGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="UsageDiscountRightIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:group name="UsageDiscountRightGroup">
+    <xsd:sequence>
+      <xsd:element name="ProductType" type="UsageDiscountRightEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== CAPPED DISCOUNT RIGHT.=============================================== -->
+  <xsd:element name="CappedDiscountRight" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CappedDiscountRight_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SaleDiscountRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CappedDiscountRightGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CappedDiscountRightIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CappedDiscountRight_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SaleDiscountRight_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CappedDiscountRightGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CappedDiscountRightGroup">
+    <xsd:sequence>
+      <xsd:element name="cappingRules" type="cappingRules_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== CAPPING RULE.=============================================== -->
+  <xsd:complexType name="cappingRules_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CappingRule" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CappingRule" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CappingRule_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:element ref="keyList" minOccurs="0"/>
+                <xsd:element ref="Extensions" minOccurs="0"/>
+                <xsd:element ref="BrandingRef" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CappingRuleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CappingRuleIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CappingRule_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CappingRuleGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CappingRuleGroup">
+    <xsd:sequence>
+      <xsd:element name="MaximumDistance" type="DistanceType" minOccurs="0"/>
+      <xsd:element name="CappingPeriod" type="CappingPeriodEnumeration" default="day" minOccurs="0"/>
+      <xsd:element ref="CappedDiscountRightRef" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="PreassignedFareProductRef" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="ValidableElementRef" minOccurs="0"/>
+      <xsd:group ref="OptimisedOneManyAssignmentGroup" minOccurs="0"/>
+      <xsd:element name="prices" type="cappingRulePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CappingStartConstraintGroup">
+    <xsd:sequence>
+      <xsd:element name="CappingStartConstraintType" type="CappingPeriodStartConstraintTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="startOnlyOn" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="dayTypes_RelStructure">
+              <xsd:sequence>
+                <xsd:element name="StartMonth" type="xsd:gMonth" minOccurs="0"/>
+                <xsd:element name="StartDay" type="xsd:gDay" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== AMOUNT OF PRICE UNIT PRODUCT.=============================================== -->
+  <xsd:complexType name="UsageDiscountRight_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="UsageDiscountRightGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AmountOfPriceUnitProduct" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AmountOfPriceUnitProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AmountOfPriceUnitProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AmountOfPriceUnitProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AmountOfPriceUnitProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AmountOfPriceUnitProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AmountOfPriceUnitProductGroup">
+    <xsd:sequence>
+      <xsd:element name="ProductType" type="AmountOfPriceUnitEnumeration" minOccurs="0"/>
+      <xsd:element ref="PriceUnitRef" minOccurs="0"/>
+      <xsd:element name="Amount" type="xsd:decimal" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== PREASSIGNED FARE PRODUC=============================================== -->
+  <xsd:element name="PreassignedFareProduct" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PreassignedFareProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PreassignedFareProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PreassignedFareProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PreassignedFareProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PreassignedFareProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PreassignedFareProductGroup">
+    <xsd:sequence>
+      <xsd:element name="ProductType" type="PreassignedFareProductEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== PREASSIGNED FARE PRODUC=============================================== -->
+  <xsd:element name="SupplementProduct" abstract="false" substitutionGroup="FareProduct_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SupplementProduct_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceAccessRightGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PreassignedFareProductGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SupplementProductGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PreassignedFareProductIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SupplementProduct_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PreassignedFareProduct_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SupplementProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SupplementProductGroup">
+    <xsd:sequence>
+      <xsd:element name="SupplementProductType" type="SupplementProductEnumeration" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element name="SupplementToFareProductRef" type="FareProductRefStructure" minOccurs="0"/>
+        <xsd:element name="supplementTo" type="fareProductRefs_RelStructure" minOccurs="0"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====ACCESS RIGHT IN PRODUCT..============================= -->
+  <xsd:complexType name="accessRightsInProduct_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="AccessRightInProductRef"/>
+          <xsd:element ref="AccessRightInProduct"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AccessRightInProduct" type="AccessRightInProduct_VersionedChildStructure" abstract="false" substitutionGroup="VersionedChild"/>
+  <xsd:complexType name="AccessRightInProduct_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareElementInSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="AccessRightInProductGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AccessRightInProductGroup">
+    <xsd:sequence>
+      <xsd:element ref="ValidableElementRef" minOccurs="0"/>
+      <xsd:element ref="PreassignedFareProductRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ChargingMoment" abstract="false" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ChargingMoment_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ChargingMomentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ChargingMoment_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- == FARE PRICEs.============================= -->
+  <xsd:complexType name="fareProductPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareProductPriceRef"/>
+          <xsd:element ref="CellRef_"/>
+          <xsd:element ref="FareProductPrice"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareProductPrice" abstract="false" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareProductPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareProductPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareProductPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareProductPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareProductPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareProductPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareProductRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- == CAPPING RULE PRICEs.============================= -->
+  <xsd:complexType name="cappingRulePrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CappingRulePriceRef"/>
+          <xsd:element ref="CellRef_"/>
+          <xsd:element ref="CappingRulePrice"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CappingRulePrice" abstract="false" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CappingRulePrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CappingRulePriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CappingRulePriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CappingRulePrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="CappingRulePriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CappingRulePriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="CappingRuleRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

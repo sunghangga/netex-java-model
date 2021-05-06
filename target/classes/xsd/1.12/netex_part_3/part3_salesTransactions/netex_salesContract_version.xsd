@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_version.xsd"/>
+  <xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
+  <xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesContract_support.xsd"/>
+  <xsd:include schemaLocation="netex_customerEligibility_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="FareContractsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="customers" type="customersInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="customerAccounts" type="customerAccountsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareContracts" type="fareContractsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="customersInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="Customer" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="fareContractsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareContract" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="customerAccountsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerAccount" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER-->
+  <xsd:complexType name="customers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CustomerRef"/>
+          <xsd:element ref="Customer"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Customer" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Customer_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Customer_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerGroup">
+    <xsd:sequence>
+      <xsd:group ref="CustomerParticularsGroup"/>
+      <xsd:group ref="CustomerContactGroup"/>
+      <xsd:group ref="CustomerProfileGroup"/>
+      <xsd:element name="customerAccounts" type="customerAccounts_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerParticularsGroup">
+    <xsd:sequence>
+      <xsd:element name="Surname" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="FirstName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="Title" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="DateOfBirth" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="Gender" type="GenderEnumeration" minOccurs="0"/>
+      <xsd:element name="Height" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Photo" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerContactGroup">
+    <xsd:sequence>
+      <xsd:element name="Email" type="EmailAddressType" minOccurs="0"/>
+      <xsd:element name="Phone" type="TelephoneContactStructure" minOccurs="0"/>
+      <xsd:element ref="PostalAddress" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerProfileGroup">
+    <xsd:sequence>
+      <xsd:element name="IdentityDocumentRef" type="PrivateCodeStructure" minOccurs="0"/>
+      <xsd:element name="customerEligibilities" type="customerEligibilities_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE CONTRACT  -->
+  <xsd:complexType name="fareContracts_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareContractRef"/>
+          <xsd:element ref="FareContract"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareContract" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareContract_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareContractIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareContract_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareContractGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareContractGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="StartDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="EndDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="Status" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="CustomerRef" minOccurs="0"/>
+      <xsd:element ref="CustomerAccountRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareContractRef" minOccurs="0"/>
+      <xsd:element name="fareContractEntries" type="fareContractEntries_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====P ASSENGER CONTRACT ENTRY-->
+  <xsd:complexType name="fareContractEntries_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareContractEntryRef"/>
+          <xsd:element ref="FareContractEntry_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareContractEntry_" type="DataManagedObjectStructure" substitutionGroup="DataManagedObject"/>
+  <xsd:element name="FareContractEntry" abstract="true" substitutionGroup="FareContractEntry_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareContractEntry_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LogEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractEntryGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareContractEntryIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareContractEntry_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LogEntry_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareContractEntryGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareContractEntryGroup">
+    <xsd:sequence>
+      <xsd:element name="IsValid" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareContractEntryRef" minOccurs="0"/>
+      <xsd:element ref="FareContractRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF FARE CONTRACT ======================================== -->
+  <xsd:complexType name="typesOfFareContract_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfFareContractRef"/>
+          <xsd:element ref="TypeOfFareContract"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TypeOfFareContract_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfFareContract" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFareContract_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFareContractIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ====TYPE OF FARE CONTRACT ENTRY ======================================== -->
+  <xsd:complexType name="typesOfFareContractEntry_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfFareContractEntryRef"/>
+          <xsd:element ref="TypeOfFareContractEntry"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfFareContractEntry" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFareContractEntry_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFareContractEntryIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfFareContractEntry_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER ACCOUNT ======================-->
+  <xsd:complexType name="customerAccounts_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CustomerAccountRef"/>
+          <xsd:element ref="CustomerAccount"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerAccount" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerAccount_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerAccountGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerAccountIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerAccount_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerAccountGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerAccountGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="StartDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="EndDate" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element ref="CustomerRef" minOccurs="0"/>
+      <xsd:group ref="CustomerAccountPropertiesGroup"/>
+      <xsd:group ref="CustomerAccountContentsGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerAccountPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfCustomerAccountRef" minOccurs="0"/>
+      <xsd:element ref="CustomerAccountStatusRef" minOccurs="0"/>
+      <xsd:element name="CustomerAccountStatusType" type="AccountStatusTypeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerAccountContentsGroup">
+    <xsd:sequence>
+      <xsd:element name="fareContracts" type="fareContracts_RelStructure" minOccurs="0"/>
+      <xsd:element name="customerPurchasePackages" type="customerPurchasePackageRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF CUSTOMER ACCOUNT ======================================== -->
+  <xsd:complexType name="typesOfCustomerAccount_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfCustomerAccountRef"/>
+          <xsd:element ref="TypeOfCustomerAccount"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfCustomerAccount" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfCustomerAccount_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfCustomerAccountIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfCustomerAccount_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====CUSTOMER ACCOUNT STATUS ======================================== -->
+  <xsd:complexType name="typesOfAccountStatus_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CustomerAccountStatusRef"/>
+          <xsd:element ref="CustomerAccountStatus"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerAccountStatus" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerAccountStatus_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerAccountStatusIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerAccountStatus_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER ACCOUNT SECURITY LISTING ======================================== -->
+  <xsd:element name="CustomerAccountSecurityListing" abstract="false" substitutionGroup="SecurityListing_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerAccountSecurityListing_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SecurityListingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerAccountSecurityListingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerAccountSecurityListingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerAccountSecurityListing_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SecurityListing_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerAccountSecurityListingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerAccountSecurityListingGroup">
+    <xsd:sequence>
+      <xsd:element ref="CustomerAccountRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== CUSTOMER SECURITY LISTING ======================================== -->
+  <xsd:element name="CustomerSecurityListing" abstract="false" substitutionGroup="SecurityListing_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerSecurityListing_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SecurityListingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerSecurityListingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerSecurityListingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerSecurityListing_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SecurityListing_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerSecurityListingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerSecurityListingGroup">
+    <xsd:sequence>
+      <xsd:element ref="CustomerRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== FARE CONTRACT SECURITY LISTING ======================================== -->
+  <xsd:element name="FareContractSecurityListing" abstract="false" substitutionGroup="SecurityListing_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareContractSecurityListing_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SecurityListingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractSecurityListingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareContractSecurityListingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareContractSecurityListing_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SecurityListing_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareContractSecurityListingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareContractSecurityListingGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareContractRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- -->
+</xsd:schema>

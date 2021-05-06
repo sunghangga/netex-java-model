@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_route_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLink_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <!-- ===Direction=========================================================== -->
+  <xsd:element name="DirectionType" type="DirectionTypeEnumeration" default="outbound"/>
+  <xsd:simpleType name="DirectionTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="inbound"/>
+      <xsd:enumeration value="outbound"/>
+      <xsd:enumeration value="clockwise"/>
+      <xsd:enumeration value="anticlockwise"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DirectionIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DirectionRef" type="DirectionRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="DirectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="DirectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==Route============================================================ -->
+  <xsd:element name="RouteRef" type="RouteRefStructure" substitutionGroup="LinkSequenceRef"/>
+  <xsd:simpleType name="RouteIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="RouteRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkSequenceRefStructure">
+        <xsd:attribute name="ref" type="RouteIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="routeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="RouteRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==RoutePoint======================================================== -->
+  <xsd:simpleType name="RoutePointIdType">
+    <xsd:restriction base="PointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoutePointRef" type="RoutePointRefStructure" substitutionGroup="PointRef"/>
+  <xsd:complexType name="RoutePointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointRefStructure">
+        <xsd:attribute name="ref" type="RoutePointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==RouteLink======================================================== -->
+  <xsd:simpleType name="RouteLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RouteLinkRef" type="RouteLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="RouteLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="RouteLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="RouteLinkRefByValue" type="RouteLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="RouteLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="RoutePointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="RoutePointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="RoutePoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointOnRouteIdType">
+    <xsd:restriction base="PointInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PointOnRouteRef" type="PointOnRouteRefStructure" substitutionGroup="PointInSequenceRef"/>
+  <xsd:complexType name="PointOnRouteRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointInSequenceRefStructure">
+        <xsd:attribute name="ref" type="PointOnRouteIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==Route Section=========================================================== -->
+  <!-- 
+	<xsd:simpleType name="RouteSectionIdType">
+		<xsd:annotation>
+			<xsd:documentation>Type for identifier of a ROUTE SECTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="SectionIdType"/>
+	</xsd:simpleType>
+	<xsd:element name="RouteSectionRef" type="RouteSectionRefStructure" abstract="false" substitutionGroup="SectionRef">
+		<xsd:annotation>
+			<xsd:documentation>Reference to a ROUTE SECTION.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RouteSectionRefStructure">
+		<xsd:annotation>
+			<xsd:documentation>Type for a reference to a ROUTE SECTION.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="SectionRefStructure">
+				<xsd:attribute name="ref" type="RouteSectionIdType" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Identifier of referenced entity.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>  -->
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_relationship_support">
+  <xsd:include schemaLocation="netex_version_support.xsd"/>
+  <!--====Version =======================================================================-->
+  <xsd:element name="SimpleObjectRef" type="SimpleObjectRefStructure"/>
+  <xsd:complexType name="SimpleObjectRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ObjectIdType">
+        <xsd:attribute name="ref" type="ObjectIdType" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--====Version =======================================================================-->
+  <xsd:element name="VersionOfObjectRef" type="VersionOfObjectRefStructure"/>
+  <xsd:complexType name="VersionOfObjectRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ObjectIdType">
+        <xsd:attribute name="nameOfRefClass" type="NameOfClass" use="optional"/>
+        <xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+        <xsd:attribute name="modification" type="ModificationEnumeration" use="optional"/>
+        <xsd:attribute name="ref" type="ObjectIdType" use="required"/>
+        <xsd:attribute name="versionRef" type="VersionIdType" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="OrderedVersionOfObjectRef" type="OrderedVersionOfObjectRefStructure"/>
+  <xsd:complexType name="OrderedVersionOfObjectRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="VersionOfObjectRefStructure">
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--====Version =======================================================================-->
+  <xsd:element name="VersionRef" type="VersionRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VersionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VersionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--==== DATA SOURCE  =======================================================================-->
+  <xsd:element name="DataSourceRef" type="DataSourceRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DataSourceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="DataSourceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--==== DATA SOURCE =======================================================================-->
+  <xsd:element name="TypeOfVersionRef" type="TypeOfVersionRefStructure"/>
+  <xsd:complexType name="TypeOfVersionRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ObjectIdType">
+        <xsd:attribute name="nameOfRefClass" type="NameOfClass" use="optional"/>
+        <xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+        <xsd:attribute name="modification" type="ModificationEnumeration" use="optional"/>
+        <xsd:attribute name="ref" type="ObjectIdType" use="required"/>
+        <xsd:attribute name="versionRef" type="VersionIdType" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--====External Obect Reference =======================================================================-->
+  <xsd:complexType name="ExternalObjectRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="type" type="xsd:normalizedString"/>
+        <xsd:attribute name="ref" type="xsd:normalizedString" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

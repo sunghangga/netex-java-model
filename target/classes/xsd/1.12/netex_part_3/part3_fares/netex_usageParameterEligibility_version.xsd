@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterEligibility_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameterEligibility_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====USER PROFILE================================================= -->
+  <xsd:element name="UserProfile" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="UserProfile_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UserProfileGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="UserProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="UserProfile_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="UserProfileGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="UserProfileGroup">
+    <xsd:sequence>
+      <xsd:element name="BaseUserProfileRef" type="UserProfileRefStructure" minOccurs="0"/>
+      <xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+      <xsd:element name="UserType" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="UserTypeEnumeration"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:group ref="UserProfileQualificationGroup"/>
+      <xsd:element ref="GenderLimitation" minOccurs="0"/>
+      <xsd:element name="ProofRequired" type="ProofOfIdentityListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="DiscountBasis" type="DiscountBasisEnumeration" minOccurs="0"/>
+      <xsd:element name="companionProfiles" type="companionProfiles_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="UserProfileQualificationGroup">
+    <xsd:sequence>
+      <xsd:element name="MinimumAge" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximumAge" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MonthDayOnWhichAgeApplies" type="xsd:gMonthDay" minOccurs="0"/>
+      <xsd:element name="MinimumHeight" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximumHeight" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="LocalResident" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="resides" type="residentialQualifications_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====COMMERCIAL PROFILE=================================================== -->
+  <xsd:element name="CommercialProfile" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CommercialProfile_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CommercialProfileGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CommercialProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CommercialProfile_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CommercialProfileGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CommercialProfileGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+      <xsd:element name="ConsumptionAmount" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="ConsumptionUnits" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element ref="GeneralGroupOfEntitiesRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====GROUP TICKET=================================================== -->
+  <xsd:element name="GroupTicket" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupTicket_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupTicketGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupTicketIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupTicket_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupTicketGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupTicketGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfConcessionRef" minOccurs="0"/>
+      <xsd:group ref="GroupTicketSizeGroup"/>
+      <xsd:group ref="GroupTicketCalculationGroup"/>
+      <xsd:group ref="GroupTicketBookingGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="GroupTicketSizeGroup">
+    <xsd:sequence>
+      <xsd:element name="MinimumNumberOfPersons" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfPersons" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MinimumNumberOfCardHolders" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="companionProfiles" type="companionProfiles_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="GroupTicketCalculationGroup">
+    <xsd:sequence>
+      <xsd:element name="PricingBasis" type="PerBasisEnumeration" minOccurs="0"/>
+      <xsd:element name="MaximumPersonsFree" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MaximumPersonsDiscounted" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="DiscountOnlyForFirstPerson" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="OneForNPersons" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="GroupSizeChanges" type="GroupSizeChangesEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="GroupTicketBookingGroup">
+    <xsd:sequence>
+      <xsd:element name="Ticketing" type="GroupTicketingEnumeration" minOccurs="0"/>
+      <xsd:element name="JointCheckIn" type="GroupCheckInEnumeration" minOccurs="0"/>
+      <xsd:element ref="GroupBookingFacility" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====COMPANION PROFILE =================================================== -->
+  <xsd:complexType name="companionProfiles_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CompanionProfileRef"/>
+          <xsd:element ref="CompanionProfile"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CompanionProfile" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CompanionProfile_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CompanionProfileGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CompanionProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CompanionProfile_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CompanionProfileGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CompanionProfileGroup">
+    <xsd:sequence>
+      <xsd:element name="ParentRef" type="UsageParameterRefStructure" minOccurs="0"/>
+      <xsd:element ref="UserProfileRef" minOccurs="0"/>
+      <xsd:element name="CompanionRelationshipType" type="CompanionRelationshipEnumeration" default="anyone" minOccurs="0"/>
+      <xsd:element name="MinimumNumberOfPersons" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfPersons" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="DiscountBasis" type="DiscountBasisEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== RESIDENTIAL QUALIFICATION. ================================================== -->
+  <xsd:complexType name="residentialQualifications_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ResidentialQualificationRef"/>
+          <xsd:element ref="ResidentialQualification"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ResidentialQualification" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ResidentialQualification_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ResidentialQualificationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ResidentialQualificationIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ResidentialQualification_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="ResidentialQualificationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ResidentialQualificationGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ParentRef" type="UsageParameterRefStructure" minOccurs="0"/>
+      <xsd:element name="MustReside" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+      <xsd:element name="ResidenceType" type="ResidenceTypeEnumeration" default="live" minOccurs="0"/>
+      <xsd:element name="MinimumDuration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF CONCESSION======================================== -->
+  <xsd:complexType name="typeOfConcessions_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfConcessionRef"/>
+          <xsd:element ref="TypeOfConcession"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfConcession" abstract="false" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfConcession_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfConcessionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfConcessionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfConcession_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TypeOfConcessionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfConcessionGroup">
+    <xsd:sequence>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==== ELIGIBILITY CHANGE POLICY QUALIFICATION. ================================================== -->
+  <xsd:element name="EligibilityChangePolicy" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="EligibilityChangePolicy_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EligibilityChangePolicyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="EligibilityChangePolicyIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="EligibilityChangePolicy_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="EligibilityChangePolicyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="EligibilityChangePolicyGroup">
+    <xsd:sequence>
+      <xsd:element name="OnBecomingEligiblePolicy" type="OnBecomingEnumeration" default="noAction" minOccurs="0"/>
+      <xsd:element name="OnCeasingToBeEligiblePolicy" type="OnCeasingEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

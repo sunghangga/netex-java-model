@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_lineNetwork_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLink_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_section_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LineLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LineLinkRef" type="LineLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="LineLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="LineLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="LineLinkRefByValue" type="LineLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="LineLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="PointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="PointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LineSectionIdType">
+    <xsd:restriction base="SectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LineSectionRef" type="LineSectionRefStructure" substitutionGroup="SectionRef"/>
+  <xsd:complexType name="LineSectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SectionRefStructure">
+        <xsd:attribute name="ref" type="LineSectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SectionTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="trunk"/>
+      <xsd:enumeration value="branch"/>
+      <xsd:enumeration value="eyelBranch"/>
+      <xsd:enumeration value="endLoop"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LineSectionPointTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="interchange"/>
+      <xsd:enumeration value="majorInterchange"/>
+      <xsd:enumeration value="terminus"/>
+      <xsd:enumeration value="majorTerminus"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LineNetworkIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LineNetworkRef" type="LineNetworkRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="LineNetworkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LineNetworkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointOnLineSectionIdType">
+    <xsd:restriction base="PointOnSectionIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

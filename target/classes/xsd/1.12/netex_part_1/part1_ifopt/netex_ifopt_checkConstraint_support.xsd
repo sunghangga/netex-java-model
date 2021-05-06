@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_checkConstraint_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ===== TYPE OFCONGESTION ======================================== -->
+  <xsd:simpleType name="TypeOfCongestionIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfCongestionRef" type="TypeOfCongestionRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfCongestionRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfCongestionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======CHECK CONSTRAINT ============================================================================-->
+  <xsd:simpleType name="CheckConstraintIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CheckConstraintRef" type="CheckConstraintRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="CheckConstraintRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="CheckConstraintIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======CHECK CONSTRAINT ============================================================================-->
+  <xsd:simpleType name="CheckConstraintDelayIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CheckConstraintDelayRef" type="CheckConstraintDelayRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="CheckConstraintDelayRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="CheckConstraintDelayIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======Values =============================================================================-->
+  <xsd:simpleType name="CheckConstraintThroughputIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CheckConstraintThroughputRef" type="CheckConstraintThroughputRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="CheckConstraintThroughputRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="CheckConstraintThroughputIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--======Values =============================================================================-->
+  <xsd:simpleType name="CheckProcessTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="boarding"/>
+      <xsd:enumeration value="alighting"/>
+      <xsd:enumeration value="ticketPurchase"/>
+      <xsd:enumeration value="ticketCollection"/>
+      <xsd:enumeration value="ticketValidation"/>
+      <xsd:enumeration value="baggageCheckIn"/>
+      <xsd:enumeration value="checkout"/>
+      <xsd:enumeration value="oversizeBaggageCheckIn"/>
+      <xsd:enumeration value="oversizeBaggageReclaim"/>
+      <xsd:enumeration value="baggageReclaim"/>
+      <xsd:enumeration value="leftLuggageDeposit"/>
+      <xsd:enumeration value="leftLuggageReclaim"/>
+      <xsd:enumeration value="firstclassCheckin"/>
+      <xsd:enumeration value="specialNeedsCheckin"/>
+      <xsd:enumeration value="baggageSecurityCheck"/>
+      <xsd:enumeration value="securityCheck"/>
+      <xsd:enumeration value="outgoingPassportControl"/>
+      <xsd:enumeration value="incomingPassportControl"/>
+      <xsd:enumeration value="fasttrackDepartures"/>
+      <xsd:enumeration value="fasttrackArrivals"/>
+      <xsd:enumeration value="incomingDutyFree"/>
+      <xsd:enumeration value="outgoingDutyFree"/>
+      <xsd:enumeration value="taxRefunds"/>
+      <xsd:enumeration value="outgoingCustoms"/>
+      <xsd:enumeration value="incomingCustoms"/>
+      <xsd:enumeration value="waitForLift"/>
+      <xsd:enumeration value="ingress"/>
+      <xsd:enumeration value="egress"/>
+      <xsd:enumeration value="queue"/>
+      <xsd:enumeration value="vehicleLoading"/>
+      <xsd:enumeration value="vehicleUnloading"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CheckServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="selfService"/>
+      <xsd:enumeration value="counterService"/>
+      <xsd:enumeration value="anyService"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AccessFeatureEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="lift"/>
+      <xsd:enumeration value="escalator"/>
+      <xsd:enumeration value="freightElevator"/>
+      <xsd:enumeration value="travelator"/>
+      <xsd:enumeration value="ramp"/>
+      <xsd:enumeration value="stairs"/>
+      <xsd:enumeration value="seriesOfStairs"/>
+      <xsd:enumeration value="shuttle"/>
+      <xsd:enumeration value="crossing"/>
+      <xsd:enumeration value="barrier"/>
+      <xsd:enumeration value="narrowEntrance"/>
+      <xsd:enumeration value="hall"/>
+      <xsd:enumeration value="concourse"/>
+      <xsd:enumeration value="confinedSpace"/>
+      <xsd:enumeration value="queueManagement"/>
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="openSpace"/>
+      <xsd:enumeration value="street"/>
+      <xsd:enumeration value="pavement"/>
+      <xsd:enumeration value="footpath"/>
+      <xsd:enumeration value="passage"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AccessFeatureListOfEnumerations">
+    <xsd:list itemType="AccessFeatureEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="CongestionEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noWaiting"/>
+      <xsd:enumeration value="queue"/>
+      <xsd:enumeration value="crowding"/>
+      <xsd:enumeration value="full"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CheckDirectionEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="forwards"/>
+      <xsd:enumeration value="backwards"/>
+      <xsd:enumeration value="bothWays"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

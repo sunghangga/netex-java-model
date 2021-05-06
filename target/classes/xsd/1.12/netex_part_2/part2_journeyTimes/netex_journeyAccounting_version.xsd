@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_journeyAccounting_version">
+  <xsd:include schemaLocation="netex_journeyAccounting_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_location_types.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="JourneyAccountingInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="journeyAccountings" type="journeyAccountingsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="journeyAccountingsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="JourneyAccounting" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="journeyAccountings_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="JourneyAccountingRef"/>
+          <xsd:element ref="JourneyAccounting"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="JourneyAccounting" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="JourneyAccounting_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="JourneyAccountingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="JourneyAccountingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="JourneyAccounting_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="JourneyAccountingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="JourneyAccountingGroup">
+    <xsd:sequence>
+      <xsd:element name="AccountedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:element name="OrganisationRef" type="OrganisationRefStructure" minOccurs="0"/>
+      <xsd:element ref="SupplyContractRef" minOccurs="0"/>
+      <xsd:element name="AccountingCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="AccountingType" type="JourneyAccountingEnumeration" default="contract" minOccurs="0"/>
+      <xsd:element name="Partial" type="xsd:boolean" default="false" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="Distance" type="DistanceType" default="1" minOccurs="0"/>
+      <xsd:element name="Duration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

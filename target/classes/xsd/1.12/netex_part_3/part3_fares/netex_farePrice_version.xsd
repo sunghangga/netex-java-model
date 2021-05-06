@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_farePrice_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_units.xsd"/>
+  <xsd:include schemaLocation="netex_fareTable_support.xsd"/>
+  <xsd:include schemaLocation="netex_farePrice_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_alternativeName_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_noticeAssignment_version.xsd"/>
+  <xsd:include schemaLocation="netex_calculationParameters_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in FARE FRAME)=================================================== -->
+  <xsd:complexType name="farePricesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PriceGroup_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===FARE PRICE================================================= -->
+  <xsd:element name="PriceableObject_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:element name="PriceableObject" type="PriceableObject_VersionStructure" abstract="true" substitutionGroup="PriceableObject_" id="PriceableObject"/>
+  <xsd:complexType name="PriceableObject_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="PriceableObjectGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PriceableObjectGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="infoLinks" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="infoLinks_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+      <xsd:group ref="PriceableObjectPricingGroup"/>
+      <xsd:group ref="PriceableObjectPricesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PriceableObjectPricingGroup">
+    <xsd:sequence>
+      <xsd:element ref="PricingServiceRef" minOccurs="0"/>
+      <xsd:element ref="PricingRuleRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PriceableObjectPricesGroup">
+    <xsd:sequence>
+      <xsd:element name="priceGroups" type="priceGroups_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareTables" type="fareTables_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="FareTable_" type="GroupOfEntities_VersionStructure" abstract="true" substitutionGroup="GroupOfEntities"/>
+  <xsd:complexType name="fareTables_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareTableRef"/>
+          <xsd:element ref="FareTable_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===FARE PRICE================================================= -->
+  <xsd:complexType name="farePrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FarePriceRef"/>
+          <xsd:element ref="CellRef_"/>
+          <xsd:element ref="FarePrice_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FarePrice_" type="VersionedChildStructure" abstract="true" substitutionGroup="VersionedChild"/>
+  <xsd:element name="FarePrice" abstract="true" substitutionGroup="FarePrice_" id="FarePrice">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="FarePrice_VersionedChildStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FarePrice_VersionedChildStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FarePriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FarePriceGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="StartDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+      <xsd:group ref="FarePriceAmountWithDerivationGroup"/>
+      <xsd:element name="IsAllowed" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="PricingServiceRef" minOccurs="0"/>
+      <xsd:group ref="FarePriceCalculationGroup"/>
+      <xsd:element name="Ranking" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FarePriceAmountWithDerivationGroup">
+    <xsd:sequence>
+      <xsd:group ref="FarePriceAmountGroup"/>
+      <xsd:element name="ruleStepResults" type="priceRuleStepResults_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FarePriceAmountGroup">
+    <xsd:sequence>
+      <xsd:element name="Amount" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="Currency" type="CurrencyType" minOccurs="0"/>
+      <xsd:element ref="PriceUnitRef" minOccurs="0"/>
+      <xsd:element name="Units" type="xsd:decimal" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FarePriceCalculationGroup">
+    <xsd:sequence>
+      <xsd:element ref="FarePriceRef" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="PricingRuleRef"/>
+        <xsd:element ref="PricingRule_"/>
+      </xsd:choice>
+      <xsd:element name="CanBeCumulative" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element ref="RoundingRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="priceRuleStepResults_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="RuleStepResult" type="PriceRuleStepResultStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PriceRuleStepResultStructure" abstract="false">
+    <xsd:sequence>
+      <xsd:element ref="FarePriceRef" minOccurs="0"/>
+      <xsd:group ref="FarePriceAmountGroup"/>
+      <xsd:group ref="StepCalculationAmountGroup"/>
+      <xsd:group ref="PriceRuleStepRateGroup"/>
+      <xsd:element name="Narrative" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="RuleStepResultIdType"/>
+    <xsd:attribute name="order" type="xsd:integer" use="optional"/>
+  </xsd:complexType>
+  <xsd:group name="StepCalculationAmountGroup">
+    <xsd:sequence>
+      <xsd:element name="RateUsed" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="AdjustmentAmount" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="AdjustmentUnits" type="xsd:decimal" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PriceRuleStepRateGroup">
+    <xsd:sequence>
+      <xsd:element ref="PricingRuleRef"/>
+      <xsd:element ref="RoundingRef" minOccurs="0"/>
+      <xsd:element ref="RoundingStepRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==PRICE GROUP============================================================ -->
+  <xsd:complexType name="compositePrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FarePriceRef"/>
+          <xsd:element ref="PriceGroupRef"/>
+          <xsd:element ref="FarePrice_"/>
+          <xsd:element ref="PriceGroup_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="priceGroups_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PriceGroupRef"/>
+          <xsd:element ref="PriceGroup_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PriceGroup_" type="GroupOfEntities_VersionStructure" abstract="true" substitutionGroup="GroupOfEntities"/>
+  <xsd:element name="PriceGroup" abstract="false" substitutionGroup="PriceGroup_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PriceGroup_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricePropertyGroup"/>
+              <xsd:element name="members" type="farePrices_RelStructure" minOccurs="0"/>
+              <xsd:element ref="FarePriceRef" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PriceGroupIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PriceGroup_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:group ref="PriceGroupGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PriceGroupGroup">
+    <xsd:sequence>
+      <xsd:group ref="PricePropertyGroup"/>
+      <xsd:element name="members" type="farePrices_RelStructure" minOccurs="0"/>
+      <xsd:element ref="FarePriceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PricePropertyGroup">
+    <xsd:sequence>
+      <xsd:element name="StartDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="EndDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element ref="RoundingRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by christophe duquesne (Dryade SARL) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_validityCondition_version">
+  <xsd:include schemaLocation="netex_validityCondition_support.xsd"/>
+  <xsd:include schemaLocation="netex_responsibility_version.xsd"/>
+  <!--CLOSE COUPLED with netex_responsibility_version-->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="validityConditions_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ValidityConditionRef"/>
+          <xsd:element ref="ValidBetween"/>
+          <xsd:element ref="ValidityCondition_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ValidityCondition_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="ValidityCondition" abstract="false" substitutionGroup="ValidityCondition_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidityCondition_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="ConditionedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="WithConditionRef" type="ValidityConditionRefStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityConditionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ValidityCondition_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:group ref="ValidityConditionGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ValidityConditionGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ConditionedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:element name="WithConditionRef" type="ValidityConditionRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Time zone======================================================= -->
+  <xsd:complexType name="validityTriggers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="ValidityTrigger" type="ValidityTrigger_VersionStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidityTrigger" abstract="false" substitutionGroup="ValidityCondition_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidityTrigger_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="ConditionedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="WithConditionRef" type="ValidityConditionRefStructure" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityTriggerGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityTriggerIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ValidityTrigger_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityCondition_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ValidityTriggerGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ValidityTriggerGroup">
+    <xsd:sequence>
+      <xsd:element name="TriggerObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="validityRuleParameters_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="ValidityRuleParameter" type="ValidityRuleParameter_VersionStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidityRuleParameter" abstract="false" substitutionGroup="ValidityCondition_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidityRuleParameter_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="ConditionedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="WithConditionRef" type="ValidityConditionRefStructure" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityRuleParameterGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityRuleParameterIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ValidityRuleParameter_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityCondition_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ValidityRuleParameterGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ValidityRuleParameterGroup">
+    <xsd:sequence>
+      <xsd:element name="RuleObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:sequence>
+          <xsd:element name="AttributeName" type="xsd:NMTOKEN"/>
+          <xsd:element name="ComparisonOperator" type="RelativeOperatorEnumeration"/>
+          <xsd:choice>
+            <xsd:element name="AttributeValue" type="xsd:anyType"/>
+            <xsd:element name="Method" type="xsd:anyType"/>
+          </xsd:choice>
+        </xsd:sequence>
+        <xsd:element name="isValid" type="xsd:boolean"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="SimpleValidityCondition" abstract="false">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidBetween_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="FromDate" type="xsd:dateTime" minOccurs="0"/>
+              <xsd:element name="ToDate" type="xsd:dateTime" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityConditionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="ValidBetween" abstract="false">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ValidBetween_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="FromDate" type="xsd:dateTime" minOccurs="0"/>
+              <xsd:element name="ToDate" type="xsd:dateTime" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ValidityConditionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ValidBetween_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityCondition_VersionStructure">
+        <xsd:sequence>
+          <xsd:element name="FromDate" type="xsd:dateTime" minOccurs="0"/>
+          <xsd:element name="ToDate" type="xsd:dateTime" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

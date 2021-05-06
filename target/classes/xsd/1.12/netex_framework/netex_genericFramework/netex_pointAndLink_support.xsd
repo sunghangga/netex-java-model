@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_pointAndLink_support">
+  <xsd:include schemaLocation="netex_grouping_support.xsd"/>
+  <xsd:include schemaLocation="../netex_utility/netex_units.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PointRef" type="PointRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="pointRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="linkRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="LinkRef"/>
+          <xsd:element ref="LinkRefByValue"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LinkIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LinkRef" type="LinkRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="LinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="LinkRefByValue" type="LinkRefByValueStructure"/>
+  <xsd:complexType name="LinkRefByValueStructure">
+    <xsd:attribute name="nameOfClass" type="NameOfClass"/>
+    <xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+    <xsd:attribute name="fromPointRef" type="PointIdType" use="required"/>
+    <xsd:attribute name="toPointRef" type="PointIdType" use="required"/>
+    <xsd:attribute name="nameOfPointRefClass" type="NameOfClass"/>
+    <xsd:attribute name="typeOfLinkRef" type="TypeOfLinkIdType"/>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointOnLinkIdType">
+    <xsd:restriction base="PointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PointOnLinkRef" type="PointOnLinkRefStructure" abstract="true" substitutionGroup="PointRef"/>
+  <xsd:complexType name="PointOnLinkRefStructure_">
+    <xsd:simpleContent>
+      <xsd:extension base="PointRefStructure">
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="PointOnLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointOnLinkRefStructure_">
+        <xsd:attribute name="ref" type="PointOnLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="PointOnLinkByValueStructure" abstract="false">
+    <xsd:sequence>
+      <xsd:element name="DistanceFromStart" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="typeOfPointRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfPointRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfPointIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfPointRef" type="TypeOfPointRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="linkTypeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfLinkRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfLinkIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfLinkRef" type="TypeOfLinkRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfLinkRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==Group of Points============================================================ -->
+  <xsd:element name="GroupOfPointsRef_" type="GroupOfEntitiesRefStructure" abstract="true" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:simpleType name="GroupOfPointsIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfPointsRef" abstract="true" substitutionGroup="GroupOfEntitiesRef_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="GroupOfPointsRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfPointsRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" use="required">
+          <xsd:simpleType>
+            <xsd:restriction base="GroupOfPointsIdType"/>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ==Group of Links============================================================ -->
+  <xsd:simpleType name="GroupOfLinksIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+</xsd:schema>

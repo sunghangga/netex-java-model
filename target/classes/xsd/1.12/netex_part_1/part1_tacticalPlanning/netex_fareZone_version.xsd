@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareZone_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareZone_support.xsd"/>
+  <xsd:include schemaLocation="../part1_tacticalPlanning/netex_servicePattern_version.xsd"/>
+  <xsd:include schemaLocation="../part1_networkDescription/netex_route_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="FareRoutingInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="borderPoints" type="borderPointsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareScheduledStopPoints" type="fareScheduledStopPointsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareZones" type="fareZonesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareSections" type="fareSectionsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="borderPointsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="BorderPoint" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="fareScheduledStopPointsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ScheduledStopPoint"/>
+          <xsd:element ref="FareScheduledStopPoint"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="fareZonesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareZone" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="fareSectionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareSection" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="FareScheduledStopPoint" abstract="false" substitutionGroup="Point">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareScheduledStopPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ScheduledStopPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareScheduledStopPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareScheduledStopPointIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareScheduledStopPoint_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="ScheduledStopPoint_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareScheduledStopPointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareScheduledStopPointGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="SiteFacilitySetRef"/>
+        <xsd:element ref="SiteFacilitySet"/>
+      </xsd:choice>
+      <xsd:element name="NameOnRouting" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="AccountingStopPointRef" type="FareScheduledStopPointRefStructure" minOccurs="0"/>
+      <xsd:element ref="BorderPointRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="BorderPoint" abstract="false" substitutionGroup="Point">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="BorderPoint_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+              <xsd:choice minOccurs="0">
+                <xsd:element ref="GroupOfOperatorsRef"/>
+                <xsd:element ref="GroupOfOperators"/>
+              </xsd:choice>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="BorderPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="BorderPoint_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TimingPoint_VersionStructure">
+        <xsd:group ref="BorderPointGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="BorderPointGroup">
+    <xsd:sequence>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="GroupOfOperatorsRef"/>
+        <xsd:element ref="GroupOfOperators"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE POINT IN JOURNEY PATTERN ====================-->
+  <xsd:complexType name="farePointsInPattern_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FarePointInPatternRef"/>
+          <xsd:element ref="FarePointInPattern"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FarePointInPattern" substitutionGroup="PointInLinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FarePointInPattern_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointInJourneyPatternGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="ScheduledStopPointView" minOccurs="0"/>
+              <xsd:element name="AbridgementRanking" type="xsd:integer" minOccurs="0"/>
+              <xsd:element name="PresentationPosition" type="SeriesPresentationEnumeration" minOccurs="0"/>
+              <xsd:element name="IsForbidden" type="xsd:boolean" default="false" minOccurs="0"/>
+              <xsd:element name="InterchangeAllowed" type="xsd:boolean" default="true" minOccurs="0"/>
+              <xsd:element name="IsFareStage" type="xsd:boolean" default="true" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FarePointInPatternIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FarePointInPattern_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PointInJourneyPattern_VersionedChildStructure">
+        <xsd:group ref="FarePointInPatternGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FarePointInPatternGroup">
+    <xsd:sequence>
+      <xsd:element ref="ScheduledStopPointView" minOccurs="0"/>
+      <xsd:element name="AbridgementRanking" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="PresentationPosition" type="SeriesPresentationEnumeration" minOccurs="0"/>
+      <xsd:element name="IsForbidden" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="InterchangeAllowed" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="IsFareStage" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE SECTION  ====================-->
+  <xsd:complexType name="fareSections_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareSectionRef"/>
+          <xsd:element ref="FareSection"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareSection" abstract="false" substitutionGroup="Section_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareSection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SectionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeneralSectionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareSectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareSectionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareSection_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GeneralSection_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareSectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareSectionGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="JourneyPatternRef" minOccurs="0"/>
+        <xsd:element ref="JourneyPattern" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element name="FromPointInPatternRef" type="FarePointInPatternRefStructure" minOccurs="0"/>
+      <xsd:element name="ToPointInPatternRef" type="FarePointInPatternRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="FareZone" abstract="false" substitutionGroup="TariffZone_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareZone_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TariffZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="ParentFareZoneRef" type="FareZoneRefStructure" minOccurs="0"/>
+              <xsd:element name="ZoneTopology" type="ZoneTopologyEnumeration" minOccurs="0"/>
+              <xsd:element name="ScopingMethod" type="ScopingMethodEnumeration" default="explicitStops" minOccurs="0"/>
+              <xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+              <xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
+              <xsd:element name="fareSections" type="fareSections_RelStructure" minOccurs="0"/>
+              <xsd:element name="contains" type="tariffZoneRefs_RelStructure" minOccurs="0"/>
+              <xsd:element name="neighbours" type="fareZoneRefs_RelStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareZone_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TariffZone_VersionStructure">
+        <xsd:group ref="FareZoneGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareZoneGroup">
+    <xsd:sequence>
+      <xsd:element name="ParentFareZoneRef" type="FareZoneRefStructure" minOccurs="0"/>
+      <xsd:element name="ZoneTopology" type="ZoneTopologyEnumeration" minOccurs="0"/>
+      <xsd:element name="ScopingMethod" type="ScopingMethodEnumeration" default="explicitStops" minOccurs="0"/>
+      <xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfOperatorsRef" minOccurs="0"/>
+      <xsd:element name="fareSections" type="fareSections_RelStructure" minOccurs="0"/>
+      <xsd:element name="contains" type="tariffZoneRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="neighbours" type="fareZoneRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

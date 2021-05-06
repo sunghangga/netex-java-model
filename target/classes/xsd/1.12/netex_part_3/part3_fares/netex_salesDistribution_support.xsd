@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesDistribution_support">
+  <xsd:include schemaLocation="netex_farePrice_support.xsd"/>
+  <!-- ====FULFILMENT METHOD.=============================================== -->
+  <xsd:complexType name="fulfilmentMethodRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FulfilmentMethodRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FulfilmentMethodIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FulfilmentMethodRef" type="FulfilmentMethodRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="FulfilmentMethodRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="FulfilmentMethodIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FulfilmentMethodTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="ticketOffice"/>
+      <xsd:enumeration value="ticketMachine"/>
+      <xsd:enumeration value="conductor"/>
+      <xsd:enumeration value="agent"/>
+      <xsd:enumeration value="post"/>
+      <xsd:enumeration value="courier"/>
+      <xsd:enumeration value="selfprint"/>
+      <xsd:enumeration value="sms"/>
+      <xsd:enumeration value="email"/>
+      <xsd:enumeration value="topUpDevice"/>
+      <xsd:enumeration value="validator"/>
+      <xsd:enumeration value="mobileApp"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FulfilmentMethodListOfEnumerations">
+    <xsd:list itemType="FulfilmentMethodTypeEnumeration"/>
+  </xsd:simpleType>
+  <!-- ====DISTRIBUTION CHANNEL.======================================================== -->
+  <xsd:complexType name="distributionChannelRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="DistributionChannelRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="DistributionChannelIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DistributionChannelRef" type="DistributionChannelRefStructureElement" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="DistributionChannelRefStructureElement">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="DistributionChannelIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="DistributionChannelTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="atStop"/>
+      <xsd:enumeration value="onBoard"/>
+      <xsd:enumeration value="online"/>
+      <xsd:enumeration value="onlineAccount"/>
+      <xsd:enumeration value="telephone"/>
+      <xsd:enumeration value="electronicPass"/>
+      <xsd:enumeration value="postal"/>
+      <xsd:enumeration value="mobileDevice"/>
+      <xsd:enumeration value="agency"/>
+      <xsd:enumeration value="tourOperator"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="AllDistributionChannelsRef" type="AllDistributionChannelsRefStructureElement" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="AllDistributionChannelsRefStructureElement">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="DistributionChannelIdType" use="required" fixed="All"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====GROUP OF DISTRIBUTION CHANNELs.======================================================== -->
+  <xsd:simpleType name="GroupOfDistributionChannelsIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfDistributionChannelsRef" type="GroupOfDistributionChannelsRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="GroupOfDistributionChannelsRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="GroupOfDistributionChannelsIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:group name="OneAllOrSomeDistributionChannelsRefGroup">
+    <xsd:choice>
+      <xsd:element ref="AllDistributionChannelsRef"/>
+      <xsd:element ref="GroupOfDistributionChannelsRef"/>
+      <xsd:element ref="DistributionChannelRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ==== FULFILMENT METHOD PRICE======================================================== -->
+  <xsd:simpleType name="FulfilmentMethodPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FulfilmentMethodPriceRef" type="FulfilmentMethodPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="FulfilmentMethodPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="FulfilmentMethodPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =============================================================== -->
+  <xsd:simpleType name="DistributionRightsEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="sell"/>
+      <xsd:enumeration value="exchange"/>
+      <xsd:enumeration value="refund"/>
+      <xsd:enumeration value="inform"/>
+      <xsd:enumeration value="private"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DistributionRightsListOfEnumerations">
+    <xsd:list itemType="DistributionRightsEnumeration"/>
+  </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_entity_entity">
+  <xsd:include schemaLocation="netex_entity_version.xsd"/>
+  <xsd:include schemaLocation="netex_version_version.xsd"/>
+  <!-- ==== Entity ================================================================ -->
+  <xsd:element name="Entity_Entity" type="Entity_EntityStructure" substitutionGroup="Entity"/>
+  <!-- ==== Metamodel ================================================================ -->
+  <xsd:complexType name="Entity_EntityStructure">
+    <xsd:complexContent>
+      <xsd:extension base="EntityStructure">
+        <xsd:sequence>
+          <xsd:element name="versions" type="entitiesInVersion_RelStructure"/>
+        </xsd:sequence>
+        <xsd:attribute name="created" type="xsd:dateTime" use="optional"/>
+        <xsd:attribute name="changed" type="xsd:dateTime" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

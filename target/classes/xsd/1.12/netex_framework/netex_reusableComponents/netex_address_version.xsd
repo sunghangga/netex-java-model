@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 2007 03 23 add Road numbers -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_address_version">
+  <xsd:include schemaLocation="../netex_genericFramework/netex_place_version.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_alternativeName_version.xsd"/>
+  <xsd:include schemaLocation="netex_address_support.xsd"/>
+  <xsd:include schemaLocation="netex_country_support.xsd"/>
+  <!--=============================================================================-->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="addressesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Address" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="countriesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Country" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--=============================================================================-->
+  <xsd:element name="Address" type="Address_VersionStructure" abstract="true" substitutionGroup="Place"/>
+  <xsd:complexType name="Address_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AddressGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AddressGroup">
+    <xsd:sequence>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element name="CountryName" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--=============================================================================-->
+  <xsd:element name="AddressablePlace" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="AddressablePlace_VersionStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AddressablePlace_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AddressablePlaceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AddressablePlaceGroup">
+    <xsd:sequence>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="Image" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element ref="PostalAddress" minOccurs="0"/>
+      <xsd:element ref="RoadAddress" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--=============================================================================-->
+  <xsd:element name="RoadAddress" abstract="false" substitutionGroup="Address">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoadAddress_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoadAddressGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoadAddressIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoadAddress_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Address_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoadAddressGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoadAddressGroup">
+    <xsd:sequence>
+      <xsd:element name="GisFeatureRef" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="RoadNumber" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="RoadName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="BearingCompass" type="CompassBearing16Enumeration" minOccurs="0"/>
+      <xsd:element name="BearingDegrees" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="OddNumberRange" type="RoadNumberRangeStructure" minOccurs="0"/>
+      <xsd:element name="EvenNumberRange" type="RoadNumberRangeStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="RoadNumberRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="FromNumber" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element name="ToNumber" type="xsd:positiveInteger" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--=============================================================================-->
+  <xsd:element name="PostalAddress" abstract="false" substitutionGroup="Address">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PostalAddress_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PostalAddressGroup"/>
+              <xsd:element name="RoadAddressRef" type="AddressRefStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PostalAddressIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PostalAddress_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Address_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PostalAddressGroup"/>
+          <xsd:element name="RoadAddressRef" type="AddressRefStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PostalAddressGroup">
+    <xsd:sequence>
+      <xsd:element name="HouseNumber" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="BuildingName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="AddressLine1" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="AddressLine2" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Street" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Town" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Suburb" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="PostCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="PostCodeExtension" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="PostalRegion" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="Province" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="AddressPlaceGroup">
+    <xsd:sequence>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--=============================================================================-->
+  <xsd:element name="Country" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Country_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="CountryGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CountryCodeType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Country_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Place_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CountryGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="principality" type="CountryPrincipalityCodeType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CountryGroup">
+    <xsd:sequence>
+      <xsd:element name="UicCode" type="PrivateCodeStructure" minOccurs="0"/>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_activation_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==Activation============================================================ -->
+  <xsd:simpleType name="ActivatedEquipmentIdType">
+    <xsd:restriction base="EquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ActivatedEquipmentRef" type="ActivatedEquipmentRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="ActivatedEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="ActivatedEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ActivationPointIdType">
+    <xsd:restriction base="PointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ActivationPointRef" type="ActivationPointRefStructure" substitutionGroup="PointRef"/>
+  <xsd:complexType name="ActivationPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointRefStructure">
+        <xsd:attribute name="ref" type="ActivationPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BeaconPointIdType">
+    <xsd:restriction base="ActivationPointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="BeaconPointRef" type="BeaconPointRefStructure" substitutionGroup="ActivationPointRef"/>
+  <xsd:complexType name="BeaconPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ActivationPointRefStructure">
+        <xsd:attribute name="ref" type="BeaconPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrafficControlPointIdType">
+    <xsd:restriction base="PointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrafficControlPointRef" type="TrafficControlPointRefStructure" substitutionGroup="PointRef"/>
+  <xsd:complexType name="TrafficControlPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointRefStructure">
+        <xsd:attribute name="ref" type="TrafficControlPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ActivationLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ActivationLinkRef" type="ActivationLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="ActivationLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="ActivationLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ActivationLinkRefByValue" type="ActivationLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="ActivationLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="ActivationPointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="ActivationPointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="ActivationPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ActivationAssignmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ActivationAssignmentRef" type="ActivationAssignmentRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="ActivationAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="ActivationAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="activationTypeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfActivationRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfActivationIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfActivationRef" type="TypeOfActivationRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="TypeOfActivationRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfActivationIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

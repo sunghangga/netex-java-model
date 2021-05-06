@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterLuggage_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <xsd:group name="UsageParameterLuggageRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="LuggageAllowanceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === LUGGAGE ALLOWANCE PARAMETER============================================== -->
+  <xsd:simpleType name="LuggageAllowanceIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LuggageAllowanceRef" type="LuggageAllowanceRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="LuggageAllowanceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="LuggageAllowanceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LuggageAllowanceTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="singleBag"/>
+      <xsd:enumeration value="limited"/>
+      <xsd:enumeration value="unlimited"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BaggageTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="handbag"/>
+      <xsd:enumeration value="handLuggage"/>
+      <xsd:enumeration value="smallSuitcase"/>
+      <xsd:enumeration value="suitcase"/>
+      <xsd:enumeration value="trunk"/>
+      <xsd:enumeration value="oversizeItem"/>
+      <xsd:enumeration value="bicycle"/>
+      <xsd:enumeration value="motorcycle"/>
+      <xsd:enumeration value="sportingEquipment"/>
+      <xsd:enumeration value="skis"/>
+      <xsd:enumeration value="musicalnstrument"/>
+      <xsd:enumeration value="pushChair"/>
+      <xsd:enumeration value="wheelchair"/>
+      <xsd:enumeration value="motorizedWheelchair"/>
+      <xsd:enumeration value="largeMotorizedWheelchair"/>
+      <xsd:enumeration value="smallAnimal"/>
+      <xsd:enumeration value="animal"/>
+      <xsd:enumeration value="game"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BaggageUseTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="carryOn"/>
+      <xsd:enumeration value="checkIn"/>
+      <xsd:enumeration value="oversizeCheckIn"/>
+      <xsd:enumeration value="baggageCompartment"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LuggageChargingBasisEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="chargedByItem"/>
+      <xsd:enumeration value="chargedByWeight"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

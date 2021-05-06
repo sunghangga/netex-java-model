@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_mode_version">
+  <xsd:include schemaLocation="../netex_responsibility/netex_typeOfValue_version.xsd"/>
+  <xsd:include schemaLocation="netex_mode_support.xsd"/>
+  <xsd:include schemaLocation="netex_submode_version.xsd"/>
+  <!--======STOP PLACE Types======================================================================================-->
+  <xsd:group name="TransportModeGroup">
+    <xsd:sequence>
+      <xsd:element name="TransportMode" type="AllModesEnumeration"/>
+      <xsd:group ref="AllSubmodeChoiceGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="TransportModeStructure">
+    <xsd:sequence>
+      <xsd:group ref="TransportModeGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!--======Modes===================================================================================-->
+  <xsd:complexType name="transportModes_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="OpenTransportModeRef"/>
+          <xsd:element name="TransportMode" type="TransportModeStructure"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OpenTransportMode" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OpenTransportMode_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OpenTransportModeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OpenTransportModeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OpenTransportMode_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OpenTransportModeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OpenTransportModeGroup">
+    <xsd:sequence>
+      <xsd:group ref="TransportModeGroup"/>
+      <xsd:element ref="SubmodeRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Submode" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OpenTransportMode_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OpenTransportModeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SubmodeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

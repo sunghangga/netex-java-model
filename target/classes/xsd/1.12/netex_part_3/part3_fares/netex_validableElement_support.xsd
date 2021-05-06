@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_validableElement_support">
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====VALIDABLE ELEMENT======================================================== -->
+  <xsd:simpleType name="ValidableElementIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ValidableElementRef" type="ValidableElementRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="ValidableElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="ValidableElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === VALIDABLE ELEMENT PRICE====================================================== -->
+  <xsd:simpleType name="ValidableElementPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ValidableElementPriceRef" type="ValidableElementPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="ValidableElementPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="ValidableElementPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====CONTROLLABLE ELEMENT======================================================== -->
+  <xsd:simpleType name="ControllableElementIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ControllableElementRef" type="ControllableElementRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="ControllableElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="ControllableElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====CONTROLLABLE ELEMENT IN SEQUENCE. ==================================================== -->
+  <xsd:simpleType name="ControllableElementInSequenceIdType">
+    <xsd:restriction base="FareElementInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ControllableElementInSequenceRef" type="ControllableElementInSequenceRefStructure" substitutionGroup="FareElementInSequenceRef"/>
+  <xsd:complexType name="ControllableElementInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareElementInSequenceRefStructure">
+        <xsd:attribute name="ref" type="ControllableElementInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === CONTROLLABLE ELEMENT PRICE====================================================== -->
+  <xsd:simpleType name="ControllableElementPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ControllableElementPriceRef" type="ControllableElementPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="ControllableElementPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="ControllableElementPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

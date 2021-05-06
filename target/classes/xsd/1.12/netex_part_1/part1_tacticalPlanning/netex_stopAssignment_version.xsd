@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_stopAssignment_version">
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_stopPlace_version.xsd"/>
+  <xsd:include schemaLocation="netex_stopAssignment_support.xsd"/>
+  <xsd:include schemaLocation="netex_servicePattern_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="StopAssignmentInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="stopAssignments" type="stopAssignmentsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="stopAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="StopAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="StopAssignment" type="StopAssignment_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="StopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="StopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="StopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element name="BoardingUse" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="AlightingUse" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="ScheduledStopPointRef"/>
+        <xsd:element ref="ScheduledStopPoint"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PassengerStopAssignment" abstract="false" substitutionGroup="StopAssignment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerStopAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerStopAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerStopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="StopAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PassengerStopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PassengerStopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="StopPlaceRef"/>
+        <xsd:element ref="StopPlace"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="QuayRef"/>
+        <xsd:element ref="Quay"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="BoardingPositionRef"/>
+        <xsd:element ref="BoardingPosition"/>
+      </xsd:choice>
+      <xsd:element name="trainElements" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="trainStopAssignments_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="DynamicStopAssignment" abstract="false" substitutionGroup="StopAssignment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DynamicStopAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerStopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DynamicStopAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DynamicStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DynamicStopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerStopAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DynamicStopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DynamicStopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="JourneyPatternRef" minOccurs="0"/>
+      <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="trainStopAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TrainStopAssignmentRef"/>
+          <xsd:element ref="TrainStopAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TrainStopAssignment" substitutionGroup="StopAssignment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TrainStopAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TrainStopAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TrainStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TrainStopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="StopAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TrainStopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TrainStopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+      <xsd:element ref="TrainRef" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element ref="TrainComponentRef" minOccurs="0"/>
+        <xsd:element ref="TrainComponentView" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element name="PositionOfTrainElement" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element name="BoardingPositionRef" type="BoardingPositionRefStructure" minOccurs="0"/>
+      <xsd:element name="EntranceToVehicle" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="PassengerStopAssignmentView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerStopAssignment_DerivedViewStructure">
+          <xsd:sequence>
+            <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+            <xsd:element ref="StopPlaceRef" minOccurs="0"/>
+            <xsd:element name="QuayRef" type="QuayRefStructure" minOccurs="0"/>
+            <xsd:element name="QuayName" type="MultilingualString" minOccurs="0"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerStopAssignment_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+          <xsd:element ref="StopPlaceRef" minOccurs="0"/>
+          <xsd:element name="QuayRef" type="QuayRefStructure" minOccurs="0"/>
+          <xsd:element name="QuayName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="Label" type="xsd:normalizedString" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:group name="QuayAssignmentGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+        <xsd:element ref="QuayAssignmentView" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element ref="DynamicStopAssignment" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="QuayAssignmentView" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerStopAssignment_DerivedViewStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DerivedViewGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+              <xsd:element ref="StopPlaceRef" minOccurs="0"/>
+              <xsd:element name="QuayRef" type="QuayRefStructure" minOccurs="0"/>
+              <xsd:element name="QuayName" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Label" type="xsd:normalizedString" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ======================================================================= -->
+</xsd:schema>

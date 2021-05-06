@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_topographicPlace_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_place_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_projection_support.xsd"/>
+  <!-- =====NPTGClassifiers================================================================== -->
+  <xsd:simpleType name="TopographicPlaceTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="continent"/>
+      <xsd:enumeration value="interregion"/>
+      <xsd:enumeration value="country"/>
+      <xsd:enumeration value="principality"/>
+      <xsd:enumeration value="state"/>
+      <xsd:enumeration value="province"/>
+      <xsd:enumeration value="region"/>
+      <xsd:enumeration value="county"/>
+      <xsd:enumeration value="area"/>
+      <xsd:enumeration value="conurbation"/>
+      <xsd:enumeration value="city"/>
+      <xsd:enumeration value="municipality"/>
+      <xsd:enumeration value="quarter"/>
+      <xsd:enumeration value="suburb"/>
+      <xsd:enumeration value="town"/>
+      <xsd:enumeration value="urbanCentre"/>
+      <xsd:enumeration value="district"/>
+      <xsd:enumeration value="parish"/>
+      <xsd:enumeration value="village"/>
+      <xsd:enumeration value="hamlet"/>
+      <xsd:enumeration value="placeOfInterest"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="unrecorded"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ===== TOPOGRAPHIC PLACE  ====================================================== -->
+  <xsd:simpleType name="TopographicPlaceIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TopographicPlaceRef" type="TopographicPlaceRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="TopographicPlaceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="TopographicPlaceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="topographicPlaceRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element name="TopographicPlaceRef" type="TopographicPlaceRefStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- =====Place DESCRIPTOR ======================================================== -->
+  <xsd:simpleType name="TopographicPlaceDescriptorIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ==  GROUP OF PLACEs ============================================== -->
+  <xsd:element name="GroupOfPlacesRef" type="GroupOfPlacesRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="GroupOfPlacesRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="GroupOfPlacesIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="GroupOfPlacesIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <!-- ==  TOPOGRAPHIC PROJECTION ============================================== -->
+  <xsd:simpleType name="TopographicProjectionIdType">
+    <xsd:restriction base="ProjectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TopographicProjectionRef" type="TopographicProjectionRefStructure" substitutionGroup="ProjectionRef"/>
+  <xsd:complexType name="TopographicProjectionRefStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ZoneProjectionRefStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

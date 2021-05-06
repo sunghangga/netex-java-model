@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_parking_version">
+  <xsd:include schemaLocation="netex_ifopt_parking_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_navigationPath_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SITEFRAME)=================================================== -->
+  <xsd:complexType name="parkingsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Parking" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="Parking" substitutionGroup="Site">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Parking_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Parking_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Site_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingGroup">
+    <xsd:sequence>
+      <xsd:group ref="SiteAccessGroup" minOccurs="0"/>
+      <xsd:group ref="ParkingIdentifierGroup"/>
+      <xsd:group ref="ParkingDetailsGroup"/>
+      <xsd:group ref="ParkingChargeGroup" minOccurs="0"/>
+      <xsd:group ref="ParkingPassengerGroup" minOccurs="0"/>
+      <xsd:group ref="ParkingVehicleGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingDetailsGroup">
+    <xsd:sequence>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ParkingType" type="ParkingTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="ParkingVehicleTypes" type="ParkingVehicleListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="ParkingLayout" type="ParkingLayoutEnumeration" minOccurs="0"/>
+      <xsd:element name="NumberOfParkingLevels" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="PrincipalCapacity" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="TotalCapacity" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="OvernightParkingPermitted" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ProhibitedForHazardousMaterials" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="RechargingAvailable" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Secure" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RealTimeOccupancyAvailable" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingPassengerGroup">
+    <xsd:sequence>
+      <xsd:element name="parkingProperties" type="parkingProperties_RelStructure" minOccurs="0"/>
+      <xsd:element name="parkingAreas" type="parkingAreas_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingVehicleGroup">
+    <xsd:sequence>
+      <xsd:element name="vehicleEntrances" type="parkingEntrancesForVehicles_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingChargeGroup">
+    <xsd:sequence>
+      <xsd:element name="ParkingPaymentProcess" type="ParkingPaymentProcessListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="DefaultCurrency" type="CurrencyType" minOccurs="0"/>
+      <xsd:element name="CurrenciesAccepted" type="CurrencyListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="CardsAccepted" type="xsd:NMTOKENS" minOccurs="0"/>
+      <xsd:element name="ParkingReservation" type="ParkingReservationEnumeration" minOccurs="0"/>
+      <xsd:element name="BookingUrl" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="PaymentByMobile" type="PaymentByMobileStructure" minOccurs="0"/>
+      <xsd:element name="FreeParkingOutOfHours" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="PaymentByMobileStructure">
+    <xsd:sequence>
+      <xsd:element name="PhoneNumberToPay" type="PhoneType" minOccurs="0"/>
+      <xsd:element name="SupportPhoneNumber" type="PhoneType" minOccurs="0"/>
+      <xsd:element name="PaymentUrl" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="PaymentAppDownloadUrl" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingEntrancesForVehicles_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingEntranceForVehiclesRef"/>
+          <xsd:element ref="ParkingEntranceForVehicles"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingEntranceForVehicles" substitutionGroup="Entrance">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingEntranceForVehicles__VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteEntranceGroup"/>
+              <xsd:group ref="ExternalEntranceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingEntranceForVehiclesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingEntranceForVehiclesIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingEntranceForVehicles__VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SiteEntrance_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingEntranceForVehiclesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingEntranceForVehiclesGroup">
+    <xsd:sequence>
+      <xsd:element name="areas" type="parkingAreaRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ParkingPassengerEntrance" substitutionGroup="Entrance">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingPassengerEntrance_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteEntranceGroup"/>
+              <xsd:group ref="ExternalEntranceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="areas" type="parkingAreaRefs_RelStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingPassengerEntranceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingPassengerEntrance_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SiteEntrance_VersionStructure">
+        <xsd:group ref="ParkingPassengerEntranceGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingPassengerEntranceGroup">
+    <xsd:sequence>
+      <xsd:element name="areas" type="parkingAreaRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingProperties_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ParkingProperties" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingProperties" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingProperties_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingPropertiesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingPropertiesIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingProperties_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingPropertiesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element ref="ParkingRef" minOccurs="0"/>
+      <xsd:element name="ParkingUserTypes" type="ParkingUserListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="ParkingVehicleTypes" type="ParkingVehicleListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="ParkingStayList" type="ParkingStayListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="MaximumStay" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="areas" type="parkingAreaRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="spaces" type="parkingCapacities_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingCapacities_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingCapacityRef"/>
+          <xsd:element ref="ParkingCapacity"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingCapacity" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingCapacity_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingCapacityGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingCapacityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingCapacity_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingCapacityGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingCapacityGroup">
+    <xsd:sequence>
+      <xsd:element ref="ParkingRef" minOccurs="0"/>
+      <xsd:element name="ParentRef" type="ParkingPropertiesRefStructure" minOccurs="0"/>
+      <xsd:element ref="ParkingPropertiesRef" minOccurs="0"/>
+      <xsd:element name="ParkingUserType" type="ParkingUserEnumeration" minOccurs="0"/>
+      <xsd:element name="ParkingVehicleType" type="ParkingVehicleEnumeration" minOccurs="0"/>
+      <xsd:element name="ParkingStayType" type="ParkingStayEnumeration" minOccurs="0"/>
+      <xsd:element name="NumberOfSpaces" type="NumberOfVehicles" minOccurs="0"/>
+      <xsd:element name="NumberOfSpacesWithRechargePoint" type="NumberOfVehicles" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ParkingComponent" substitutionGroup="SiteComponent">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingComponent_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingComponentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SiteComponentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingComponent_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SiteComponent_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingComponentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingComponentGroup">
+    <xsd:sequence>
+      <xsd:element name="ParkingPaymentCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="MaximumLength" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumWeight" type="WeightType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingAreas_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingAreaRef"/>
+          <xsd:element ref="ParkingArea"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingArea" substitutionGroup="SiteComponent">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingArea_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingAreaGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingAreaIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingArea_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ParkingComponent_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingAreaGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingAreaGroup">
+    <xsd:sequence>
+      <xsd:element name="TotalCapacity" type="NumberOfVehicles" minOccurs="0"/>
+      <xsd:element name="NumberOfBaysWithRecharging" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="ParkingProperties"/>
+        <xsd:element name="parkingProperties" type="parkingProperties_RelStructure"/>
+      </xsd:choice>
+      <xsd:element name="bays" type="parkingBays_RelStructure" minOccurs="0"/>
+      <xsd:element name="entrances" type="entranceRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="parkingBays_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ParkingBayRef"/>
+          <xsd:element ref="ParkingBay"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ParkingBay" substitutionGroup="SiteComponent">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingBay_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ParkingBayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingBayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingBay_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ParkingComponent_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ParkingBayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingBayGroup">
+    <xsd:sequence>
+      <xsd:element name="ParkingVehicleType" type="ParkingVehicleEnumeration" minOccurs="0"/>
+      <xsd:element name="Length" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Width" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Height" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Weight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="RechargingAvailable" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

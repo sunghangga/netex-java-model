@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_filter_object">
+  <!-- ===Dependencies ======================================= -->
+  <xsd:include schemaLocation="../netex_framework/netex_utility/netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_utility/netex_utility_time.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_utility/netex_location_types.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_responsibility/netex_dataSource_version.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_genericFramework/netex_layer_support.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_responsibility/netex_responsibilitySet_version.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_reusableComponents/netex_availabilityCondition_version.xsd"/>
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!-- ======================================================================= -->
+  <!-- ==== Filter  ============================================================ -->
+  <xsd:element name="Topic" type="TopicStructure" abstract="true"/>
+  <xsd:complexType name="TopicStructure">
+    <xsd:sequence>
+      <xsd:group ref="TopicGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="TopicGroup">
+    <xsd:sequence>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="sources" type="dataSources_RelStructure" minOccurs="0"/>
+      <xsd:element ref="CodespaceRef" minOccurs="0"/>
+      <xsd:element ref="ResponsibilityRoleAssignment" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== Filter  ============================================================ -->
+  <xsd:group name="TopicTemporalScopeGroup">
+    <xsd:choice>
+      <xsd:element name="Current" type="EmptyType"/>
+      <xsd:element name="ChangedSince" type="xsd:dateTime"/>
+      <xsd:element name="CurrentAt" type="xsd:dateTime"/>
+      <xsd:element name="HistoricBetween" type="ClosedTimestampRangeStructure"/>
+      <xsd:element name="selectionValidityConditions">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded">
+            <xsd:element ref="ValidityCondition_"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="OutputDetailListOfEnumerations">
+    <xsd:list itemType="OutputDetailEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="OutputDetailEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="All"/>
+      <xsd:enumeration value="Basic"/>
+      <xsd:enumeration value="NoGeometry"/>
+      <xsd:enumeration value="Xref"/>
+      <xsd:enumeration value="AllWithXref"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ObjectFilterByValue" type="ObjectFilterByValueStructure" abstract="true"/>
+  <xsd:complexType name="ObjectFilterByValueStructure">
+    <xsd:sequence>
+      <xsd:group ref="ObjectByValueGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="ObjectByValueGroup">
+    <xsd:sequence>
+      <xsd:element ref="LayerRef" minOccurs="0"/>
+      <xsd:element name="BoundingBox" type="BoundingBoxStructure" minOccurs="0"/>
+      <xsd:element name="objectReferences" minOccurs="0">
+        <xsd:complexType>
+          <xsd:choice maxOccurs="unbounded">
+            <xsd:element ref="VersionOfObjectRef"/>
+            <xsd:element ref="AssignmentRef"/>
+            <xsd:element ref="ClassInFrameRef"/>
+          </xsd:choice>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_AlternativeText_support">
+  <xsd:include schemaLocation="netex_relationship_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <xsd:simpleType name="AlternativeTextIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AlternativeTextRef" type="AlternativeTextRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="AlternativeTextRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="nameOfRefClass" type="NameOfClass" use="optional"/>
+        <xsd:attribute name="ref" type="AlternativeTextIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

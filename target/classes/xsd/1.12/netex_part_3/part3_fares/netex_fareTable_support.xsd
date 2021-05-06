@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareTable_support">
+  <xsd:include schemaLocation="netex_farePrice_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareProduct_support.xsd"/>
+  <!-- === FARE TABLE PRIC EGROUP==================================================== -->
+  <xsd:complexType name="fareTableRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareTableRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FareTableIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareTableRef" type="FareTableRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="FareTableRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="FareTableIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === FARE TABLE PRIC EGROUP==================================================== -->
+  <xsd:complexType name="StandardFareTableRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="StandardFareTableRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="StandardFareTableIdType">
+    <xsd:restriction base="FareTableIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StandardFareTableRef" type="StandardFareTableRefStructure" substitutionGroup="FareTableRef"/>
+  <xsd:complexType name="StandardFareTableRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareTableRefStructure">
+        <xsd:attribute name="ref" type="StandardFareTableIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === CELL ====================================================== -->
+  <xsd:complexType name="cellRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CellRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CellIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="CellRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CellIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="CellRef" type="CellRefStructure" substitutionGroup="CellRef_"/>
+  <!-- === FARE TABLE COLUMN  PRICE====================================================== -->
+  <xsd:simpleType name="FareTableColumnIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="FareTableColumnRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FareTableColumnIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="FareTableColumnRef" type="FareTableColumnRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <!-- === FARE TABLE ROW  ====================================================== -->
+  <xsd:simpleType name="FareTableRowIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareTableRowRef" type="FareTableRowRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FareTableRowRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FareTableRowIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF FARE TABLE ================================================= -->
+  <xsd:simpleType name="TypeOfFareTableIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFareTableRef" type="TypeOfFareTableRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TypeOfFareTableRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFareTableIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

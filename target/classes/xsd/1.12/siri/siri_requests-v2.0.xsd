@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri_requests">
+  <!-- ===Dependencies ======================================= -->
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../siri_utility/siri_utility-v1.1.xsd"/>
+  <xsd:include schemaLocation="../siri_utility/siri_location-v2.0.xsd"/>
+  <xsd:include schemaLocation="siri_request_errorConditions-v2.0.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractRequest" type="AbstractRequestStructure" abstract="true"/>
+  <xsd:complexType name="AbstractRequestStructure" abstract="true">
+    <xsd:sequence>
+      <xsd:element ref="RequestTimestamp"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="AuthenticatedRequest" type="AuthenticatedRequestStructure" abstract="true"/>
+  <xsd:complexType name="AuthenticatedRequestStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestStructure">
+        <xsd:group ref="AuthenticatedRequestGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AuthenticatedRequestGroup">
+    <xsd:sequence>
+      <xsd:element name="AccountId" type="xsd:NMTOKEN" minOccurs="0"/>
+      <xsd:element name="AccountKey" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="RequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AuthenticatedRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="RequestorEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RequestorEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="Address" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element ref="RequestorRef"/>
+      <xsd:element name="MessageIdentifier" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DelegatorEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="DelegatorAddress" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="DelegatorRef" type="ParticipantRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractTrackedRequest" type="RequestStructure" abstract="true"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractServiceRequest" type="AbstractServiceRequestStructure" abstract="true" substitutionGroup="AbstractRequest"/>
+  <xsd:complexType name="AbstractServiceRequestStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="ContextualisedRequestEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ContextualisedRequestEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="MessageIdentifier" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="AbstractFunctionalServiceRequest" type="AbstractFunctionalServiceRequestStructure" abstract="true" substitutionGroup="AbstractServiceRequest"/>
+  <xsd:complexType name="AbstractFunctionalServiceRequestStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractServiceRequestStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Request Context================================================================== -->
+  <xsd:complexType name="AbstractSubscriptionStructure" abstract="true">
+    <xsd:sequence>
+      <xsd:group ref="SubscriptionIdentityGroup"/>
+      <xsd:element name="InitialTerminationTime" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="AbstractFunctionalServiceSubscriptionRequest" type="AbstractSubscriptionStructure" abstract="true"/>
+  <xsd:group name="SubscriptionIdentityGroup">
+    <xsd:sequence>
+      <xsd:element name="SubscriberRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="SubscriptionIdentifier" type="SubscriptionQualifierStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="SubscriptionContextStructure">
+    <xsd:sequence>
+      <xsd:element name="HeartbeatInterval" type="PositiveDurationType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractSubscriptionRequestStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="RequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="SubscriberEndpointGroup"/>
+          <xsd:element name="SubscriptionContext" type="SubscriptionContextStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractResponse" type="ResponseStructure" abstract="true"/>
+  <xsd:complexType name="ResponseStructure" abstract="true">
+    <xsd:sequence>
+      <xsd:element ref="ResponseTimestamp"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="ServiceDeliveryRequestStatusGroup">
+    <xsd:sequence>
+      <xsd:element name="Status" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="ErrorCondition" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element ref="CapabilityNotSupportedError"/>
+              <xsd:element ref="OtherError"/>
+            </xsd:choice>
+            <xsd:element name="Description" type="ErrorDescriptionStructure" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="ProducerResponse" type="ProducerResponseStructure" abstract="true" substitutionGroup="AbstractResponse"/>
+  <xsd:complexType name="ProducerResponseStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ProducerResponseEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DeliveryStatusGroup">
+    <xsd:sequence>
+      <xsd:element ref="Status" minOccurs="0"/>
+      <xsd:element name="ErrorCondition" type="ServiceDeliveryErrorConditionStructure" minOccurs="0"/>
+      <xsd:group ref="SuccessInfoGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="AbstractNotificationStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="ProducerRequestEndpointStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractFunctionalServiceDelivery" type="AbstractServiceDeliveryStructure" abstract="true" substitutionGroup="AbstractResponse"/>
+  <xsd:complexType name="AbstractServiceDeliveryStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:group ref="ContextualisedResponseEndpointGroup"/>
+            <xsd:group ref="SubscriptionIdentifierResourcePropertyGroup"/>
+          </xsd:choice>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+          <xsd:group ref="DeliveryStatusGroup"/>
+          <xsd:group ref="DeliveryDefaultGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DeliveryDefaultGroup">
+    <xsd:sequence>
+      <xsd:element name="DefaultLanguage" type="xsd:language" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SubscriberEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="ConsumerAddress" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="SubscriptionFilterIdentifier" type="xsd:NMTOKEN" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SubscriptionIdentifierResourcePropertyGroup">
+    <xsd:sequence>
+      <xsd:element name="SubscriberRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="SubscriptionFilterRef" type="SubscriptionFilterRefStructure" minOccurs="0"/>
+      <xsd:element name="SubscriptionRef" type="SubscriptionQualifierStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OptionalSubscriberEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="SubscriberRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="SubscriptionRef" type="SubscriptionQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ContextualisedResponseEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="RequestMessageRef" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="Status" type="xsd:boolean" default="true"/>
+  <!-- ============WSDL========================================================= -->
+  <xsd:complexType name="ConsumerRequestEndpointStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AuthenticatedRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="ConsumerRequestEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ConsumerRequestEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="Address" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="ConsumerRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="MessageIdentifier" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConsumerResponseEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="ConsumerRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="RequestMessageRef" type="MessageRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="ConsumerResponseEndpointStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ConsumerResponseEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ============WSDL========================================================= -->
+  <xsd:element name="ProducerRequest" type="ProducerRequestEndpointStructure" abstract="true" substitutionGroup="AuthenticatedRequest"/>
+  <xsd:complexType name="ProducerRequestEndpointStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AuthenticatedRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="ProducerRequestEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ProducerRequestEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="Address" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="ProducerRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="MessageIdentifier" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ResponseEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="Address" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="ResponderRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="RequestMessageRef" type="MessageQualifierStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="ResponseEndpointStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ResponseEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ProducerResponseEndpointGroup">
+    <xsd:sequence>
+      <xsd:element name="ProducerRef" type="ParticipantRefStructure" minOccurs="0"/>
+      <xsd:element name="Address" type="EndpointAddress" minOccurs="0"/>
+      <xsd:element name="ResponseMessageIdentifier" type="MessageQualifierStructure" minOccurs="0"/>
+      <xsd:element name="RequestMessageRef" type="MessageRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="ProducerResponseEndpointStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ProducerResponseEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ============Recorded Items========================================================== -->
+  <xsd:complexType name="AbstractItemStructure" abstract="true">
+    <xsd:sequence>
+      <xsd:element name="RecordedAtTime" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractIdentifiedItemStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractItemStructure">
+        <xsd:sequence>
+          <xsd:element name="ItemIdentifier" type="ItemIdentifierType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractRequiredIdentifiedItemStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractItemStructure">
+        <xsd:sequence>
+          <xsd:element name="ItemIdentifier" type="ItemIdentifierType"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractReferencingItemStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractItemStructure">
+        <xsd:sequence>
+          <xsd:element name="ItemRef" type="ItemRefStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractRequiredReferencingItemStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractItemStructure">
+        <xsd:sequence>
+          <xsd:element name="ItemRef" type="ItemRefStructure"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractFunctionalServiceCapabilitiesRequest" type="AbstractServiceRequestStructure" abstract="true" substitutionGroup="AbstractServiceRequest"/>
+  <xsd:complexType name="ServiceCapabilitiesRequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractServiceRequestStructure">
+        <xsd:sequence>
+          <xsd:element name="ParticipantPermissions" type="xsd:boolean" default="false" minOccurs="0"/>
+          <xsd:element ref="Extensions" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="version" type="VersionString" default="2.0"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CapabilityStatusGroup">
+    <xsd:sequence>
+      <xsd:element ref="Status" minOccurs="0"/>
+      <xsd:element name="ErrorCondition" type="ServiceDeliveryErrorConditionStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractFunctionalServiceCapabilitiesResponse" type="AbstractServiceCapabilitiesResponseStructure" abstract="true" substitutionGroup="AbstractResponse"/>
+  <xsd:complexType name="AbstractServiceCapabilitiesResponseStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ContextualisedResponseEndpointGroup"/>
+          <xsd:group ref="DelegatorEndpointGroup"/>
+          <xsd:sequence>
+            <xsd:group ref="CapabilityStatusGroup"/>
+          </xsd:sequence>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="AbstractCapabilitiesStructure">
+    <xsd:sequence>
+      <xsd:element name="GeneralInteraction" type="CapabilityGeneralInteractionStructure" minOccurs="0"/>
+      <xsd:element name="TransportDescription" type="TransportDescriptionStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CapabilityGeneralInteractionStructure">
+    <xsd:sequence>
+      <xsd:element name="Interaction">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RequestResponse" type="xsd:boolean" default="true"/>
+            <xsd:element name="PublishSubscribe" type="xsd:boolean" default="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Delivery">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="DirectDelivery" type="xsd:boolean"/>
+            <xsd:element name="FetchedDelivery" type="xsd:boolean"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="MultipartDespatch" type="xsd:boolean" default="true"/>
+      <xsd:element name="MultipleSubscriberFilter" type="xsd:boolean" default="false"/>
+      <xsd:element name="HasConfirmDelivery" type="xsd:boolean" default="false"/>
+      <xsd:element name="HasHeartbeat" type="xsd:boolean" default="false"/>
+      <xsd:element name="VisitNumberisOrder" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CapabilityRequestPolicyStructure">
+    <xsd:sequence>
+      <xsd:element name="NationalLanguage" type="xsd:language" maxOccurs="unbounded"/>
+      <xsd:element name="Translations" type="xsd:boolean" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element name="GmlCoordinateFormat" type="SrsNameType"/>
+        <xsd:element name="WgsDecimalDegrees" type="EmptyType"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CapabilitySubscriptionPolicyStructure">
+    <xsd:sequence>
+      <xsd:element name="HasIncrementalUpdates" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="HasChangeSensitivity" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ====Permissions================================================= -->
+  <xsd:complexType name="TransportDescriptionStructure">
+    <xsd:sequence>
+      <xsd:element name="CommunicationsTransportMethod" type="CommunicationsTransportMethodEnumeration" default="httpPost"/>
+      <xsd:element name="CompressionMethod" type="CompressionMethodEnumeration" default="none"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ====Discovery================================================ -->
+  <xsd:element name="AbstractDiscoveryRequest" type="AbstractDiscoveryRequestStructure" abstract="true" substitutionGroup="AuthenticatedRequest"/>
+  <xsd:complexType name="AbstractDiscoveryRequestStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AuthenticatedRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="RequestorEndpointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AbstractDiscoveryDelivery" type="AbstractDiscoveryDeliveryStructure" abstract="true" substitutionGroup="AbstractResponse"/>
+  <xsd:complexType name="AbstractDiscoveryDeliveryStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="DeliveryStatusGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

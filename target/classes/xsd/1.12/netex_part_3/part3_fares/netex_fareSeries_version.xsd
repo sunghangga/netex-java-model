@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareStructure_version">
+  <xsd:include schemaLocation="netex_fareSeries_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_version.xsd"/>
+  <xsd:include schemaLocation="netex_farePrice_version.xsd"/>
+  <!-- ======================================================== -->
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="FareSeriesInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="seriesConstraints" type="fareSeriesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="fareSeriesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="SeriesConstraint" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====FARE STRUCTURE=================================================== -->
+  <xsd:complexType name="SeriesConstraints_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SeriesConstraintRef"/>
+          <xsd:element ref="SeriesConstraint"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SeriesConstraint" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SeriesConstraint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SeriesConstraintGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SeriesConstraintIdType"/>
+          <xsd:attribute name="order" type="xsd:integer"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SeriesConstraint_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SeriesConstraintGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SeriesConstraintGroup">
+    <xsd:sequence>
+      <xsd:group ref="SeriesConstraintDescriptionGroup"/>
+      <xsd:group ref="SeriesConstraintClassificationGroup"/>
+      <xsd:group ref="SeriesConstraintPricingGroup"/>
+      <xsd:group ref="SeriesConstraintConstraintGroup"/>
+      <xsd:element name="journeyPatterns" type="journeyPatternRefs_RelStructure" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="prices" type="seriesConstraintPrices_RelStructure" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="replaces" type="seriesConstraintRefs_RelStructure" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SeriesConstraintDescriptionGroup">
+    <xsd:sequence>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="Itinerary" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="SymbolMarkingUsualRoute" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SeriesConstraintClassificationGroup">
+    <xsd:sequence>
+      <xsd:element name="SeriesType" type="SeriesTypeEnumeration" default="stationToStation" minOccurs="0"/>
+      <xsd:element name="RoutingType" type="RoutingTypeEnumeration" default="both" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SeriesConstraintPricingGroup">
+    <xsd:sequence>
+      <xsd:element name="FareBasis" type="FareBasisEnumeration" default="route" minOccurs="0"/>
+      <xsd:element name="FirstClassDistance" type="DistanceType" minOccurs="0"/>
+      <xsd:element name="SecondClassDistance" type="DistanceType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SeriesConstraintConstraintGroup">
+    <xsd:sequence>
+      <xsd:element name="Discrete" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="FromConnectionRef" type="ConnectionRefStructure" minOccurs="0"/>
+      <xsd:element name="ToConnectionRef" type="ConnectionRefStructure" minOccurs="0"/>
+      <xsd:element name="farePointsInPattern" type="farePointsInPattern_RelStructure" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == SERIES CONSTRAINT PRICE.================================ -->
+  <xsd:complexType name="seriesConstraintPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SeriesConstraintPriceRef"/>
+          <xsd:element name="SeriesConstraintPrice" type="SeriesConstraintPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SeriesConstraintPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SeriesConstraintPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SeriesConstraintPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SeriesConstraintPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SeriesConstraintPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="SeriesConstraintPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SeriesConstraintPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="SeriesConstraintRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

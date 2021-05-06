@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_qualityStructureFactor_support">
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ====QUALITY STRUCTURE FACTOR========================================== -->
+  <xsd:simpleType name="QualityStructureFactorIdType">
+    <xsd:restriction base="FareStructureFactorIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="QualityStructureFactorRef" type="QualityStructureFactorRefStructure" substitutionGroup="FareStructureFactorRef"/>
+  <xsd:complexType name="QualityStructureFactorRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareStructureFactorRefStructure">
+        <xsd:attribute name="ref" type="QualityStructureFactorIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====FARE DEMAND  FACTOR========================================== -->
+  <xsd:simpleType name="FareDemandFactorIdType">
+    <xsd:restriction base="QualityStructureFactorIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareDemandFactorRef" type="FareDemandFactorRefStructure" substitutionGroup="QualityStructureFactorRef"/>
+  <xsd:complexType name="FareDemandFactorRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="QualityStructureFactorRefStructure">
+        <xsd:attribute name="ref" type="FareDemandFactorIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FareDemandTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="peak"/>
+      <xsd:enumeration value="middle"/>
+      <xsd:enumeration value="offPeak"/>
+      <xsd:enumeration value="superOffPeak"/>
+      <xsd:enumeration value="night"/>
+      <xsd:enumeration value="specialEvent"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="StopUseConstraintEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="arriving"/>
+      <xsd:enumeration value="departing"/>
+      <xsd:enumeration value="passingThrough"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====FARE QUOTA  FACTOR========================================== -->
+  <xsd:simpleType name="FareQuotaFactorIdType">
+    <xsd:restriction base="QualityStructureFactorIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareQuotaFactorRef" type="FareQuotaFactorRefStructure" substitutionGroup="QualityStructureFactorRef"/>
+  <xsd:complexType name="FareQuotaFactorRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="QualityStructureFactorRefStructure">
+        <xsd:attribute name="ref" type="FareQuotaFactorIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === QUALITY STRUCTURE FACTOR PRICE.============================================= -->
+  <xsd:simpleType name="QualityStructureFactorPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="QualityStructureFactorPriceRef" type="QualityStructureFactorPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="QualityStructureFactorPriceRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="QualityStructureFactorPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====START TIME AT STOP========================================== -->
+  <xsd:simpleType name="StartTimeAtStopPointIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StartTimeAtStopPointRef" type="VersionOfObjectRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="StartTimeAtStopPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="StartTimeAtStopPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

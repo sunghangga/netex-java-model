@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.2" id="netex_acsb_limitations">
+  <!--======Suitability==================================================================================-->
+  <xsd:group name="MobilityLimitationGroup">
+    <xsd:sequence>
+      <xsd:element ref="WheelchairAccess"/>
+      <xsd:element ref="StepFreeAccess" minOccurs="0"/>
+      <xsd:element ref="EscalatorFreeAccess" minOccurs="0"/>
+      <xsd:element ref="LiftFreeAccess" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:simpleType name="LimitationStatusEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="true"/>
+      <xsd:enumeration value="false"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="partial"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:group name="SensoryLimitationGroup">
+    <xsd:sequence>
+      <xsd:element ref="AudibleSignalsAvailable" minOccurs="0"/>
+      <xsd:element ref="VisualSignsAvailable" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--======Point=======================================================================================-->
+  <xsd:element name="WheelchairAccess" type="LimitationStatusEnumeration" default="false"/>
+  <xsd:element name="StepFreeAccess" type="LimitationStatusEnumeration" default="unknown"/>
+  <xsd:element name="EscalatorFreeAccess" type="LimitationStatusEnumeration" default="unknown"/>
+  <xsd:element name="LiftFreeAccess" type="LimitationStatusEnumeration" default="unknown"/>
+  <xsd:element name="AudibleSignalsAvailable" type="LimitationStatusEnumeration" default="false"/>
+  <xsd:element name="VisualSignsAvailable" type="LimitationStatusEnumeration" default="unknown"/>
+  <xsd:element name="GuideDogAccess" type="LimitationStatusEnumeration" default="unknown"/>
+  <!--======Limitation=======================================================================================-->
+</xsd:schema>

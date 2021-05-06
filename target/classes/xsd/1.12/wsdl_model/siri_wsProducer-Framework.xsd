@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.3" id="siriWS">
+  <!--	<xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="../siriSg.xsd"/>-->
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="../NeTEx_siri.xsd"/>
+  <!--   <xsd:include  schemaLocation="../NeTEx_siri.xsd"/>-->
+  <!-- Subscription -->
+  <xsd:complexType name="WsSubscriptionRequestInfoStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractSubscriptionRequestStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="WsSubscriptionRequestStructure">
+    <xsd:sequence>
+      <xsd:element name="SubscriptionRequestInfo" type="WsSubscriptionRequestInfoStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Request" type="siri:SubscriptionRequestStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="RequestExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WsSubscriptionAnswerStructure">
+    <xsd:sequence>
+      <xsd:element name="SubscriptionAnswerInfo" type="siri:ResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Answer" type="siri:SubscriptionResponseBodyStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AnswerExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WsDeleteSubscriptionRequestStructure">
+    <xsd:sequence>
+      <xsd:element name="DeleteSubscriptionInfo" type="siri:RequestStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Request" type="siri:TerminateSubscriptionRequestBodyStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="RequestExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WsDeleteSubscriptionAnswerStructure">
+    <xsd:sequence>
+      <xsd:element name="DeleteSubscriptionAnswerInfo" type="siri:ResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Answer" type="siri:TerminateSubscriptionResponseStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AnswerExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Subscribe" type="WsSubscriptionRequestStructure"/>
+  <xsd:element name="SubscribeResponse" type="WsSubscriptionAnswerStructure"/>
+  <xsd:element name="DeleteSubscription" type="WsDeleteSubscriptionRequestStructure"/>
+  <xsd:element name="DeleteSubscriptionResponse" type="WsDeleteSubscriptionAnswerStructure"/>
+  <!-- CheckStatus -->
+  <xsd:complexType name="WsCheckStatusStructure">
+    <xsd:sequence>
+      <xsd:element name="Request" type="siri:RequestStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="RequestExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WsCheckStatusResponseStructure">
+    <xsd:sequence>
+      <xsd:element name="CheckStatusAnswerInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Answer" type="siri:CheckStatusResponseBodyStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AnswerExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="CheckStatus" type="WsCheckStatusStructure"/>
+  <xsd:element name="CheckStatusResponse" type="WsCheckStatusResponseStructure"/>
+  <!-- DataSuply -->
+  <xsd:complexType name="WsDataSupplyRequestStructure">
+    <xsd:sequence>
+      <xsd:element name="DataSupplyRequestInfo" type="siri:ConsumerRequestEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Request" type="siri:DataSupplyRequestBodyStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="RequestExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="WsDataSupplyAnswerStructure">
+    <xsd:sequence>
+      <xsd:element name="DataSupplyAnswerInfo" type="siri:ProducerResponseEndpointStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Answer" type="siri:ServiceDeliveryBodyStructure" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AnswerExtension" type="siri:ExtensionsStructure" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="DataSupply" type="WsDataSupplyRequestStructure"/>
+  <xsd:element name="DataSupplyResponse" type="WsDataSupplyAnswerStructure"/>
+  <xsd:element name="WSErrorConditionElement" type="siri:ErrorConditionStructure"/>
+  <xsd:element name="WSServiceDeliveryErrorConditionElement" type="siri:ServiceDeliveryErrorConditionStructure"/>
+</xsd:schema>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_flexibleNetwork_support">
+  <xsd:include schemaLocation="netex_route_support.xsd"/>
+  <xsd:include schemaLocation="netex_line_support.xsd"/>
+  <xsd:simpleType name="FlexibleLineIdType">
+    <xsd:restriction base="LineIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleLineRef" type="FlexibleLineRefStructure" substitutionGroup="LineRef"/>
+  <xsd:complexType name="FlexibleLineRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LineRefStructure">
+        <xsd:attribute name="ref" type="FlexibleLineIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="flexibleLineRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FlexibleLineRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleRouteIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <!-- ==FlexibleRoute============================================================ -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleLineTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="corridorService"/>
+      <xsd:enumeration value="mainRouteWithFlexibleEnds"/>
+      <xsd:enumeration value="flexibleAreasOnly"/>
+      <xsd:enumeration value="hailAndRideSections"/>
+      <xsd:enumeration value="fixedStopAreaWide"/>
+      <xsd:enumeration value="freeAreaAreaWide"/>
+      <xsd:enumeration value="mixedFlexible"/>
+      <xsd:enumeration value="mixedFlexibleAndFixed"/>
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FlexibleRouteTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="flexibleAreasOnly"/>
+      <xsd:enumeration value="hailAndRideSections"/>
+      <xsd:enumeration value="mixed"/>
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FlexibleLinkTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="hailAndRide"/>
+      <xsd:enumeration value="onDemand"/>
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleLinkPropertiesIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleLinkPropertiesRef" type="FlexibleLinkPropertiesRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FlexibleLinkPropertiesRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FlexibleLinkPropertiesIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexiblePointPropertiesIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexiblePointPropertiesRef" type="FlexiblePointPropertiesRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FlexiblePointPropertiesRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FlexiblePointPropertiesIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

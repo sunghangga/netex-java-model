@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<!-- 2007 03 23 Add repeating name -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_navigationPath_version">
+  <!-- ======================================================================= -->
+  <!-- ===Global import of all acsb namespace elements neeeded to work around XERCES limitation
+	<xsd:include schemaLocation="../acsb/netex_acsb_all.xsd"/> =====-->
+  <!--.....These are the actual dependencies...-->
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_place_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_path_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SITEFRAME)=================================================== -->
+  <xsd:group name="PathInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="navigationPaths" type="navigationPathsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="pathLinks" type="pathLinksInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="pathJunctions" type="pathJunctionsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="navigationPathsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="NavigationPath" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="pathLinksInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PathLink" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="pathJunctionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PathJunction" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteAccessGroup">
+    <xsd:sequence>
+      <xsd:element name="pathLinks" type="sitePathLinks_RelStructure" minOccurs="0"/>
+      <xsd:element name="pathJunctions" type="pathJunctions_RelStructure" minOccurs="0"/>
+      <xsd:element name="accesses" type="accesses_RelStructure" minOccurs="0"/>
+      <xsd:element name="navigationPaths" type="navigationPaths_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="navigationPaths_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="NavigationPathRef"/>
+          <xsd:element ref="NavigationPath"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NavigationPath" substitutionGroup="LinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="NavigationPath_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NavigationPathSummaryGroup"/>
+              <xsd:group ref="SiteElementPropertiesGroup"/>
+              <xsd:group ref="NavigationPathGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NavigationPathIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="NavigationPath_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LinkSequence_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="NavigationPathSummaryGroup"/>
+          <xsd:group ref="SiteElementPropertiesGroup"/>
+          <xsd:group ref="NavigationPathGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NavigationPathGroup">
+    <xsd:sequence>
+      <xsd:element name="AccessFeatureList" type="AccessFeatureListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="NavigationType" type="NavigationTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="placesInSequence" type="placesInSequence_RelStructure" minOccurs="0"/>
+      <xsd:element name="pathLinksInSequence" type="pathLinksInSequence_RelStructure" minOccurs="0"/>
+      <xsd:element name="transfers" type="transferRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="NavigationPathSummaryGroup">
+    <xsd:sequence>
+      <xsd:element name="From" type="PathLinkEndStructure" minOccurs="0"/>
+      <xsd:element name="To" type="PathLinkEndStructure" minOccurs="0"/>
+      <xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+      <xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="summaries" type="accessSummaries_RelStructure" minOccurs="0"/>
+      <xsd:element name="TransferDuration" type="TransferDurationStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pathLinksInSequence_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PathLinkInSequence" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PathLinkInSequence" substitutionGroup="LinkInLinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PathLinkInSequence_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PathLinkInSequenceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PathLinkInSequenceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PathLinkInSequence_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LinkInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="PathLinkInSequenceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PathLinkInSequenceGroup">
+    <xsd:sequence>
+      <xsd:element ref="PathLinkRef"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Reverse" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Heading" type="PathHeadingEnumeration" minOccurs="0"/>
+      <xsd:element name="Transition" type="TransitionEnumeration" minOccurs="0"/>
+      <xsd:element name="Instruction" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="views" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="PathLinkView"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="placesInSequence_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PlaceInSequence" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PlaceInSequence" substitutionGroup="PointInLinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PlaceInSequence_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PlaceInSequenceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PlaceInSequenceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PlaceInSequence_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PointInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="PlaceInSequenceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PlaceInSequenceGroup">
+    <xsd:sequence>
+      <xsd:element name="PlaceRef" type="PlaceRefStructure" minOccurs="0"/>
+      <xsd:element name="BranchLevel" type="xsd:NMTOKEN" minOccurs="0"/>
+      <xsd:element name="onwardLinks" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="pathLinksInSequence_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="accessSummaries_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="AccessSummary" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AccessSummary">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AccessSummary_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessSummaryGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AccessSummaryIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AccessSummary_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="AccessSummaryGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AccessSummaryGroup">
+    <xsd:sequence>
+      <xsd:element name="AccessFeatureType" type="AccessFeatureEnumeration"/>
+      <xsd:element name="Count" type="xsd:nonNegativeInteger"/>
+      <xsd:element name="Transition" type="TransitionEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

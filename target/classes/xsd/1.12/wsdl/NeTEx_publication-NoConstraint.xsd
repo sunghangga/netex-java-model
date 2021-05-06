@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_publication">
+  <!-- ===SIRI system IDs for  request =========================================================== -->
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri/siri_base-v2.0.xsd"/>
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri_utility/siri_participant-v2.0.xsd"/>
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="siri/siri_requests-v2.0.xsd"/>
+  <!-- ===Regular netex============================================================== -->
+  <xsd:include schemaLocation="netex_service/netex_dataObjectRequest_service.xsd"/>
+  <xsd:include schemaLocation="netex_service/netex_all.xsd"/>
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="ParticipantRef" type="siri:ParticipantCodeType"/>
+  <xsd:element name="PublicationRequest" type="PublicationRequestStructure"/>
+  <xsd:complexType name="PublicationRequestStructure">
+    <xsd:sequence>
+      <xsd:element name="RequestTimestamp" type="xsd:dateTime"/>
+      <xsd:element ref="ParticipantRef" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="topics" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="NetworkFrameTopic" type="NetworkFrameTopicStructure" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RequestPolicy" type="NetworkFrameRequestPolicyStructure" minOccurs="0"/>
+      <xsd:element name="SubscriptionPolicy" type="NetworkFrameSubscriptionPolicyStructure" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="xsd:NMTOKEN" default="1.0"/>
+  </xsd:complexType>
+  <!-- ======================================================================= 
+-->
+  <xsd:element name="PublicationDelivery" type="PublicationDeliveryStructure"/>
+  <!-- =====END OF CONSTRAINTS================= -->
+  <xsd:complexType name="PublicationDeliveryStructure">
+    <xsd:sequence>
+      <xsd:group ref="PublicationHeaderGroup"/>
+      <xsd:group ref="PayloadGroup"/>
+    </xsd:sequence>
+    <xsd:attribute name="version" type="xsd:NMTOKEN" default="1.0"/>
+  </xsd:complexType>
+  <xsd:group name="PublicationHeaderGroup">
+    <xsd:sequence>
+      <xsd:element name="PublicationTimestamp" type="xsd:dateTime"/>
+      <xsd:element ref="ParticipantRef"/>
+      <xsd:element name="PublicationRequest" type="PublicationRequestStructure" minOccurs="0"/>
+      <xsd:element name="PublicationRefreshInterval" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--== Requests ===================================================================== -->
+</xsd:schema>

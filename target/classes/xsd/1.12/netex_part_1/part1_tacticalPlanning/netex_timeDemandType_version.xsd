@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_timeDemandType_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLink_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+  <xsd:include schemaLocation="netex_journeyTiming_version.xsd"/>
+  <!--CLOSE COUPLED WITH JOURNEY TIMINGS-->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="TimeDemandTypeInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="timeDemandTypes" type="timeDemandTypesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="timeDemandTypeAssignments" type="timeDemandTypeAssignmentsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="timingLinkGroups" type="groupOfLinksInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TimeDemandOnlyInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="timeDemandTypes" type="timeDemandTypesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="timeDemandTypesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimeDemandType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="timeDemandTypeAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimeDemandTypeAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- === TIME DEMAND TYPE ========================================================= -->
+  <xsd:element name="TimeDemandType" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeDemandType_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeDemandTypeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeDemandTypeIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeDemandType_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeDemandTypeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeDemandTypeGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element ref="TypeOfTimeDemandTypeRef" minOccurs="0"/>
+      <xsd:element name="Presentation" type="PresentationStructure" minOccurs="0"/>
+      <xsd:group ref="TimeDemandTypeTimingsGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TimeDemandTypeTimingsGroup">
+    <xsd:sequence>
+      <xsd:element name="runTimes" type="journeyRunTimes_RelStructure" minOccurs="0"/>
+      <xsd:element name="waitTimes" type="journeyWaitTimes_RelStructure" minOccurs="0"/>
+      <xsd:element name="layovers" type="journeyLayovers_RelStructure" minOccurs="0"/>
+      <xsd:element name="headways" type="journeyHeadways_RelStructure" minOccurs="0"/>
+      <xsd:element name="vehiclePreferences" type="vehicleTypePreferences_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TimeDemandTypeAssignment" abstract="false" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeDemandTypeAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeDemandTypeAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeDemandTypeAssigmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeDemandTypeAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeDemandTypeAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeDemandTypeAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimeDemandTypeRef" minOccurs="0"/>
+      <xsd:element ref="TimebandRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfTimingLinksRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfTimeDemandType" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfTimeDemandTypeStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfTimeDemandTypeIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfTimeDemandTypeStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===VehicleTypePreference===================================================== -->
+  <xsd:complexType name="vehicleTypePreferences_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="VehicleTypePreference" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleTypePreference" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleTypePreference_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="JourneyTimingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleTypePreferenceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleTypePreferenceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleTypePreference_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyTiming_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleTypePreferenceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleTypePreferenceGroup">
+    <xsd:sequence>
+      <xsd:element name="Rank" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element ref="DayTypeRef" minOccurs="0"/>
+      <xsd:element ref="VehicleTypePreferenceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_journeyTiming_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === JourneyTiming ========================================================= -->
+  <xsd:simpleType name="JourneyTimingIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyTimingRef" type="JourneyTimingRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="JourneyTimingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="JourneyTimingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===WaitTime===================================================== -->
+  <xsd:simpleType name="JourneyWaitTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="JourneyRunTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="JourneyLayoverIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <!-- ===Frequency=============================================== -->
+  <xsd:simpleType name="JourneyHeadwayIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="HeadwayRef" type="HeadwayRefStructure" abstract="true" substitutionGroup="JourneyTimingRef"/>
+  <xsd:complexType name="HeadwayRefStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyTimingRefStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===TURNAROUND TIME ========================================== -->
+  <xsd:simpleType name="TurnaroundTimeLimitTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TurnaroundTimeLimitTimeRef" substitutionGroup="JourneyTimingRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TurnaroundTimeLimitTimeRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TurnaroundTimeLimitTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="TurnaroundTimeLimitTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- === DEFAULT DEAD RUN TIME==================================== -->
+  <xsd:simpleType name="DefaultDeadRunRunTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DefaultDeadRunRunTimeRef" type="DefaultDeadRunRunTimeRefStructure" substitutionGroup="JourneyTimingRef"/>
+  <xsd:complexType name="DefaultDeadRunRunTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="DefaultDeadRunRunTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === DEFAULT SERVICE JOURNEY TIME==================================== -->
+  <xsd:simpleType name="DefaultServiceJourneyTimeIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DefaultServiceJourneyTimeRef" substitutionGroup="JourneyTimingRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="DefaultServiceJourneyTimeRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DefaultServiceJourneyTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="DefaultServiceJourneyTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

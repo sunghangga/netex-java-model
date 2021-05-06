@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterAfterSales_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <xsd:group name="UsageParameterAfterSalesRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="ExchangingRef" minOccurs="0"/>
+      <xsd:element ref="RefundingRef" minOccurs="0"/>
+      <xsd:element ref="ReplacingRef" minOccurs="0"/>
+      <xsd:element name="TransferabilityRef" type="TransferabilityRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === RESELLING PARAMETER====================================================== -->
+  <xsd:simpleType name="ResellingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ResellingRef" type="ResellingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="ResellingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="ResellingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ResellTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="partial"/>
+      <xsd:enumeration value="slidingScale"/>
+      <xsd:enumeration value="full"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ResellWhenEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="never"/>
+      <xsd:enumeration value="withinPurchaseGracePeriod"/>
+      <xsd:enumeration value="beforeStartOfValidity"/>
+      <xsd:enumeration value="afterStartOfValidity"/>
+      <xsd:enumeration value="afterEndOfValidity"/>
+      <xsd:enumeration value="beforeFirstUse"/>
+      <xsd:enumeration value="afterFirstUse"/>
+      <xsd:enumeration value="beforeValidation"/>
+      <xsd:enumeration value="afterValidation"/>
+      <xsd:enumeration value="withinSpecifiedWindow"/>
+      <xsd:enumeration value="anyTime"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EffectiveFromEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="never"/>
+      <xsd:enumeration value="nextInterval"/>
+      <xsd:enumeration value="nextInstallment"/>
+      <xsd:enumeration value="anyTime"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === EXCHANGING PARAMETER====================================================== -->
+  <xsd:simpleType name="ExchangingIdType">
+    <xsd:restriction base="ResellingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ExchangingRef" type="ExchangingRefStructure" substitutionGroup="ResellingRef"/>
+  <xsd:complexType name="ExchangingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ResellingRefStructure">
+        <xsd:attribute name="ref" type="ExchangingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ExchangableToEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="anyProduct"/>
+      <xsd:enumeration value="sameProductSameDay"/>
+      <xsd:enumeration value="sameProductAnyDay"/>
+      <xsd:enumeration value="sameProductLongerJourney"/>
+      <xsd:enumeration value="sameProductShorterJourney"/>
+      <xsd:enumeration value="upgradeToStandardFare"/>
+      <xsd:enumeration value="upgradeToSpecifiedFare"/>
+      <xsd:enumeration value="downgradeToSpecifiedFare"/>
+      <xsd:enumeration value="equivalentProduct"/>
+      <xsd:enumeration value="changeGroupSize"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === REFUNDING PARAMETER====================================================== -->
+  <xsd:simpleType name="RefundingIdType">
+    <xsd:restriction base="ResellingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RefundingRef" type="RefundingRefStructure" substitutionGroup="ResellingRef"/>
+  <xsd:complexType name="RefundingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ResellingRefStructure">
+        <xsd:attribute name="ref" type="RefundingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="RefundTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="unused"/>
+      <xsd:enumeration value="delay"/>
+      <xsd:enumeration value="cancellation"/>
+      <xsd:enumeration value="partialJourney"/>
+      <xsd:enumeration value="earlyTermination"/>
+      <xsd:enumeration value="changeOfGroupSize"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RefundPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="any"/>
+      <xsd:enumeration value="illness"/>
+      <xsd:enumeration value="death"/>
+      <xsd:enumeration value="maternity"/>
+      <xsd:enumeration value="redundancy"/>
+      <xsd:enumeration value="changeOfEmployment"/>
+      <xsd:enumeration value="changeOfResidence"/>
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RefundPolicyListOfEnumerations">
+    <xsd:list itemType="RefundPolicyEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="PartialRefundBasisEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="unusedDays"/>
+      <xsd:enumeration value="unusedWeeks"/>
+      <xsd:enumeration value="unusedMonths"/>
+      <xsd:enumeration value="unusedSemesters"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === REPLACING PARAMETER====================================================== -->
+  <xsd:simpleType name="ReplacingIdType">
+    <xsd:restriction base="ResellingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ReplacingRef" type="ReplacingRefStructure" substitutionGroup="ResellingRef"/>
+  <xsd:complexType name="ReplacingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ResellingRefStructure">
+        <xsd:attribute name="ref" type="ReplacingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === TRANSFERABILITY PARAMETER====================================================== -->
+  <xsd:simpleType name="TransferabilityIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TransferabilityRef" type="TransferabilityRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="TransferabilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="TransferabilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SharedUsageEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="singleUser"/>
+      <xsd:enumeration value="concurrentUsers"/>
+      <xsd:enumeration value="concurrentDesignatedUsers"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

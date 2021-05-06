@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_flexibleService_support">
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleServicePropertiesIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleServicePropertiesRef" type="FlexibleServicePropertiesRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FlexibleServicePropertiesRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FlexibleServicePropertiesIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleStopAssignmentIdType">
+    <xsd:restriction base="StopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleServiceAssignmentRef" type="FlexibleServiceAssignmentRefStructure" substitutionGroup="StopAssignmentRef"/>
+  <xsd:complexType name="FlexibleServiceAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="StopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="FlexibleStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfFlexibleServiceIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFlexibleServiceRef" type="TypeOfFlexibleServiceRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfFlexibleServiceRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFlexibleServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="dynamicPassingTimes"/>
+      <xsd:enumeration value="fixedHeadwayFrequency"/>
+      <xsd:enumeration value="fixedPassingTimes"/>
+      <xsd:enumeration value="notFlexible"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

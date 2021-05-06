@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentAccess_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==ACCESS EQUIPMENT=================================================== -->
+  <xsd:simpleType name="AccessEquipmentIdType">
+    <xsd:restriction base="InstalledEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AccessEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="AccessEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="AccessEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="EntranceEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="EntranceEquipmentRef" type="EntranceEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="EntranceEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="EntranceEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RampEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RampEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="RampEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="RampEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CrossingEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CrossingEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="CrossingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="CrossingEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LiftEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LiftEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="LiftEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="LiftEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="EscalatorEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="EscalatorEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="EscalatorEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="EscalatorEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TravelatorEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TravelatorEquipmentRef" type="TravelatorEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="TravelatorEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="TravelatorEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="QueueingEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="QueueingEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="QueueingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="QueueingEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="StaircaseEquipmentIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StaircaseEquipmentRef" type="StaircaseEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="StaircaseEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="StaircaseEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RoughSurfaceIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoughSurfaceRef" type="RoughSurfaceRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="RoughSurfaceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="RoughSurfaceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TactileWarningStripEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="tactileStripAtBeginning"/>
+      <xsd:enumeration value="tactileStripAtEnd"/>
+      <xsd:enumeration value="tactileStripAtBothEnds"/>
+      <xsd:enumeration value="noTactileStrip"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PlaceLightingIdType">
+    <xsd:restriction base="AccessEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PlaceLightingEquipmentRef" type="AccessEquipmentRefStructure" substitutionGroup="AccessEquipmentRef"/>
+  <xsd:complexType name="PlaceLightingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccessEquipmentRefStructure">
+        <xsd:attribute name="ref" type="PlaceLightingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="StairFlighttIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LightingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="wellLit"/>
+      <xsd:enumeration value="poorlyLit"/>
+      <xsd:enumeration value="unlit"/>
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LightingOnMethodEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="movementDetector"/>
+      <xsd:enumeration value="stepDetector"/>
+      <xsd:enumeration value="switchOnTheWall"/>
+      <xsd:enumeration value="atDoorOpening"/>
+      <xsd:enumeration value="onlyAtNight"/>
+      <xsd:enumeration value="alwaysOn"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DirectionOfUseEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="up"/>
+      <xsd:enumeration value="down"/>
+      <xsd:enumeration value="both"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SurfaceTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="asphalt"/>
+      <xsd:enumeration value="bricks"/>
+      <xsd:enumeration value="cobbles"/>
+      <xsd:enumeration value="earth"/>
+      <xsd:enumeration value="grass"/>
+      <xsd:enumeration value="looseSurface"/>
+      <xsd:enumeration value="pavingStones"/>
+      <xsd:enumeration value="roughSurface"/>
+      <xsd:enumeration value="smooth"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="HandrailEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="oneSide"/>
+      <xsd:enumeration value="bothSides"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GradientEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="verySteep"/>
+      <xsd:enumeration value="steep"/>
+      <xsd:enumeration value="medium"/>
+      <xsd:enumeration value="gentle"/>
+      <xsd:enumeration value="level"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="EntranceAttentionEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="doorbell"/>
+      <xsd:enumeration value="helpPoint"/>
+      <xsd:enumeration value="intercom"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CrossingTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="levelCrossing"/>
+      <xsd:enumeration value="barrowCrossing"/>
+      <xsd:enumeration value="roadCrossing"/>
+      <xsd:enumeration value="roadCrossingWithIsland"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NecessaryForceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noForce"/>
+      <xsd:enumeration value="lightForce"/>
+      <xsd:enumeration value="mediumForce"/>
+      <xsd:enumeration value="heavyForce"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

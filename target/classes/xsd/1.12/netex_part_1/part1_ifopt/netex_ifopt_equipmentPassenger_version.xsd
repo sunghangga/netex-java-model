@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentPassenger_version">
+  <xsd:include schemaLocation="netex_ifopt_equipmentPassenger_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="PassengerEquipmentChoice">
+    <xsd:choice>
+      <xsd:element ref="HelpPointEquipment"/>
+      <xsd:element ref="PassengerSafetyEquipment"/>
+      <xsd:element ref="RubbishDisposalEquipment"/>
+      <xsd:element ref="SanitaryEquipment"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="SanitaryEquipment" substitutionGroup="PassengerEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SanitaryEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Fixed" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SanitaryEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SanitaryEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SanitaryEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SanitaryEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SanitaryEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+      <xsd:element name="Gender" type="GenderLimitationEnumeration" minOccurs="0"/>
+      <xsd:element ref="SanitaryFacilityList" minOccurs="0"/>
+      <xsd:element name="NumberOfToilets" type="xsd:integer" minOccurs="0"/>
+      <xsd:group ref="SanitaryEquipmentPaymentGroup"/>
+      <xsd:element name="WheelchairTurningCircle" type="LengthType" minOccurs="0"/>
+      <xsd:element name="SupportBarHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="CallButtonAvailable" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SharpsDisposal" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Staffing" type="StaffingEnumeration" minOccurs="0"/>
+      <xsd:element name="LockedAccess" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="KeyScheme" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SanitaryEquipmentPaymentGroup">
+    <xsd:sequence>
+      <xsd:element name="FreeToUse" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Charge" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="Currency" type="CurrencyType" minOccurs="0"/>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="ChangeAvailable" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="PassengerSafetyEquipment" substitutionGroup="PassengerEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PassengerSafetyEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Fixed" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerSafetyEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PassengerSafetyEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PassengerSafetyEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PassengerSafetyEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PassengerSafetyEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Cctv" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MobilePhoneCoverage" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="PanicButton" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SosPhones" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="HeightOfSosPanel" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Lighting" type="LightingEnumeration" minOccurs="0"/>
+      <xsd:element name="AudioAnnouncements" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AcousticAnnouncements" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AudioAnnouncementType" type="AudioAnnouncementTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="AudioAnnouncementsTrigger" type="AudioTriggerMethodEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="HelpPointEquipment" substitutionGroup="PassengerEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="HelpPointEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Fixed" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="HelpPointEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="HelpPointEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="HelpPointEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="HelpPointEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="HelpPointEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+      <xsd:element name="HeightFromGround" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Phone" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="InductionLoop" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="InductionLoopSign" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="StopRequestButton" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="StopRequestTimeout" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RubbishDisposalEquipment" substitutionGroup="PassengerEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RubbishDisposalEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Fixed" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RubbishDisposalEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RubbishDisposalEquipmentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RubbishDisposalEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RubbishDisposalEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RubbishDisposalEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="SharpsDispsal" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Recycling" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

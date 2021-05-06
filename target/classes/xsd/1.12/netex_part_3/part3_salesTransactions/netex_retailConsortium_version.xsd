@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_retailConsortium_version">
+  <xsd:include schemaLocation="netex_retailConsortium_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesContract_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_organisation_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="RetailConsortiumInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="retailConsortiums" type="retailConsortiumsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="retailDevices" type="retailDevicesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="retailDevicesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="RetailDevice" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="retailConsortiumsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="RetailConsortium" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER-->
+  <xsd:complexType name="retailConsortiums_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="RetailConsortiumRef"/>
+          <xsd:element ref="RetailConsortium"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RetailConsortium" abstract="false" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RetailConsortium_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RetailConsortiumGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RetailConsortiumIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RetailConsortium_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Organisation_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RetailConsortiumGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RetailConsortiumGroup">
+    <xsd:sequence>
+      <xsd:element ref="PostalAddress" minOccurs="0"/>
+      <xsd:element name="members" type="organisationRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="blacklistRefs" type="blacklistRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="whitelistRefs" type="whitelistRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="retailDevices" type="RetailDevices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== RETAIL DEVICE =================-->
+  <xsd:complexType name="RetailDevices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="RetailDeviceRef"/>
+          <xsd:element ref="RetailDevice"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RetailDevice" abstract="false" substitutionGroup="InstalledEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RetailDevice_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RetailDeviceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RetailDeviceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RetailDevice_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InstalledEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RetailDeviceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RetailDeviceGroup">
+    <xsd:sequence>
+      <xsd:element name="Status" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="OrganisationRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfRetailDeviceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF FARE CONTRACT ======================================== -->
+  <xsd:complexType name="typesOfRetailDevice_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfRetailDeviceRef"/>
+          <xsd:element ref="TypeOfRetailDevice"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TypeOfRetailDevice_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfRetailDevice" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfRetailDevice_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfRetailDeviceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ====CUSTOMER SECURITY LISTING ======================================== -->
+  <xsd:element name="RetailDeviceSecurityListing" abstract="false" substitutionGroup="SecurityListing_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RetailDeviceSecurityListing_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SecurityListingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RetailDeviceSecurityListingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RetailDeviceSecurityListingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RetailDeviceSecurityListing_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SecurityListing_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="RetailDeviceSecurityListingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RetailDeviceSecurityListingGroup">
+    <xsd:sequence>
+      <xsd:element ref="RetailDeviceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_distanceMatrixElement_support">
+  <xsd:include schemaLocation="netex_farePrice_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_linkByValue_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====GROUP OF DISTANCE MATRIX ELEMENT.======================================================== -->
+  <xsd:complexType name="groupOfDistanceMatrixElementsRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfDistanceMatrixElementsRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="GroupOfDistanceMatrixElementsIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfDistanceMatrixElementsRef" type="GroupOfDistanceMatrixElementsRefStructureElement" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="GroupOfDistanceMatrixElementsRefStructureElement">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="GroupOfDistanceMatrixElementsIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====DISTANCE MATRIX ELEMENT.======================================================== -->
+  <xsd:complexType name="distanceMatrixElementRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DistanceMatrixElementRef"/>
+          <xsd:element ref="DistanceMatrixElementInverseRef"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="DistanceMatrixElementIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DistanceMatrixElementRef" substitutionGroup="PriceableObjectRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="DistanceMatrixElementRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DistanceMatrixElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="DistanceMatrixElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="DistanceMatrixElementInverseRef" substitutionGroup="PriceableObjectRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="DistanceMatrixElementRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ======================================================================= -->
+  <xsd:element name="DistanceMatrixElementRefByValue" type="DistanceMatrixElementRefByValueStructure"/>
+  <xsd:complexType name="DistanceMatrixElementRefByValueStructure">
+    <xsd:attribute name="nameOfClass" type="NameOfClass"/>
+    <xsd:attributeGroup ref="ReferenceModificationDetailsGroup"/>
+    <xsd:attribute name="fromRef" type="ObjectIdType" use="required"/>
+    <xsd:attribute name="toRef" type="ObjectIdType" use="required"/>
+    <xsd:attribute name="nameOfPointRefClass" type="NameOfClass"/>
+  </xsd:complexType>
+  <!-- === DISTANCE MATRIX PRICE====================================================== -->
+  <xsd:simpleType name="DistanceMatrixElementPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DistanceMatrixElementPriceRef" type="DistanceMatrixElementPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="DistanceMatrixElementPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="DistanceMatrixElementPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

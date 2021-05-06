@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_vehicleJourneyFrequency_support">
+  <xsd:include schemaLocation="netex_serviceJourney_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===TEMPLATE JORUNEY=================================================== -->
+  <xsd:simpleType name="TemplateVehicleJourneyTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="headway"/>
+      <xsd:enumeration value="rhythmic"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TemplateServiceJourneyIdType">
+    <xsd:restriction base="ServiceJourneyIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TemplateServiceJourneyRef" type="TemplateServiceJourneyRefStructure" substitutionGroup="ServiceJourneyRef"/>
+  <xsd:complexType name="TemplateServiceJourneyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ServiceJourneyRefStructure">
+        <xsd:attribute name="ref" type="TemplateServiceJourneyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="JourneyFrequencyGroupIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyFrequencyGroupRef" type="JourneyFrequencyGroupRefStructure" abstract="false" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="JourneyFrequencyGroupRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="JourneyFrequencyGroupIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="HeadwayUseEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="DisplayPassingTimesOnly"/>
+      <xsd:enumeration value="DisplayAsWellAsPassingTimes"/>
+      <xsd:enumeration value="DisplayInsteadOfPassingTimes"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="HeadwayJourneyGroupIdType">
+    <xsd:restriction base="JourneyFrequencyGroupIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="HeadwayJourneyGroupRef" type="HeadwayJourneyGroupRefStructure" abstract="false" substitutionGroup="JourneyFrequencyGroupRef"/>
+  <xsd:complexType name="HeadwayJourneyGroupRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyFrequencyGroupRefStructure">
+        <xsd:attribute name="ref" type="HeadwayJourneyGroupIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RhythmicalJourneyGroupIdType">
+    <xsd:restriction base="JourneyFrequencyGroupIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RhythmicalJourneyGroupRef" type="RhythmicalJourneyGroupRefStructure" abstract="false" substitutionGroup="JourneyFrequencyGroupRef"/>
+  <xsd:complexType name="RhythmicalJourneyGroupRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyFrequencyGroupRefStructure">
+        <xsd:attribute name="ref" type="RhythmicalJourneyGroupIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

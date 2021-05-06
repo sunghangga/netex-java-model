@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_zone_version">
+  <xsd:include schemaLocation="netex_pointAndLink_support.xsd"/>
+  <!-- ====Zone======================================================= -->
+  <xsd:simpleType name="ZoneIdType">
+    <xsd:restriction base="GroupOfPointsIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ZoneRef" type="ZoneRefStructure" substitutionGroup="GroupOfPointsRef_"/>
+  <!-- === Unresolved XMLSPy issue: cant make ZoneRefStructure a restriction of Group of points =====-->
+  <xsd:complexType name="ZoneRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfPointsRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="zoneRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ZoneRef"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TariffZoneRef_" type="ZoneRefStructure" abstract="true" substitutionGroup="ZoneRef"/>
+  <xsd:simpleType name="TariffZoneIdType">
+    <xsd:restriction base="ZoneIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TariffZoneRef" substitutionGroup="TariffZoneRef_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TariffZoneRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TariffZoneRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ZoneRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="tariffZoneRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TariffZoneRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfZoneIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfZoneRef" type="TypeOfZoneRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfZoneRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfZoneIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="typeOfZoneRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfZoneRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

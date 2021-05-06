@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_place_version">
+  <xsd:include schemaLocation="netex_place_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_zoneProjection_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="transfersInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Transfer" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====Place========================================================== -->
+  <xsd:element name="Place" type="Place_VersionStructure" abstract="true" substitutionGroup="Zone"/>
+  <xsd:complexType name="Place_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Zone_VersionStructure">
+        <xsd:group ref="PlaceGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PlaceGroup">
+    <xsd:sequence>
+      <xsd:element name="placeTypes" type="typeOfPlaceRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Transfer" type="Transfer_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="Transfer_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="TransferGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TransferGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="TypeOfTransferRef" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+      <xsd:element name="TransferDuration" type="TransferDurationStructure" minOccurs="0"/>
+      <xsd:element name="WalkTransferDuration" type="TransferDurationStructure" minOccurs="0"/>
+      <xsd:element name="BothWays" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="TransferDuration" type="TransferDurationStructure"/>
+  <xsd:complexType name="TransferDurationStructure">
+    <xsd:sequence>
+      <xsd:element name="DefaultDuration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="FrequentTravellerDuration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="OccasionalTravellerDuration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MobilityRestrictedTravellerDuration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfTransfer" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfTransfer_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfTransferIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfTransfer_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfPlace" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfPlace_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfPlaceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfPlace_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

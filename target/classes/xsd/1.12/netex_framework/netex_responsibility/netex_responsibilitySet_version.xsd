@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_responsibilitySet">
+  <xsd:include schemaLocation="netex_typeOfValue_version.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="codespacesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Codespace" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="responsibilitySetsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ResponsibilitySet" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- =====Responsibility============================================ -->
+  <xsd:complexType name="responsibilitySets_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ResponsibilitySetRef"/>
+          <xsd:element ref="ResponsibilitySet"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ResponsibilitySet" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ResponsibilitySet_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="ResponsibilitySetGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ResponsibilitySetIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ResponsibilitySet_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:group ref="ResponsibilitySetGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ResponsibilitySetGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="roles" type="responsibilityRoleAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====Responsibility Role============================================ -->
+  <xsd:complexType name="ResponsibilityRoles_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ResponsibilityRoleRef"/>
+          <xsd:element ref="ResponsibilityRole"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ResponsibilityRole" abstract="true" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ResponsibilityRole_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="ResponsibilityRoleGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ResponsibilityRole_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:group ref="ResponsibilityRoleGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ResponsibilityRoleGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="TypeOfResponsibilityRoleRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====Assignments of Roles============================================================= -->
+  <xsd:element name="ResponsibilityRoleAssignment" type="ResponsibilityRoleAssignment_VersionedChildStructure"/>
+  <xsd:complexType name="ResponsibilityRoleAssignment_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element ref="ResponsibilitySetRef" minOccurs="0"/>
+          <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+          <xsd:group ref="ResponsibilityRolesGroup"/>
+          <xsd:group ref="ResponsiblePartiesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ResponsibilityRolesGroup">
+    <xsd:sequence>
+      <xsd:element name="DataRoleType" type="DataRoleTypeListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="StakeholderRoleType" type="StakeholderRoleTypeListOfEnumerations" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element ref="TypeOfResponsibilityRoleRef" minOccurs="0"/>
+        <xsd:element ref="ResponsibilityRoleRef" minOccurs="0"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ResponsiblePartiesGroup">
+    <xsd:sequence>
+      <xsd:element name="ResponsibleOrganisationRef" type="OrganisationRefStructure" minOccurs="0"/>
+      <xsd:element name="ResponsiblePartRef" type="OrganisationPartRefStructure" minOccurs="0"/>
+      <xsd:element name="ResponsibleAreaRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="responsibilityRoleAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ResponsibilityRoleAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfResponsibilityRole" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfResponsibilityRole_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ResponsibilityRoleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfResponsibilityRole_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

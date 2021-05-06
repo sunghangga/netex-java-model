@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareProduct_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ====FARE PRODUCT======================================================== -->
+  <xsd:complexType name="serviceAccessRightRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ServiceAccessRightRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ServiceAccessRightRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="ServiceAccessRightRef"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:simpleType name="ServiceAccessRightIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceAccessRightRef" type="ServiceAccessRightRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="ServiceAccessRightRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="ServiceAccessRightIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====FARE PRODUCT======================================================== -->
+  <xsd:complexType name="fareProductRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareProductRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareProductRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareProductRef"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:simpleType name="FareProductIdType">
+    <xsd:restriction base="ServiceAccessRightIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareProductRef" type="FareProductRefStructure" substitutionGroup="ServiceAccessRightRef"/>
+  <xsd:complexType name="FareProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ServiceAccessRightRefStructure">
+        <xsd:attribute name="ref" type="FareProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== SALES DISCOUNT RIGHT==================================================== -->
+  <xsd:simpleType name="SaleDiscountRightIdType">
+    <xsd:restriction base="FareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SaleDiscountRightRef" type="SaleDiscountRightRefStructure" substitutionGroup="FareProductRef"/>
+  <xsd:complexType name="SaleDiscountRightRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareProductRefStructure">
+        <xsd:attribute name="ref" type="SaleDiscountRightIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SaleDiscountRightEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="travelCard"/>
+      <xsd:enumeration value="payAsYouGoRight"/>
+      <xsd:enumeration value="statutoryRight"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ==== ENTITLEMENT PRODUCT==================================================== -->
+  <xsd:simpleType name="EntitlementProductIdType">
+    <xsd:restriction base="ServiceAccessRightIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="EntitlementProductRef" type="EntitlementProductRefStructure" substitutionGroup="ServiceAccessRightRef"/>
+  <xsd:complexType name="EntitlementProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ServiceAccessRightRefStructure">
+        <xsd:attribute name="ref" type="EntitlementProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===== NON FARE PRODUCT==================================================== -->
+  <xsd:complexType name="thirdPartyProductRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ThirdPartyProductRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ThirdPartyProductIdType">
+    <xsd:restriction base="FareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ThirdPartyProductRef" type="ThirdPartyProductRefStructure" substitutionGroup="FareProductRef"/>
+  <xsd:complexType name="ThirdPartyProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareProductRefStructure">
+        <xsd:attribute name="ref" type="ThirdPartyProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== USAGE DISCOUNT RIGHT==================================================== -->
+  <xsd:complexType name="discountRightRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SaleDiscountRightRef"/>
+          <xsd:element ref="UsageDiscountRightRef"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UsageDiscountRightIdType">
+    <xsd:restriction base="FareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="UsageDiscountRightRef" type="UsageDiscountRightRefStructure" substitutionGroup="FareProductRef"/>
+  <xsd:complexType name="UsageDiscountRightRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareProductRefStructure">
+        <xsd:attribute name="ref" type="UsageDiscountRightIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UsageDiscountRightEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="mileagePoints"/>
+      <xsd:enumeration value="usageRebate"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ==== CAPPED  DISCOUNT RIGHT==================================================== -->
+  <xsd:simpleType name="CappedDiscountRightIdType">
+    <xsd:restriction base="SaleDiscountRightIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CappedDiscountRightRef" type="CappedDiscountRightRefStructure" substitutionGroup="SaleDiscountRightRef"/>
+  <xsd:complexType name="CappedDiscountRightRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SaleDiscountRightRefStructure">
+        <xsd:attribute name="ref" type="CappedDiscountRightIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====CAPPED DISCOUNT RIGHT==================================================== -->
+  <xsd:simpleType name="CappingRuleIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CappingRuleRef" type="CappingRuleRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="CappingRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="CappingRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CappingPeriodEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="day"/>
+      <xsd:enumeration value="week"/>
+      <xsd:enumeration value="month"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====AMOUNT OF PRICE UNIT PRODUCT==================================================== -->
+  <xsd:complexType name="amountOfPriceUnitRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="AmountOfPriceUnitProductRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="AmountOfPriceUnitProductIdType">
+    <xsd:restriction base="FareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AmountOfPriceUnitProductRef" type="AmountOfPriceUnitProductRefStructure" substitutionGroup="FareProductRef"/>
+  <xsd:complexType name="AmountOfPriceUnitProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareProductRefStructure">
+        <xsd:attribute name="ref" type="AmountOfPriceUnitProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="AmountOfPriceUnitEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="tripCarnet"/>
+      <xsd:enumeration value="passCarnet"/>
+      <xsd:enumeration value="unitCoupon"/>
+      <xsd:enumeration value="storedValue"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====PREASSIGNED FARE PRODUCT==================================================== -->
+  <xsd:simpleType name="PreassignedFareProductIdType">
+    <xsd:restriction base="FareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PreassignedFareProductRef" type="PreassignedFareProductRefStructure" substitutionGroup="FareProductRef"/>
+  <xsd:complexType name="PreassignedFareProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareProductRefStructure">
+        <xsd:attribute name="ref" type="PreassignedFareProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PreassignedFareProductEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="singleTrip"/>
+      <xsd:enumeration value="shortTrip"/>
+      <xsd:enumeration value="timeLimitedSingleTrip"/>
+      <xsd:enumeration value="dayReturnTrip"/>
+      <xsd:enumeration value="periodReturnTrip"/>
+      <xsd:enumeration value="multistepTrip"/>
+      <xsd:enumeration value="dayPass"/>
+      <xsd:enumeration value="periodPass"/>
+      <xsd:enumeration value="supplement"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====SUPPLEMENT PRODUCT======================================== -->
+  <xsd:simpleType name="SupplementProductIdType">
+    <xsd:restriction base="PreassignedFareProductIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SupplementProductRef" type="SupplementProductRefStructure" substitutionGroup="PreassignedFareProductRef"/>
+  <xsd:complexType name="SupplementProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PreassignedFareProductRefStructure">
+        <xsd:attribute name="ref" type="SupplementProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SupplementProductEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="seatReservation"/>
+      <xsd:enumeration value="bicycle"/>
+      <xsd:enumeration value="dog"/>
+      <xsd:enumeration value="animal"/>
+      <xsd:enumeration value="meal"/>
+      <xsd:enumeration value="wifi"/>
+      <xsd:enumeration value="extraLuggage"/>
+      <xsd:enumeration value="penalty"/>
+      <xsd:enumeration value="upgrade"/>
+      <xsd:enumeration value="journeyExtension"/>
+      <xsd:enumeration value="journeyAddOn"/>
+      <xsd:enumeration value="eventAddOn"/>
+      <xsd:enumeration value="parking"/>
+      <xsd:enumeration value="topUp"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === FARE PRODUCT PRICE====================================================== -->
+  <xsd:simpleType name="FareProductPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareProductPriceRef" type="FareProductPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="FareProductPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="FareProductPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === CAPPING RULE PRICE====================================================== -->
+  <xsd:simpleType name="CappingRulePriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CappingRulePriceRef" type="CappingRulePriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="CappingRulePriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="CappingRulePriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CappingPeriodStartConstraintTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="variable"/>
+      <xsd:enumeration value="fixed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====ACCESS RIGHT IN PRODUCT==================================================== -->
+  <xsd:simpleType name="AccessRightInProductIdType">
+    <xsd:restriction base="FareElementInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AccessRightInProductRef" type="AccessRightInProductRefStructure" substitutionGroup="FareElementInSequenceRef"/>
+  <xsd:complexType name="AccessRightInProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareElementInSequenceRefStructure">
+        <xsd:attribute name="ref" type="AccessRightInProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====TYPE OF LINE======================================================= -->
+  <xsd:element name="ChargingMomentRef" type="ChargingMomentRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="ChargingMomentRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="ChargingMomentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="ChargingMomentIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="ChargingMomentEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="beforeTravel"/>
+      <xsd:enumeration value="onStartOfTravel"/>
+      <xsd:enumeration value="beforeEndOfTravel"/>
+      <xsd:enumeration value="onStartThenAdjustAtEndOfTravel"/>
+      <xsd:enumeration value="onStarThenAdjustAtEndOfFareDay"/>
+      <xsd:enumeration value="onStartThenAdjustAtEndOfChargePeriod"/>
+      <xsd:enumeration value="atEndOfTravel"/>
+      <xsd:enumeration value="atEndOfFareDay"/>
+      <xsd:enumeration value="atEndOfChargePeriod"/>
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="anyTime"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====TYPE OF FARE PRODUCT================================================== -->
+  <xsd:complexType name="typeOfFareProductRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfFareProductRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfFareProductIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFareProductRef" type="TypeOfFareProductRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfFareProductRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFareProductIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

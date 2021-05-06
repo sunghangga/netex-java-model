@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_timeDemandType_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <xsd:include schemaLocation="netex_journeyTiming_support.xsd"/>
+  <!-- ==TimeDemand========================================================== -->
+  <xsd:simpleType name="TimeDemandTypeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="timeDemandTypeRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimeDemandTypeRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimeDemandTypeRef" type="TimeDemandTypeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TimeDemandTypeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TimeDemandTypeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==TimeDemand========================================================== -->
+  <xsd:simpleType name="TimeDemandTypeAssigmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimeDemandTypeAssigmentRef" type="TimeDemandTypeAssigmentRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="TimeDemandTypeAssigmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="TimeDemandTypeAssigmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimeDemandProfileIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimeDemandProfileRef" type="TimeDemandProfileRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TimeDemandProfileRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TimeDemandProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TimeDemandProfileMemberIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ===== TYPE OF TIME DEMAND TYPE======================================== -->
+  <xsd:simpleType name="TypeOfTimeDemandTypeIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfTimeDemandTypeRef" type="TypeOfTimeDemandTypeRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfTimeDemandTypeRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfTimeDemandTypeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===VEHICLE TYPE PREFERENCE=========================================== -->
+  <xsd:simpleType name="VehicleTypePreferenceIdType">
+    <xsd:restriction base="JourneyTimingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleTypePreferenceRef" substitutionGroup="JourneyTimingRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="VehicleTypePreferenceRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleTypePreferenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyTimingRefStructure">
+        <xsd:attribute name="ref" type="VehicleTypePreferenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="VehicleTypePreferenceMemberIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

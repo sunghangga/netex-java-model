@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterAfterSales_version">
+  <xsd:include schemaLocation="netex_usageParameterAfterSales_support.xsd"/>
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====RESELLING=================================================== -->
+  <xsd:element name="Reselling" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Reselling_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ResellingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ResellingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Reselling_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ResellingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ResellingGroup">
+    <xsd:sequence>
+      <xsd:element name="Allowed" type="ResellTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="CanChangeClass" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="UnusedTicketsOnly" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="OnlyAtCertainDistributionPoints" type="xsd:boolean" minOccurs="0"/>
+      <xsd:group ref="ResellingPeriodGroup"/>
+      <xsd:group ref="ResellingCalculationGroup"/>
+      <xsd:group ref="ResellingPaymentGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ResellingPeriodGroup">
+    <xsd:sequence>
+      <xsd:element name="ResellWhen" type="ResellWhenEnumeration" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="ExchangableFromAnyTime" type="EmptyType"/>
+        <xsd:element name="ExchangableFromDuration" type="xsd:duration"/>
+        <xsd:element name="ExchangableFromPercentUse" type="xsd:decimal"/>
+      </xsd:choice>
+      <xsd:element name="ExchangableFromIntervalRef" type="TimeIntervalRefStructure" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="ExchangableUntilAnyTime" type="EmptyType"/>
+        <xsd:element name="ExchangableUntilDuration" type="xsd:duration"/>
+        <xsd:element name="ExchangableUntilPercentUse" type="xsd:decimal"/>
+      </xsd:choice>
+      <xsd:element name="ExchangableUntilIntervalRef" type="TimeIntervalRefStructure" minOccurs="0"/>
+      <xsd:element name="EffectiveFrom" type="EffectiveFromEnumeration" minOccurs="0"/>
+      <xsd:element name="NotificationPeriod" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ResellingCalculationGroup">
+    <xsd:sequence>
+      <xsd:element name="HasFee" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RefundBasis" type="PerBasisEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ResellingPaymentGroup">
+    <xsd:sequence>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="typesOfPaymentMethodRef" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====EXCHANGING=================================================== -->
+  <xsd:element name="Exchanging" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Exchanging_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ResellingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ExchangingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ExchangingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Exchanging_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Reselling_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ExchangingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ExchangingGroup">
+    <xsd:sequence>
+      <xsd:element name="NumberOfExchangesAllowed" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="ToFareClass" type="FareClassEnumeration" default="any" minOccurs="0"/>
+      <xsd:element name="ToClassOfUseRef" type="ClassOfUseRefStructure" minOccurs="0"/>
+      <xsd:element name="ExchangableTo" type="ExchangableToEnumeration" default="anyProduct" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== REFUNDING================================================= -->
+  <xsd:element name="Refunding" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Refunding_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ResellingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RefundingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RefundingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Refunding_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Reselling_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RefundingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RefundingGroup">
+    <xsd:sequence>
+      <xsd:element name="RefundType" type="RefundTypeEnumeration" default="unused" minOccurs="0"/>
+      <xsd:element name="RefundPolicy" type="RefundPolicyListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="PartialRefundBasis" type="PartialRefundBasisEnumeration" minOccurs="0"/>
+      <xsd:element name="PaymentMethod" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==== REPLACING ================================================== -->
+  <xsd:element name="Replacing" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Replacing_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ResellingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ReplacingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ReplacingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Replacing_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Reselling_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ReplacingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ReplacingGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ====TRANSFERABILITY=================================================== -->
+  <xsd:element name="Transferability" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Transferability_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TransferabilityGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TransferabilityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Transferability_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TransferabilityGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TransferabilityGroup">
+    <xsd:sequence>
+      <xsd:element name="CanTransfer" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfNamedTransferees" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="HasTransferFee" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SharedUsage" type="SharedUsageEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

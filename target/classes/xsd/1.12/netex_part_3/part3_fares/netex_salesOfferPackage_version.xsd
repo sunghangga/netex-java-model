@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesOfferPackage_version">
+  <xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_salesDistribution_version.xsd"/>
+  <xsd:include schemaLocation="netex_fareProduct_version.xsd"/>
+  <xsd:include schemaLocation="netex_salesOfferPackageEntitlement_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="SalesOfferPackageInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="salesOfferPackages" type="salesOfferPackagesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="salesOfferPackageElements" type="salesOfferPackageElementsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="salesOfferPackageSubstitutions" type="salesOfferPackageSubstitutionsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfSalesOfferPackages" type="groupsOfSalesOfferPackagesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="distributionAssignments" type="distributionAssignmentsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="salesOfferPackagesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="SalesOfferPackage" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="salesOfferPackageElementsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="SalesOfferPackageElement" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="salesOfferPackageSubstitutionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="SalesOfferPackageSubstitution" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="groupsOfSalesOfferPackagesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfSalesOfferPackages" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="distributionAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="DistributionAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====SALES OFFER PACKAGE=================================================== -->
+  <xsd:element name="SalesOfferPackage" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackage_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackageGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackageIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackage_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackageGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackageGroup">
+    <xsd:sequence>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:group ref="SalesOfferPackageCommonGroup"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="GroupOfSalesOfferPackagesRef"/>
+        <xsd:element name="groupsOfSaleOfferPackages" type="groupOfSalesOfferPackageRefs_RelStructure"/>
+      </xsd:choice>
+      <xsd:element name="salesOfferPackageSubstitutions" type="salesOfferPackageSubstitutions_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SalesOfferPackageCommonGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfSalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="ConditionSummary" minOccurs="0"/>
+      <xsd:element name="validityParameterAssignments" type="genericParameterAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="distributionAssignments" type="distributionAssignments_RelStructure" minOccurs="0"/>
+      <xsd:group ref="SalesOfferPackagePricingGroup"/>
+      <xsd:element name="salesOfferPackageElements" type="salesOfferPackageElements_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SalesOfferPackagePricingGroup">
+    <xsd:sequence>
+      <xsd:element ref="RoundingRef" minOccurs="0"/>
+      <xsd:element name="prices" type="salesOfferPackagePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====SALES OFFER PACKAGE ELEMENT================================================= -->
+  <xsd:complexType name="salesOfferPackageElements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SalesOfferPackageElementRef"/>
+          <xsd:element ref="SalesOfferPackageElement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SalesOfferPackageElement" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackageElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackageElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackageElementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackageElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackageElementGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackageElementGroup">
+    <xsd:sequence>
+      <xsd:element name="RequiresValidation" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="ConditionSummary" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfTravelDocumentRef" minOccurs="0"/>
+      <xsd:element ref="FareProductRef" minOccurs="0"/>
+      <xsd:element name="validityParameterAssignments" type="genericParameterAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="prices" type="salesOfferPackagePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == SALES OFFER PACKAGE PRICE.================================ -->
+  <xsd:complexType name="salesOfferPackagePrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SalesOfferPackagePriceRef"/>
+          <xsd:element name="SalesOfferPackagePrice" type="SalesOfferPackagePrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SalesOfferPackagePrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackagePrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackagePriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackagePriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackagePrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackagePriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackagePriceGroup">
+    <xsd:choice>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageElementRef" minOccurs="0"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ====SALES OFFER PACKAGE SUBSTITUTIOIN================================= -->
+  <xsd:complexType name="salesOfferPackageSubstitutions_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SalesOfferPackageSubstitutionRef"/>
+          <xsd:element ref="SalesOfferPackageSubstitution"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SalesOfferPackageSubstitution" abstract="false" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackageSubstitution_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackageSubstitutionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackageSubstitutionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackageSubstitution_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackageSubstitutionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackageSubstitutionGroup">
+    <xsd:sequence>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element name="WithSalesOfferPackageRef" type="SalesOfferPackageRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====GROUP OF SALES OFFER PACKAGEs=================================================== -->
+  <xsd:element name="GroupOfSalesOfferPackages" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfSalesOfferPackages_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfSalesOfferPackagesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfSalesOfferPackagesIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfSalesOfferPackages_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfSalesOfferPackagesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfSalesOfferPackagesGroup">
+    <xsd:sequence>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+      <xsd:group ref="PriceableObjectPricingGroup"/>
+      <xsd:group ref="PriceableObjectPricesGroup"/>
+      <xsd:group ref="SalesOfferPackageCommonGroup"/>
+      <xsd:element name="members" type="salesOfferPackageRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====SALES NOTICE ASSIGNMENT ================================================= -->
+  <xsd:element name="SalesNoticeAssignment" abstract="false" substitutionGroup="NoticeAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesNoticeAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NoticeAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesNoticeAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesNoticeAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesNoticeAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="NoticeAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesNoticeAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesNoticeAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfSalesOfferPackagesRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====DISTRIBUTION ASSIGNMENT =================================================== -->
+  <xsd:complexType name="distributionAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DistributionAssignmentRef"/>
+          <xsd:element ref="DistributionAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DistributionAssignment" abstract="false" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DistributionAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DistributionAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DistributionAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DistributionAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure_">
+        <xsd:sequence>
+          <xsd:group ref="DistributionAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DistributionAssignmentGroup">
+    <xsd:sequence>
+      <xsd:group ref="DistributionProductsGroup"/>
+      <xsd:element name="DistributionRights" type="DistributionRightsListOfEnumerations" minOccurs="0"/>
+      <xsd:group ref="DistributionThroughGroup"/>
+      <xsd:group ref="DistributionByGroup"/>
+      <xsd:group ref="DistributionDetailsGroup"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistributionProductsGroup">
+    <xsd:sequence>
+      <xsd:element ref="ServiceAccessRightRef" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:element ref="GroupOfSalesOfferPackagesRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistributionThroughGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="AllCountriesRef"/>
+        <xsd:element ref="CountryRef"/>
+      </xsd:choice>
+      <xsd:element name="AllowedInCountry" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element ref="TopographicPlaceRef" minOccurs="0"/>
+      <xsd:group ref="OneAllOrSomeDistributionChannelsRefGroup" minOccurs="0"/>
+      <xsd:element name="DistributionChannelType" type="DistributionChannelTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="AllowedInChannel" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="RestrictedToChannel" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="MandatoryProduct" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistributionByGroup">
+    <xsd:sequence>
+      <xsd:element name="InitialCarrier" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="TransitCarrier" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="FinalCarrier" type="xsd:boolean" minOccurs="0"/>
+      <xsd:group ref="OneOrAllOrganisationsRefGroup" minOccurs="0"/>
+      <xsd:element ref="ResponsibilitySetRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistributionDetailsGroup">
+    <xsd:sequence>
+      <xsd:element ref="TicketingServiceFacilityList" minOccurs="0"/>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="RequiresRegistration" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="FulfilmentMethodRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF SALES OFFER PACKAGE ======================================== -->
+  <xsd:complexType name="typesOfSalesOfferPackage_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfSalesOfferPackageRef"/>
+          <xsd:element ref="TypeOfSalesOfferPackage"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfSalesOfferPackage" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfSalesOfferPackage_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfSalesOfferPackageIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfSalesOfferPackage_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

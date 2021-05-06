@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_spatialFeature_version">
+  <xsd:include schemaLocation="netex_spatialFeature_support.xsd"/>
+  <xsd:include schemaLocation="netex_zone_version.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="SpatialFeaturesInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="spatialFeatures" type="spatialFeaturesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="spatialFeaturesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="SimpleFeature"/>
+          <xsd:element ref="ComplexFeature"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="SpatialFeature" type="GroupOfPoints_VersionStructure" abstract="false"/>
+  <!-- ==SIMPLE FEATURE============================================================ -->
+  <xsd:element name="SimpleFeature" abstract="false" substitutionGroup="SpatialFeature">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SimpleFeature_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="ZoneRef" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SimpleFeatureIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SimpleFeature_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfPoints_VersionStructure">
+        <xsd:sequence>
+          <xsd:element ref="ZoneRef" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ComplexFeature" abstract="false" substitutionGroup="SpatialFeature">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ComplexFeature_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ComplexFeatureGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ComplexFeatureIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ComplexFeature_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfPoints_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ComplexFeatureGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ComplexFeatureGroup">
+    <xsd:sequence>
+      <xsd:element ref="GroupOfEntitiesRef" minOccurs="0"/>
+      <xsd:element name="featureMembers" type="complexFeatureMembers_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="complexFeatureMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element name="ComplexFeatureMember" type="ComplexFeatureMember_VersionedChildStructure" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ComplexFeatureMember_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractGroupMember_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="ComplexFeatureRef" type="ComplexFeatureRefStructure" minOccurs="0"/>
+          <xsd:choice>
+            <xsd:element ref="SimpleFeatureRef"/>
+            <xsd:element ref="VersionOfObjectRef"/>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfFeature" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFeature_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFeatureIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfFeature_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

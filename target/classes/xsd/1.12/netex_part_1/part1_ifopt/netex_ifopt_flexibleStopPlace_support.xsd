@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="inetex_ifopt_flexibleStopPlace_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_place_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <xsd:simpleType name="FlexibleStopPlaceIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleStopPlaceRef" type="FlexibleStopPlaceRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="FlexibleStopPlaceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="FlexibleStopPlaceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="flexibleStopPlaceRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FlexibleStopPlaceRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleQuayIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleQuayRef" type="FlexibleQuayRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="FlexibleQuayRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="FlexibleQuayIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FlexibleAreaIdType">
+    <xsd:restriction base="FlexibleQuayIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FlexibleAreaRef" type="FlexibleAreaRefStructure" substitutionGroup="FlexibleQuayRef"/>
+  <xsd:complexType name="FlexibleAreaRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FlexibleQuayRefStructure">
+        <xsd:attribute name="ref" type="FlexibleAreaIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="HailAndRideAreaIdType">
+    <xsd:restriction base="FlexibleQuayIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="HailAndRideAreaRef" type="HailAndRideAreaRefStructure" substitutionGroup="FlexibleQuayRef"/>
+  <xsd:complexType name="HailAndRideAreaRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FlexibleQuayRefStructure">
+        <xsd:attribute name="ref" type="HailAndRideAreaIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

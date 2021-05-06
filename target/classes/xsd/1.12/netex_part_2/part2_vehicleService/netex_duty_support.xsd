@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_duty_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship.xsd"/>
+  <!-- ==== DUTY ======================================================= -->
+  <xsd:simpleType name="DutyIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DutyRef" type="DutyRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DutyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="DutyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- === ACCOUNTABLE ELEMENT ================================================= -->
+  <xsd:simpleType name="AccountableElementIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AccountableElementRef" type="AccountableElementRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="AccountableElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="AccountableElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===== DUTY PART ==================================================== -->
+  <xsd:simpleType name="DutyPartIdType">
+    <xsd:restriction base="AccountableElementIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DutyPartRef" type="DutyPartRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DutyPartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AccountableElementRefStructure">
+        <xsd:attribute name="ref" type="DutyPartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- === DRIVER====================================================== -->
+  <xsd:simpleType name="DriverTripIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DriverTripRef" type="DriverTripRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DriverTripRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="DriverTripIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === DRIVEETRIP TIME -->
+  <xsd:simpleType name="DriverTripTimeIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DriverTripTimeRef" type="DriverTripTimeRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DriverTripTimeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="DriverTripTimeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

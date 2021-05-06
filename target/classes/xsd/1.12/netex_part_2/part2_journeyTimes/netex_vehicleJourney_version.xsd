@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleJourney_version">
+  <xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_route_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_vehicleStopping_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_version.xsd"/>
+  <xsd:include schemaLocation="netex_journey_version.xsd"/>
+  <xsd:include schemaLocation="netex_vehicleJourneyFrequency_version.xsd"/>
+  <xsd:include schemaLocation="netex_vehicleJourneyTimes_version.xsd"/>
+  <xsd:include schemaLocation="netex_passingTimes_version.xsd"/>
+  <xsd:include schemaLocation="netex_coupledJourney_version.xsd"/>
+  <xsd:include schemaLocation="netex_vehicleJourneyFrequency_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="trainNumbersInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TrainNumber" maxOccurs="1"/>
+          <xsd:element ref="TrainNumberRef"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="vehicleJourneyStopAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="VehicleJourneyStopAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- === BEHICL JOURNEY =================================================== -->
+  <xsd:element name="VehicleJourney_" type="Journey_VersionStructure" abstract="true" substitutionGroup="Journey_"/>
+  <xsd:element name="VehicleJourney" abstract="false" substitutionGroup="VehicleJourney_" id="VehicleJourney">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleJourney_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="VehicleJourneyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleJourneyIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleJourney_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Journey_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleJourneyGroup">
+    <xsd:sequence>
+      <xsd:group ref="VehicleJourneyPropertiesGroup"/>
+      <xsd:group ref="VehicleJourneyTimesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleJourneyPropertiesGroup">
+    <xsd:sequence>
+      <xsd:group ref="ServiceTimeGroup"/>
+      <xsd:group ref="VehicleJourneyReferencesGroup"/>
+      <xsd:group ref="VehicleJourneyPartsGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleJourneyPartsGroup">
+    <xsd:sequence>
+      <xsd:element name="timeDemandTypes" type="timeDemandTypeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="parts" type="journeyParts_RelStructure" minOccurs="0"/>
+      <xsd:element name="trainComponentLabelAssignments" type="trainComponentLabelAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="vehicleJourneyStopAssignments" type="vehicleJourneyStopAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleJourneyTimesGroup">
+    <xsd:sequence>
+      <xsd:element name="waitTimes" type="vehicleJourneyWaitTimes_RelStructure" minOccurs="0"/>
+      <xsd:element name="runTimes" type="vehicleJourneyRunTimes_RelStructure" minOccurs="0"/>
+      <xsd:element name="layovers" type="vehicleJourneyLayovers_RelStructure" minOccurs="0"/>
+      <xsd:element name="passingTimes" type="timetabledPassingTimes_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VehicleJourneyReferencesGroup">
+    <xsd:sequence>
+      <xsd:element name="dayTypes" type="dayTypeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element ref="RouteRef" minOccurs="0"/>
+      <xsd:element ref="JourneyPatternRef" minOccurs="0"/>
+      <xsd:element name="TimeDemandTypeRef" type="TimeDemandTypeRefStructure" minOccurs="0"/>
+      <xsd:element ref="TimingAlgorithmTypeRef" minOccurs="0"/>
+      <xsd:element ref="JourneyFrequencyGroupRef" minOccurs="0"/>
+      <xsd:element ref="VehicleTypeRef" minOccurs="0"/>
+      <xsd:element ref="OperationalContextRef" minOccurs="0"/>
+      <xsd:element ref="BlockRef" minOccurs="0"/>
+      <xsd:element ref="CourseOfJourneysRef" minOccurs="0"/>
+      <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ServiceTimeGroup">
+    <xsd:sequence>
+      <xsd:element name="DepartureTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="DepartureDayOffset" type="DayOffsetType" minOccurs="0"/>
+      <xsd:element name="Frequency" type="FrequencyStructure" minOccurs="0"/>
+      <xsd:element name="JourneyDuration" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====TEMPLATE VEHICLE JOURNEY=========================================== -->
+  <xsd:element name="TemplateVehicleJourney" abstract="false" substitutionGroup="VehicleJourney_" id="TemplateTemplateVehicleJourney">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TemplateVehicleJourney_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="TemplateVehicleJourneyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleJourneyIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TemplateVehicleJourney_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Journey_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TemplateVehicleJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TemplateVehicleJourneyGroup">
+    <xsd:sequence>
+      <xsd:element name="TemplateVehicleJourneyType" type="TemplateVehicleJourneyTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="frequencyGroups" type="frequencyGroups_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==== TRAIN NUMBER ============================================================== -->
+  <xsd:element name="TrainNumber" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TrainNumber_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TrainNumberGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TrainNumberIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TrainNumber_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="TrainNumberGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TrainNumberGroup">
+    <xsd:sequence>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ForAdvertisement" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="ForProduction" type="xsd:normalizedString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ===== TRAIN COMPONENT LABEL ASSIGNMENT ==================================== -->
+  <xsd:complexType name="trainComponentLabelAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TrainComponentLabelAssignmentRef"/>
+          <xsd:element ref="TrainComponentLabelAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TrainComponentLabelAssignment" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TrainComponentLabelAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TrainComponentLabelAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TrainComponentLabelAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TrainComponentLabelAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TrainComponentLabelAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TrainComponentLabelAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+      <xsd:element ref="TrainComponentRef"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======== VEHICLE TYPE STOP ASSIGNMENT ========================== -->
+  <xsd:complexType name="vehicleTypeStopAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="VehicleTypeStopAssignmentRef"/>
+          <xsd:element ref="VehicleTypeStopAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleTypeStopAssignment" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleTypeStopAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleTypeStopAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleTypeStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleTypeStopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleTypeStopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleTypeStopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element name="VehicleOrientation" type="VehicleOrientationEnumeration" default="forwards" minOccurs="0"/>
+      <xsd:element ref="VehicleStoppingPositionRef" minOccurs="0"/>
+      <xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+      <xsd:element ref="VehicleTypeRef"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ========= TIMING ALGORITHM TYPE=========================================== -->
+  <xsd:element name="TimingAlgorithmType" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingAlgorithmType_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingAlgorithmTypeIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingAlgorithmType_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======= VEHICLE JOURNEY STOP ASSIGNMENT ============================ -->
+  <xsd:complexType name="vehicleJourneyStopAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="VehicleJourneyStopAssignmentRef"/>
+          <xsd:element ref="VehicleJourneyStopAssignment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleJourneyStopAssignment" abstract="false" substitutionGroup="StopAssignment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleJourneyStopAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PassengerStopAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleJourneyStopAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleJourneyStopAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleJourneyStopAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PassengerStopAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleJourneyStopAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleJourneyStopAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="VehicleJourneyRef" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="PassengerStopAssignmentRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

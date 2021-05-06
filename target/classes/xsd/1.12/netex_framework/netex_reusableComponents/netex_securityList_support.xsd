@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_securityList_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_support.xsd"/>
+  <!-- =====SECURITY LIST =========================================== -->
+  <xsd:complexType name="securitylistRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="SecurityListRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SecurityListIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SecurityListRef" type="SecurityListRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="SecurityListRefStructure" abstract="true">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="SecurityListIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== BLACK LIST ============================================== -->
+  <xsd:complexType name="blacklistRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="BlacklistRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="BlacklistIdType">
+    <xsd:restriction base="SecurityListIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="BlacklistRef" type="BlacklistRefStructure" abstract="false" substitutionGroup="SecurityListRef"/>
+  <xsd:complexType name="BlacklistRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListRefStructure">
+        <xsd:attribute name="ref" type="BlacklistIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====WHITE LIST ============================================== -->
+  <xsd:complexType name="whitelistRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="WhitelistRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="WhitelistIdType">
+    <xsd:restriction base="SecurityListIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WhitelistRef" type="WhitelistRefStructure" abstract="false" substitutionGroup="SecurityListRef"/>
+  <xsd:complexType name="WhitelistRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListRefStructure">
+        <xsd:attribute name="ref" type="WhitelistIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =============================================================== -->
+  <!-- ====CUSTOMER.======================================================== -->
+  <xsd:complexType name="SecurityListingRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="SecurityListingRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SecurityListingIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SecurityListingRef" type="SecurityListingRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="SecurityListingRefStructure" abstract="true">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="SecurityListingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF SECURITY LIST.  -->
+  <xsd:complexType name="typeOfSecurityListRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfSecurityListRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfSecurityListIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfSecurityListRef" type="TypeOfSecurityListRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfSecurityListRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfSecurityListIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

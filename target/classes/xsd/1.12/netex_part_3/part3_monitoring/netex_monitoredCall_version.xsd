@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_monitoredCall_version">
+  <xsd:include schemaLocation="netex_monitoredPassingTimes_version.xsd"/>
+  <xsd:include schemaLocation="netex_monitoredVehicleJourney_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_call_version.xsd"/>
+  <!-- ==== CALL =========================================-->
+  <!-- ====MonitoredCall=========================================-->
+  <xsd:complexType name="monitoredCalls_RelStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="MonitoredCall" minOccurs="2" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MonitoredCall">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="MonitoredCall_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CallGroup"/>
+              <!-- The FacilityChangeElement has bee removed here in Siri 1.1, but it is still available at the same place through the AimedCallGroup->DisruptionGroup 
+                  (DisruptionGroup has been added to AimedCallGroup)
+            <xsd:element ref="FacilityChangeElement" minOccurs="0"/>
+            -->
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="MonitoredCallGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="MonitoredCallIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="MonitoredCall_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Call_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="MonitoredCallGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="MonitoredCallGroup">
+    <xsd:sequence>
+      <xsd:element ref="TargetPassingTimeView" minOccurs="0"/>
+      <xsd:element ref="EstimatedPassingTimeView" minOccurs="0"/>
+      <xsd:element ref="ObservedPassingTimeView" minOccurs="0"/>
+      <xsd:element name="previousCalls" type="previousCalls_RelStructure" minOccurs="0"/>
+      <xsd:element name="onwardCalls" type="onwardCalls_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====onwards=========================================-->
+  <xsd:complexType name="onwardCalls_RelStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="OnwardCall" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OnwardCall">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OnwardCall_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CallGroup"/>
+              <!-- The FacilityChangeElement has bee removed here in Siri 1.1, but it is still available at the same place through the AimedCallGroup->DisruptionGroup 
+                  (DisruptionGroup has been added to AimedCallGroup)
+            <xsd:element ref="FacilityChangeElement" minOccurs="0"/>
+            -->
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OnwardCallGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OnwardCallIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OnwardCall_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Call_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="OnwardCallGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OnwardCallGroup">
+    <xsd:sequence>
+      <xsd:element ref="TargetPassingTimeView" minOccurs="0"/>
+      <xsd:element ref="EstimatedPassingTimeView" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====previous=========================================-->
+  <xsd:complexType name="previousCalls_RelStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PreviousCall" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PreviousCall">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PreviousCall_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CallGroup"/>
+              <!-- The FacilityChangeElement has bee removed here in Siri 1.1, but it is still available at the same place through the AimedCallGroup->DisruptionGroup 
+                  (DisruptionGroup has been added to AimedCallGroup)
+            <xsd:element ref="FacilityChangeElement" minOccurs="0"/>
+            -->
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PreviousCallGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PreviousCallIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PreviousCall_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Call_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="PreviousCallGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PreviousCallGroup">
+    <xsd:sequence>
+      <xsd:element ref="TargetPassingTimeView" minOccurs="0"/>
+      <xsd:element ref="EstimatedPassingTimeView" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

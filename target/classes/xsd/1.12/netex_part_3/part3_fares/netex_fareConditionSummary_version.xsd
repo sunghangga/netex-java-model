@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareConditionSummary_version">
+  <xsd:include schemaLocation="netex_fareConditionSummary_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ConditionSummary================================================== -->
+  <xsd:element name="ConditionSummary" type="ConditionSummaryStructure"/>
+  <xsd:complexType name="ConditionSummaryStructure">
+    <xsd:sequence>
+      <xsd:element name="FareStructureType" type="FareStructureTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="TariffBasis" type="TariffBasisEnumeration" minOccurs="0"/>
+      <xsd:element name="HasNotices" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:group ref="ConditionSummaryCardGroup"/>
+      <xsd:group ref="ConditionSummaryEntitlementGroup"/>
+      <xsd:group ref="ConditionSummaryTravelGroup"/>
+      <xsd:group ref="ConditionSummaryCommercialGroup"/>
+      <xsd:group ref="ConditionSummaryReservationGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="ConditionSummaryCardGroup">
+    <xsd:sequence>
+      <xsd:element name="ProvidesCard" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="GoesOnCard" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="IsPersonal" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="RequiresPhoto" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="MustCarry" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="RequiresAccount" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConditionSummaryEntitlementGroup">
+    <xsd:sequence>
+      <xsd:element name="IsSupplement" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="RequiresEntitlement" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="GivesEntitlement" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConditionSummaryTravelGroup">
+    <xsd:sequence>
+      <xsd:element name="HasOperatorRestrictions" type="OperatorRestrictionsEnumeration" default="anyTrain" minOccurs="0"/>
+      <xsd:element name="HasTravelTimeRestrictions" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasRouteRestrictions" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="TrainRestrictions" type="TrainRestrictionsEnumeration" default="anyTrain" minOccurs="0"/>
+      <xsd:element name="HasZoneRestrictions" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="CanBreakJourney" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="ReturnTripsOnly" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="NightTrain" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConditionSummaryCommercialGroup">
+    <xsd:sequence>
+      <xsd:element name="CanChangeClass" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="IsRefundable" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="IsExchangable" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="HasExchangeFee" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasDiscountedFares" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="AllowAdditionalDiscounts" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="AllowCompanionDiscounts" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasMinimumPrice" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="RequiresPositiveBalance" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConditionSummaryReservationGroup">
+    <xsd:sequence>
+      <xsd:element name="HasPurchaseConditions" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasDynamicPricing" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="RequiresReservation" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasReservationFee" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="HasQuota" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ConditionSummaryChargingGroup">
+    <xsd:sequence>
+      <xsd:element name="PenaltyIfWithoutTicket" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="AvailableOnSubscription" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

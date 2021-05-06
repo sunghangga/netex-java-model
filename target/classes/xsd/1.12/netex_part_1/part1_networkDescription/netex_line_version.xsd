@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_line_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_utility/netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_submode_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_grouping_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_noticeAssignment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_version.xsd"/>
+  <xsd:include schemaLocation="netex_line_support.xsd"/>
+  <xsd:include schemaLocation="netex_route_support.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="NetworkInFrameGroup">
+    <xsd:sequence>
+      <xsd:element ref="Network" minOccurs="0"/>
+      <xsd:element name="additionalNetworks" type="networksInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LineInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="lines" type="linesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfLines" type="groupsOfLinesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="destinationDisplays" type="destinationDisplaysInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="groupsOfLinesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfLines" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="networksInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Network" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="purposesOfGroupingInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PurposeOfGrouping" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="destinationDisplaysInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="DestinationDisplay" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==GROUP OF LINES============================================================ -->
+  <xsd:element name="GroupOfLines" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfLines_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfLinesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfLinesIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfLines_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfLinesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfLinesGroup">
+    <xsd:sequence>
+      <xsd:element name="UseToExclude" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="members" type="lineRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="MainLineRef" type="LineRefStructure" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0"/>
+      <xsd:element ref="TransportSubmode" minOccurs="0"/>
+      <xsd:element name="GroupOfLinesType" type="GroupOfLinesTypeEnumeration" minOccurs="0"/>
+      <xsd:group ref="LinePaymentMethodGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==Line============================================================ -->
+  <xsd:complexType name="linesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Line_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Line_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject">
+    <!--
+		<xsd:unique name="AnyLine">
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="Id"/>
+		</xsd:unique>
+		<xsd:unique name="AnyLineDirection">
+			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+			<xsd:field xpath="@ref"/>
+		</xsd:unique>
+	<xsd:unique name="UniqueLineId">
+			<xsd:annotation>
+				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="./netex:Id"/>
+		</xsd:unique> -->
+  </xsd:element>
+  <xsd:element name="Line" abstract="false" substitutionGroup="Line_" id="Line">
+    <!--
+		<xsd:unique name="AnyLine">
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="Id"/>
+		</xsd:unique>
+		<xsd:unique name="AnyLineDirection">
+			<xsd:selector xpath=".//netex:allowedDirections/DirectionRef"/>
+			<xsd:field xpath="@ref"/>
+		</xsd:unique>
+	<xsd:unique name="UniqueLineId">
+			<xsd:annotation>
+				<xsd:appinfo>Line identifiers must be unique for Type/Version</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:selector xpath=".//netex:Line"/>
+			<xsd:field xpath="@version"/>
+			<xsd:field xpath="./netex:Id"/>
+		</xsd:unique> -->
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Line_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LineGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LineIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Line_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="LineGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LineGroup">
+    <xsd:sequence>
+      <xsd:group ref="LineDescriptionGroup"/>
+      <xsd:group ref="LineCodeGroup"/>
+      <xsd:group ref="LinePropertiesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LineDescriptionGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0"/>
+      <xsd:element ref="TransportSubmode" minOccurs="0"/>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LineCodeGroup">
+    <xsd:sequence>
+      <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="ExternalLineRef" type="ExternalObjectRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LinePropertiesGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="AuthorityRef"/>
+        <xsd:element ref="OperatorRef"/>
+      </xsd:choice>
+      <xsd:element name="additionalOperators" type="transportOrganisationRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="otherModes" type="modeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element ref="OperationalContextRef" minOccurs="0"/>
+      <xsd:group ref="LineClassificationGroup"/>
+      <xsd:element name="Monitored" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="routes" type="routeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="RepresentedByGroupRef" type="GroupOfLinesRefStructure" minOccurs="0"/>
+      <xsd:group ref="LinePresentationGroup"/>
+      <xsd:group ref="LinePaymentMethodGroup"/>
+      <xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0"/>
+      <xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+      <xsd:element name="allowedDirections" type="allowedLineDirections_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="documentLinks" type="infoLinks_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LineClassificationGroup">
+    <xsd:sequence>
+      <xsd:element name="LineType" type="LineTypeEnumeration" minOccurs="0"/>
+      <xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+      <xsd:element name="ExternalProductCategoryRef" type="ExternalObjectRefStructure" minOccurs="0"/>
+      <xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfServiceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LinePresentationGroup">
+    <xsd:sequence>
+      <xsd:element name="Presentation" type="PresentationStructure" minOccurs="0"/>
+      <xsd:element name="AlternativePresentation" type="PresentationStructure" minOccurs="0"/>
+      <xsd:element name="PrintedPresentation" type="PrintPresentationStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LinePaymentMethodGroup">
+    <xsd:sequence>
+      <xsd:element name="PaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="typesOfPaymentMethod" type="TypeOfPaymentMethod_ValueStructure" minOccurs="0"/>
+      <xsd:element name="PurchaseMoment" type="PurchaseMomentListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Network" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Network_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfLinesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NetworkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Network_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfLines_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="NetworkGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NetworkGroup">
+    <xsd:sequence>
+      <xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+      <xsd:element name="groupsOfOperators" type="groupsOfTransportOrganisationsRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfLines" type="groupsOfLinesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="tariffZones" type="tariffZoneRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="DestinationDisplay" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DestinationDisplay_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DestinationDisplayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DestinationDisplayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DestinationDisplay_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="DestinationDisplayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DestinationDisplayGroup">
+    <xsd:sequence>
+      <xsd:group ref="DestinationDisplayNameGroup"/>
+      <xsd:group ref="DestinationDisplayCodeGroup"/>
+      <xsd:element name="Presentation" type="PresentationStructure" minOccurs="0"/>
+      <xsd:element name="vias" type="vias_RelStructure" minOccurs="0"/>
+      <xsd:element name="variants" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="destinationDisplayVariants_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DestinationDisplayNameGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="SideText" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="FrontText" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="DriverDisplayText" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DestinationDisplayCodeGroup">
+    <xsd:sequence>
+      <xsd:element name="ShortCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="destinationDisplayVariants_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="DestinationDisplayVariant" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DestinationDisplayVariant" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DestinationDisplayVariant_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DestinationDisplayVariantGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DestinationDisplayVariantIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DestinationDisplayVariant_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="DestinationDisplayVariantGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DestinationDisplayVariantGroup">
+    <xsd:sequence>
+      <xsd:element ref="DestinationDisplayRef" minOccurs="0"/>
+      <xsd:element name="DestinationDisplayContext" type="DestinationDisplayContextEnumeration" default="any" minOccurs="0"/>
+      <xsd:element name="DestinationDisplayVariantMediaType" type="DeliveryVariantTypeEnumeration" default="any"/>
+      <xsd:group ref="DestinationDisplayNameGroup"/>
+      <xsd:element name="vias" type="vias_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="vias_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice>
+          <xsd:element name="None" type="EmptyType"/>
+          <xsd:sequence maxOccurs="1">
+            <xsd:element name="Via" type="Via_VersionedChildStructure" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DestinationViaGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="DestinationDisplayRef"/>
+        <xsd:element ref="DestinationDisplayView"/>
+      </xsd:choice>
+      <xsd:element name="vias" type="vias_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="Via_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:group ref="ViaGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ViaGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="DestinationDisplayRef"/>
+        <xsd:element ref="DestinationDisplayView"/>
+        <xsd:element name="Name" type="MultilingualString"/>
+      </xsd:choice>
+      <xsd:element ref="RoutePointRef" minOccurs="0"/>
+      <xsd:element name="ViaType" type="ViaTypeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==Line============================================================ -->
+  <xsd:complexType name="allowedLineDirections_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="AllowedLineDirectionRef"/>
+          <xsd:element ref="AllowedLineDirection"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AllowedLineDirection" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AllowedLineDirection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AllowedLineDirectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AllowedLineDirectionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AllowedLineDirection_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="AllowedLineDirectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AllowedLineDirectionGroup">
+    <xsd:sequence>
+      <xsd:element ref="LineRef" minOccurs="0"/>
+      <xsd:element ref="DirectionRef"/>
+      <xsd:element name="Presentation" type="PresentationStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="linesInDirectionRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="LineInDirectionRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LineInDirectionRef" type="LineInDirectionRef_Structure" abstract="false"/>
+  <xsd:complexType name="LineInDirectionRef_Structure">
+    <xsd:sequence>
+      <xsd:element ref="LineRef" minOccurs="0"/>
+      <xsd:element ref="DirectionRef" minOccurs="0"/>
+      <xsd:element name="ExternalLineRef" type="ExternalObjectRefStructure" minOccurs="0"/>
+      <xsd:element name="ExternalDirectionRef" type="ExternalObjectRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="NetworkView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="Network_DerivedViewStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Network_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="NetworkRef" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="LineView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="Line_DerivedViewStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Line_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="LineRef" minOccurs="0"/>
+          <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" minOccurs="0"/>
+          <xsd:element ref="TransportSubmode" minOccurs="0"/>
+          <xsd:element ref="OperatorRef" minOccurs="0"/>
+          <xsd:element ref="TypeOfLineRef" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="destinationDisplayViews_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DestinationDisplayRef"/>
+          <xsd:element ref="DestinationDisplayView"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DestinationDisplayView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="DestinationDisplay_DerivedViewStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DestinationDisplay_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="keyList" minOccurs="0"/>
+          <xsd:element ref="DestinationDisplayRef" minOccurs="0"/>
+          <xsd:group ref="DestinationDisplayNameGroup"/>
+          <xsd:group ref="DestinationDisplayCodeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfLine" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfLine_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfLineIdType"/>
+          <xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Line"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfLine_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by christophe duquesne (Dryade SARL) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_address_support">
+  <xsd:include schemaLocation="../netex_genericFramework/netex_place_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!--=============================================================================-->
+  <xsd:simpleType name="AddressIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AddressRef" type="AddressRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="AddressRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="AddressIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--=============================================================================-->
+  <xsd:simpleType name="AddressablePlaceIdType">
+    <xsd:restriction base="PlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AddressablePlaceRef" type="AddressablePlaceRefStructure" substitutionGroup="PlaceRef_"/>
+  <xsd:complexType name="AddressablePlaceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PlaceRefStructure">
+        <xsd:attribute name="ref" type="AddressablePlaceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--=============================================================================-->
+  <xsd:simpleType name="RoadAddressIdType">
+    <xsd:restriction base="AddressIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoadAddressRef" type="RoadAddressRefStructure" substitutionGroup="AddressRef"/>
+  <xsd:complexType name="RoadAddressRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AddressRefStructure">
+        <xsd:attribute name="ref" type="RoadAddressIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PostalAddressIdType">
+    <xsd:restriction base="AddressIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PostalAddressRef" type="PostalAddressRefStructure" substitutionGroup="AddressRef"/>
+  <xsd:complexType name="PostalAddressRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AddressRefStructure">
+        <xsd:attribute name="ref" type="PostalAddressIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--=============================================================================-->
+</xsd:schema>

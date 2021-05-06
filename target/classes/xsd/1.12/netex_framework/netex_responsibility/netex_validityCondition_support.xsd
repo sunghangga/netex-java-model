@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_validityCondition_support">
+  <xsd:include schemaLocation="netex_relationship.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ValidityConditionIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ValidityConditionRef" type="ValidityConditionRefStructure" abstract="false" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ValidityConditionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ValidityConditionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="validityConditionRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ValidityConditionRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BooleanOperatorEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="AND"/>
+      <xsd:enumeration value="OR"/>
+      <xsd:enumeration value="NOT"/>
+      <xsd:enumeration value="XOR"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SetOperatorEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="oneOfAnyOneSet"/>
+      <xsd:enumeration value="oneOfEachSet"/>
+      <xsd:enumeration value="someOfAnySet"/>
+      <xsd:enumeration value="allOfOneSet"/>
+      <xsd:enumeration value="allOfAllSets"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RelativeOperatorEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="EQ"/>
+      <xsd:enumeration value="NE"/>
+      <xsd:enumeration value="GE"/>
+      <xsd:enumeration value="GT"/>
+      <xsd:enumeration value="LE"/>
+      <xsd:enumeration value="LT"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ValidityTriggerIdType">
+    <xsd:restriction base="ValidityConditionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ValidityTriggerRef" type="ValidityTriggerRefStructure" substitutionGroup="ValidityConditionRef"/>
+  <xsd:complexType name="ValidityTriggerRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ValidityConditionRefStructure">
+        <xsd:attribute name="ref" type="ValidityTriggerIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="validityTriggerRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ValidityTriggerRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ValidityRuleParameterIdType">
+    <xsd:restriction base="ValidityConditionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ValidityRuleParameterRef" type="ValidityRuleParameterRefStructure" substitutionGroup="ValidityConditionRef"/>
+  <xsd:complexType name="ValidityRuleParameterRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ValidityConditionRefStructure">
+        <xsd:attribute name="ref" type="ValidityRuleParameterIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="validityRuleParameterRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="ValidityRuleParameterRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

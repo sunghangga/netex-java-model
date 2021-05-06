@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_section_version">
+  <xsd:include schemaLocation="netex_section_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_pointAndLink_version.xsd"/>
+  <xsd:include schemaLocation="netex_pointAndLinkSequence_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="generalSectionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GeneralSection" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ==COMMON SECTION=========================================================== -->
+  <xsd:element name="Section_" type="LinkSequence_VersionStructure" abstract="true"/>
+  <xsd:element name="Section" abstract="true" substitutionGroup="Section_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="Section_VersionStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Section_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="LinkSequence_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SectionGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="nameOfLinkClass" type="NameOfClass"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SectionGroup">
+    <xsd:sequence>
+      <xsd:element ref="PurposeOfGroupingRef" minOccurs="0"/>
+      <xsd:element name="usedIn" type="linkSequenceRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="GeneralSection" abstract="false" substitutionGroup="Section_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeneralSection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SectionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeneralSectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeneralSectionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeneralSection_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Section_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeneralSectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeneralSectionGroup">
+    <xsd:sequence>
+      <xsd:element name="pointsOnSection" type="pointsOnSection_RelStructure" minOccurs="0"/>
+      <xsd:element name="linksOnSection" type="linksOnSection_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====DEPRECATED============================================================ -->
+  <xsd:complexType name="commonSectionPointMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CommonSectionPointMember" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CommonSectionPointMember" type="PointOnSection_VersionedChildStructure"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="pointsOnSection_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PointOnSection_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PointOnSection_" type="PointInLinkSequence_VersionedChildStructure" abstract="true" substitutionGroup="PointInLinkSequence"/>
+  <xsd:element name="PointOnSection" substitutionGroup="PointOnSection_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PointOnSection_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:choice>
+                <xsd:element ref="PointRef"/>
+                <xsd:element ref="Point"/>
+              </xsd:choice>
+              <xsd:element ref="LinkRef" minOccurs="0"/>
+              <xsd:element name="Reverse" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PointOnSectionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PointOnSection_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PointInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element ref="PointRef"/>
+            <xsd:element ref="Point"/>
+          </xsd:choice>
+          <xsd:element ref="LinkRef" minOccurs="0"/>
+          <xsd:element name="Reverse" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="linksOnSection_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="LinkOnSection" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LinkOnSection" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LinkOnSection_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:choice>
+                <xsd:element ref="LinkRef"/>
+                <xsd:element ref="Link"/>
+              </xsd:choice>
+              <xsd:element name="Reverse" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LinkOnSectionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LinkOnSection_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LinkInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element ref="LinkRef"/>
+            <xsd:element ref="Link"/>
+          </xsd:choice>
+          <xsd:element name="Reverse" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="sectionsInSequence_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="SectionInSequence" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SectionInSequence" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SectionInSequence_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SectionInSequenceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SectionInSequence_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LinkInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="SectionInSequenceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SectionInSequenceGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="SectionRef"/>
+        <xsd:element ref="Section_"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

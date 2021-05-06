@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterCharging_version">
+  <xsd:include schemaLocation="netex_usageParameterCharging_support.xsd"/>
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==== CHARGING POLICY USER PARAMETER ================================================ -->
+  <xsd:element name="ChargingPolicy" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ChargingPolicy_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ChargingPolicyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ChargingPolicyIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ChargingPolicy_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ChargingPolicyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ChargingPolicyGroup">
+    <xsd:sequence>
+      <xsd:element name="CreditPolicy" type="TravelCreditPolicyEnumeration" minOccurs="0"/>
+      <xsd:element name="ExpireAfterPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="PaymentGracePeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="BillingPolicy" type="TravelBillingPolicyEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== PENALTY POLICY USER PARAMETER ================================================ -->
+  <xsd:element name="PenaltyPolicy" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PenaltyPolicy_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PenaltyPolicyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PenaltyPolicyIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PenaltyPolicy_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PenaltyPolicyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PenaltyPolicyGroup">
+    <xsd:sequence>
+      <xsd:element name="PenaltyPolicyType" type="PenaltyPolicyTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="SameStationRentryPolicy" type="SameStationReentryPolicyEnumeration" minOccurs="0"/>
+      <xsd:element name="MinimumTimeBeforeReentry" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfFailToCheckOutEvents" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== SUBSCRIBING USER PARAMETER ================================================ -->
+  <xsd:element name="Subscribing" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Subscribing_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SubscribingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SubscribingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Subscribing_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SubscribingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SubscribingGroup">
+    <xsd:sequence>
+      <xsd:group ref="SubscribingTermGroup"/>
+      <xsd:group ref="SubscribingPaymentGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SubscribingTermGroup">
+    <xsd:sequence>
+      <xsd:element name="SubscriptionTermType" type="SubscriptionTermTypeEnumeration" default="fixed" minOccurs="0"/>
+      <xsd:element name="MinimumSubscriptionPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumSubscriptionPeriod" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="SubscriptionRenewalPolicy" type="SubscriptionRenewalPolicyEnumeration" default="automatic" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SubscribingPaymentGroup">
+    <xsd:sequence>
+      <xsd:element name="possibleInstallmenttIntervals" type="timeIntervalRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="InstallmentPaymentMethods" type="PaymentMethodListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="installmentTypesOfPaymentMethod" type="TypeOfPaymentMethodRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

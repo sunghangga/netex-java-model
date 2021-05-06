@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_noticeAssignment_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_pointAndLink_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_section_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_assignment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_notice_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="noticeAssignmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="NoticeAssignment_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NoticesInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="notices" type="noticesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignmentsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="noticeAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="NoticeAssignment_" maxOccurs="1"/>
+          <xsd:element ref="NoticeAssignmentView"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NoticeAssignment_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="Assignment_"/>
+  <xsd:element name="NoticeAssignment" abstract="false" substitutionGroup="NoticeAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="NoticeAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NoticeAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NoticeAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="NoticeAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="NoticeAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NoticeAssignmentGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="NoticeRef"/>
+        <xsd:element name="GroupOfNoticesRef" type="GeneralGroupOfEntitiesRefStructure"/>
+        <xsd:element ref="Notice"/>
+      </xsd:choice>
+      <xsd:element name="NoticedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:group ref="NoticeLinkAssignmentGroup"/>
+      <xsd:group ref="NoticeAssignmentPropertiesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="NoticeLinkAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element ref="LinkSequenceRef" minOccurs="0"/>
+      <xsd:element ref="SectionRef" minOccurs="0"/>
+      <xsd:element name="StartPointInPatternRef" type="PointInSequenceRefStructure" minOccurs="0"/>
+      <xsd:element name="EndPointInPatternRef" type="PointInSequenceRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="NoticeAssignmentPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="Mark" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="MarkUrl" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="PublicityChannel" type="PublicityChannelEnumeration" default="all" minOccurs="0"/>
+      <xsd:element name="Advertised" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="noticeAssignmentViews_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="NoticeAssignmentView" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NoticeAssignmentView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="NoticeAssignment_DerivedViewStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DerivedViewGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="NoticeRef" minOccurs="0"/>
+              <xsd:group ref="NoticeAssignmentPropertiesGroup"/>
+              <xsd:group ref="NoticePropertiesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NoticeAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="NoticeAssignment_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element ref="NoticeRef" minOccurs="0"/>
+          <xsd:group ref="NoticeAssignmentPropertiesGroup"/>
+          <xsd:group ref="NoticePropertiesGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

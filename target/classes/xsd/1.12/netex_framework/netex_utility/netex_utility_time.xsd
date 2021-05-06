@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_utility_time">
+  <!-- ===Dependencies ======================================= -->
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!-- ======================================================================= -->
+  <!-- =====Times================================================================== -->
+  <xsd:complexType name="ClosedTimestampRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:dateTime"/>
+      <xsd:element name="EndTime" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ClosedTimeRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:time"/>
+      <xsd:element name="EndTime" type="xsd:time"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="HalfOpenTimeRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:time"/>
+      <xsd:element name="EndTime" type="xsd:time" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="HalfOpenTimestampRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:dateTime"/>
+      <xsd:element name="EndTime" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OpenTimeRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="EndTime" type="xsd:time" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OpenTimestampRangeStructure">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="EndTime" type="xsd:dateTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

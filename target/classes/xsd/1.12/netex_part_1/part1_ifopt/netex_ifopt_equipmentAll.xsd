@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<!-- 2007 03 23 Add repeating name -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentAll">
+  <!-- ======================================================================= -->
+  <!--.....These are the actual dependencies...-->
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentVehiclePassenger_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentSigns_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentSigns_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAccess_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentWaiting_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentWaiting_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentTicketing_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentTicketing_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentParking_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentParking_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentPassenger_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentPassenger_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_localService_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_localService_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_localServiceCommercial_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_localServiceCommercial_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:group name="AllEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="equipmentPlaces" type="equipmentPlaces_RelStructure" minOccurs="0"/>
+      <xsd:element name="placeEquipments" type="placeEquipments_RelStructure" minOccurs="0"/>
+      <xsd:element name="localServices" type="localServices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="explicitEquipments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="InstalledEquipmentRef"/>
+          <xsd:element ref="InstalledEquipment"/>
+          <xsd:element ref="LocalServiceRef"/>
+          <xsd:element ref="LocalService"/>
+          <xsd:element ref="OtherPlaceEquipment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="explicitPlaceEquipments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="OtherPlaceEquipment" minOccurs="0"/>
+          <xsd:group ref="AccessEquipmentChoice" minOccurs="0"/>
+          <xsd:group ref="SignEquipmentChoice" minOccurs="0"/>
+          <xsd:group ref="PassengerEquipmentChoice" minOccurs="0"/>
+          <xsd:group ref="TicketingEquipmentChoice" minOccurs="0"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="explicitLocalServices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="LocalServiceRef"/>
+          <xsd:element ref="LocalService" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+</xsd:schema>

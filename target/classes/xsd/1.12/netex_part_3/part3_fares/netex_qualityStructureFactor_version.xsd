@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_qualityStructureFactor_version">
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_timeDemandType_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
+  <xsd:include schemaLocation="netex_qualityStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_distanceMatrixElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_fareStructure_version.xsd"/>
+  <xsd:include schemaLocation="netex_farePrice_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="QualityFactorsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="qualityStructureFactors" type="qualityStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== QUALITY STRUCTURE FACTOR.============================= -->
+  <xsd:complexType name="qualityStructureFactors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="QualityStructureFactorRef"/>
+          <xsd:element ref="QualityStructureFactor_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="QualityStructureFactor_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="PriceableObject_"/>
+  <xsd:element name="QualityStructureFactor" abstract="false" substitutionGroup="QualityStructureFactor_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="QualityStructureFactor_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="QualityStructureFactorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="QualityStructureFactorIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="QualityStructureFactor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="QualityStructureFactorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="QualityStructureFactorGroup">
+    <xsd:sequence>
+      <xsd:element name="Value" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="prices" type="qualityStructureFactorPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==  QULAITY STRUCTURE FACTOR PRICE.================================ -->
+  <xsd:complexType name="qualityStructureFactorPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="QualityStructureFactorPriceRef"/>
+          <xsd:element name="QualityStructureFactorPrice" type="QualityStructureFactorPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="QualityStructureFactorPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="QualityStructureFactorPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="QualityStructureFactorPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="QualityStructureFactorPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="QualityStructureFactorPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="QualityStructureFactorPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="QualityStructureFactorPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== FARE DEMAND  FACTOR.============================= -->
+  <xsd:complexType name="fareDemandFactors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareDemandFactorRef"/>
+          <xsd:element ref="FareDemandFactor"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareDemandFactor" abstract="false" substitutionGroup="QualityStructureFactor_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareDemandFactor_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="QualityStructureFactorGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareDemandFactorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareDemandFactorIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareDemandFactor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="QualityStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareDemandFactorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareDemandFactorGroup">
+    <xsd:sequence>
+      <xsd:element name="FareDemandType" type="FareDemandTypeEnumeration" minOccurs="0"/>
+      <xsd:element ref="TimeDemandTypeRef" minOccurs="0"/>
+      <xsd:element name="StopUseConstraint" type="StopUseConstraintEnumeration" minOccurs="0"/>
+      <xsd:element name="startTimesAtStopPoints" type="startTimeAtStopPoints_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== FARE DEMAND  FACTOR.============================= -->
+  <xsd:complexType name="fareQuotaFactors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareQuotaFactorRef"/>
+          <xsd:element ref="FareQuotaFactor"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareQuotaFactor" abstract="false" substitutionGroup="QualityStructureFactor_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareQuotaFactor_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="QualityStructureFactorGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareQuotaFactorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareQuotaFactorIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareQuotaFactor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="QualityStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareQuotaFactorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareQuotaFactorGroup">
+    <xsd:sequence>
+      <xsd:element name="NumberOfUnits" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====START TIME AT STOP (For FARE DEMAD FACTOR) .============================= -->
+  <xsd:complexType name="startTimeAtStopPoints_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="StartTimeAtStopPointRef"/>
+          <xsd:element ref="StartTimeAtStopPoint"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StartTimeAtStopPoint" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="StartTimeAtStopPoint_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StartTimeAtStopPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="StartTimeAtStopPointIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="StartTimeAtStopPoint_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="StartTimeAtStopPointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="StartTimeAtStopPointGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareDemandFactorRef" minOccurs="0"/>
+      <xsd:element ref="ScheduledStopPointRef"/>
+      <xsd:element name="StartTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="EndTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="DayOffset" type="DayOffsetType" default="0" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

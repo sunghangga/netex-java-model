@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
+<xsd:schema xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_siri">
+  <!-- ===Dependencies ======================================= -->
+  <!-- ====INCLUDE NETEX REQUESTS==================================================== -->
+  <xsd:import namespace="http://www.netex.org.uk/netex" schemaLocation="netex_service/netex_all.xsd"/>
+  <xsd:import namespace="http://www.netex.org.uk/netex" schemaLocation="netex_service/netex_dataObjectRequest_service.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="siri/siri_base-v2.0.xsd"/>
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!--== SIRI Request include netex Data Object Request ===================================================================== -->
+  <xsd:element name="Siri">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:choice>
+          <xsd:element ref="SiriRequest"/>
+          <xsd:element ref="SiriResponse"/>
+        </xsd:choice>
+        <xsd:element ref="Extensions" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:attribute name="version" type="xsd:NMTOKEN" use="optional" default="1.0"/>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ======================================================================= -->
+  <xsd:element name="SiriRequest" type="SiriRequestStructure"/>
+  <xsd:complexType name="SiriRequestStructure">
+    <xsd:sequence>
+      <xsd:group ref="RequestGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="SiriResponse" type="SiriResponseStructure"/>
+  <xsd:complexType name="SiriResponseStructure">
+    <xsd:sequence>
+      <xsd:group ref="ResponseGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

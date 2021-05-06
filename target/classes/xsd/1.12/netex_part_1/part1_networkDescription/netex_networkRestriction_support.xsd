@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_networkRestriction_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleType_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ==== Restriction====================================================== -->
+  <xsd:simpleType name="NetworkRestrictionIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="NetworkRestrictionRef" type="NetworkRestrictionRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="NetworkRestrictionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="NetworkRestrictionIdType" use="required"/>
+        <xsd:attribute name="order" type="xsd:integer" use="optional"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====Point Restriction====================================================== -->
+  <xsd:simpleType name="VehicleTypeAtPointIdType">
+    <xsd:restriction base="NetworkRestrictionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleTypeAtPointRef" type="VehicleTypeAtPointRefStructure" substitutionGroup="NetworkRestrictionRef"/>
+  <xsd:complexType name="VehicleTypeAtPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="NetworkRestrictionRefStructure">
+        <xsd:attribute name="ref" type="VehicleTypeAtPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====Link Restrictions===================================================== -->
+  <xsd:simpleType name="InfrastructureLinkRestrictionIdType">
+    <xsd:restriction base="NetworkRestrictionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InfrastructureLinkRestrictionRef" type="InfrastructureLinkRestrictionRefStructure" substitutionGroup="NetworkRestrictionRef"/>
+  <xsd:complexType name="InfrastructureLinkRestrictionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="NetworkRestrictionRefStructure">
+        <xsd:attribute name="ref" type="InfrastructureLinkRestrictionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RestrictedManoeuvreIdType">
+    <xsd:restriction base="InfrastructureLinkRestrictionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RestrictedManoeuvreRef" type="RestrictedManoeuvreRefStructure" substitutionGroup="InfrastructureLinkRestrictionRef"/>
+  <xsd:complexType name="RestrictedManoeuvreRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructureLinkRestrictionRefStructure">
+        <xsd:attribute name="ref" type="RestrictedManoeuvreIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="MeetingRestrictionIdType">
+    <xsd:restriction base="InfrastructureLinkRestrictionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="MeetingRestrictionRef" type="MeetingRestrictionRefStructure" substitutionGroup="InfrastructureLinkRestrictionRef"/>
+  <xsd:complexType name="MeetingRestrictionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="InfrastructureLinkRestrictionRefStructure">
+        <xsd:attribute name="ref" type="MeetingRestrictionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="OvertakingPossibilityIdType">
+    <xsd:restriction base="NetworkRestrictionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OvertakingPossibilityRef" type="OvertakingPossibilityRefStructure" substitutionGroup="NetworkRestrictionRef"/>
+  <xsd:complexType name="OvertakingPossibilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="NetworkRestrictionRefStructure">
+        <xsd:attribute name="ref" type="OvertakingPossibilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_fareFrame_version">
+  <xsd:include schemaLocation="../part3_fares/netex_all_objects_part3_fares.xsd"/>
+  <xsd:include schemaLocation="../part3_monitoring/netex_all_objects_part3_monitoring.xsd"/>
+  <xsd:include schemaLocation="../part3_parkingTariff/netex_all_objects_part3_parking.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_fareZone_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_frames/netex_commonFrame_version.xsd"/>
+  <!-- ====  =========================================-->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="FareFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareFrameRef" type="FareFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:complexType name="FareFrameRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="FareFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="FareFrame" substitutionGroup="CommonFrame">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareFrame_VersionFrameStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionFrameGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareFrameGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareFrameIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ====FARE FAME======================================================= -->
+  <xsd:complexType name="FareFrame_VersionFrameStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Common_VersionFrameStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareFrameGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareFrameGroup">
+    <xsd:sequence>
+      <xsd:group ref="FareDefaultsGroup"/>
+      <xsd:group ref="NoticesInFrameGroup"/>
+      <xsd:group ref="FareZoneModelGroup"/>
+      <xsd:group ref="FareStructureModelGroup"/>
+      <xsd:group ref="FareProductsInFrameGroup"/>
+      <xsd:group ref="FarePricesInFrameGroup"/>
+      <xsd:group ref="SalesDescriptionModelGroup"/>
+      <xsd:group ref="ParkingTariffInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareDefaultsGroup">
+    <xsd:sequence>
+      <xsd:element name="Mode" type="VehicleModeEnumeration" minOccurs="0"/>
+      <xsd:element ref="TransportOrganisationRef" minOccurs="0"/>
+      <xsd:element ref="PricingParameterSet" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareZoneModelGroup">
+    <xsd:sequence>
+      <xsd:group ref="FareRoutingInFrameGroup"/>
+      <xsd:group ref="FareSeriesInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareStructureModelGroup">
+    <xsd:sequence>
+      <xsd:group ref="FareFactorsInFrameGroup"/>
+      <xsd:group ref="DistanceMatrixElementsInFrameGroup"/>
+      <xsd:group ref="FareStructureElementsInFrameGroup"/>
+      <xsd:group ref="ValidableElementsInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareStructureGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <xsd:group name="SalesDescriptionModelGroup">
+    <xsd:sequence>
+      <xsd:group ref="SalesDistributionInFrameGroup"/>
+      <xsd:group ref="TypesOfTravelDocumentsInFrameGroup"/>
+      <xsd:group ref="SalesOfferPackageInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Journey========================================-->
+</xsd:schema>

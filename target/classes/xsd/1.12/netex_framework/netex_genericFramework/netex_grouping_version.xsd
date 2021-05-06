@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_grouping_version">
+  <xsd:include schemaLocation="../netex_utility/netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="netex_grouping_support.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_typeOfValue_version.xsd"/>
+  <!-- =====GROUPING=============================================== -->
+  <xsd:complexType name="groupOfEntitiesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfEntities" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GroupOfEntities" type="GroupOfEntities_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="GroupOfEntities_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfEntitiesGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfEntitiesGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PurposeOfGroupingRef" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element name="infoLinks" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="infoLinks_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====GROUPING=============================================== -->
+  <xsd:element name="GeneralGroupOfEntities" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeneralGroupOfEntities_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeneralGroupOfEntitiesGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfEntitiesIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeneralGroupOfEntities_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeneralGroupOfEntitiesGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="nameOfMemberClass" type="NameOfClass"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeneralGroupOfEntitiesGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="objectRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ===== PURPOSE OF ROUPING=============================================== -->
+  <xsd:element name="PurposeOfGrouping" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PurposeOfGrouping_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PurposeOfGroupingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PurposeOfGroupingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PurposeOfGrouping_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PurposeOfGroupingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PurposeOfGroupingGroup">
+    <xsd:sequence>
+      <xsd:element name="classes" type="classRefs_RelStructure" minOccurs="0"/>
+      <xsd:element ref="TypeOfEntity" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="AbstractGroupMember" abstract="true" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AbstractGroupMember_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupMemberIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AbstractGroupMember_VersionedChildStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:positiveInteger"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="GroupMember" type="GroupMember_VersionedChildStructure"/>
+  <xsd:complexType name="GroupMember_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractGroupMember_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="GroupRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+          <xsd:element name="MemberObjectRef" type="VersionOfObjectRefStructure"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="GroupConstraintMember" type="GroupConstraintMember_VersionedChildStructure" abstract="false" substitutionGroup="VersionedChild"/>
+  <xsd:complexType name="GroupConstraintMember_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="PurposeOfGroupingRef" type="PurposeOfGroupingRefStructure" minOccurs="0"/>
+          <xsd:element name="MemberClassRef" type="ClassRefStructure"/>
+          <xsd:element name="MemberTypeOfValueRef" type="TypeOfValueRefStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

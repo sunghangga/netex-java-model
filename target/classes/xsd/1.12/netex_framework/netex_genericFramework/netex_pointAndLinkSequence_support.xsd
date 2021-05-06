@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_pointAndLinkSequence_support">
+  <xsd:include schemaLocation="netex_grouping_support.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_responsibility_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="linkSequenceRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="LinkSequenceRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LinkSequenceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LinkSequenceRef" type="LinkSequenceRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="LinkSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LinkSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="PointInSequenceRef" type="PointInSequenceRefStructure" substitutionGroup="OrderedVersionOfObjectRef"/>
+  <xsd:complexType name="PointInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrderedVersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PointInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PointInSequenceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:element name="LinkInSequenceRef" type="LinkInSequenceRefStructure" substitutionGroup="OrderedVersionOfObjectRef"/>
+  <xsd:complexType name="LinkInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrderedVersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LinkInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LinkInSequenceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfLinkSequenceIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfLinkSequenceRef" type="TypeOfLinkSequenceRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfLinkSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfLinkSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==Group of LinkSequences============================================================ -->
+  <xsd:simpleType name="GroupOfLinkSequencesIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfLinkSequencesRef" type="GroupOfEntitiesRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="GroupOfLinkSequencesRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" use="required">
+          <xsd:simpleType>
+            <xsd:restriction base="GroupOfLinkSequencesIdType"/>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

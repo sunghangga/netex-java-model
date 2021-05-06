@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (x64) (http://www.altova.com) by Nicholas JS Knowles (Trapeze Group Limited) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareStuctureElement_support">
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <!-- ====FARE STRUCTURE.======================================================== -->
+  <xsd:complexType name="tariffRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TariffRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TariffIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TariffRef" type="TariffRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TariffRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TariffIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TariffBasisEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="flat"/>
+      <xsd:enumeration value="distance"/>
+      <xsd:enumeration value="unitSection"/>
+      <xsd:enumeration value="zone"/>
+      <xsd:enumeration value="zoneToZone"/>
+      <xsd:enumeration value="pointToPoint"/>
+      <xsd:enumeration value="route"/>
+      <xsd:enumeration value="tour"/>
+      <xsd:enumeration value="group"/>
+      <xsd:enumeration value="discount"/>
+      <xsd:enumeration value="period"/>
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ===== TYPE OF TARIFF ======================================== -->
+  <xsd:simpleType name="TypeOfTariffIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfTariffRef" type="TypeOfTariffRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfTariffRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfTariffIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====FARE STRUCTURE ELEMENT.======================================================== -->
+  <xsd:complexType name="fareStructureElementRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareStructureElementRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FareStructureElementIdType">
+    <xsd:restriction base="PriceableObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareStructureElementRef" type="FareStructureElementRefStructure" substitutionGroup="PriceableObjectRef"/>
+  <xsd:complexType name="FareStructureElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PriceableObjectRefStructure">
+        <xsd:attribute name="ref" type="FareStructureElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === FARE STRUCTURE ELEMENT PRICE====================================================== -->
+  <xsd:simpleType name="FareStructureElementPriceIdType">
+    <xsd:restriction base="FarePriceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareStructureElementPriceRef" type="FareStructureElementPriceRefStructure" substitutionGroup="FarePriceRef"/>
+  <xsd:complexType name="FareStructureElementPriceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FarePriceRefStructure">
+        <xsd:attribute name="ref" type="FareStructureElementPriceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====FARE STRUCTURE ELEMENT IN SEQUENCE======================================================== -->
+  <xsd:simpleType name="FareStructureElementInSequenceIdType">
+    <xsd:restriction base="FareElementInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareStructureElementInSequenceRef" type="FareStructureElementInSequenceRefStructure" substitutionGroup="FareElementInSequenceRef"/>
+  <!-- ===== TYPE OF FARE STRUCTURE ELEMENT ======================================== -->
+  <xsd:simpleType name="TypeOfFareStructureElementIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFareStructureElementRef" type="TypeOfFareStructureElementRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfFareStructureElementRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFareStructureElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===== TYPE OF TARIFF ======================================== -->
+  <xsd:complexType name="FareStructureElementInSequenceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareElementInSequenceRefStructure">
+        <xsd:attribute name="ref" type="FareStructureElementInSequenceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====  TARIFF OBJECT======================================== -->
+  <xsd:element name="TariffObjectRef" type="VersionOfObjectRefStructure" substitutionGroup="VersionOfObjectRef"/>
+</xsd:schema>

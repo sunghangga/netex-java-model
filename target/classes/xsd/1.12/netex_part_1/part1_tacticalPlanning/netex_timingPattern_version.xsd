@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_timingPattern_version">
+  <xsd:include schemaLocation="../part1_networkDescription/netex_route_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_noticeAssignment_version.xsd"/>
+  <xsd:include schemaLocation="netex_journeyPatternTimings_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="TimingPatternInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="timingPoints" type="timingPointsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="timingLinks" type="timingLinksInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="timingPatterns" type="timingPatternsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="timingPointsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingPoint" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="timingLinksInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingLink" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="timingPatternsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingPattern" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="groupOfTimingLinksInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfTimingLinks" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====TIMING POINT==================================================== -->
+  <xsd:complexType name="timingPoints_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingPoint" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimingPoint_" type="Point_VersionStructure" abstract="true" substitutionGroup="Point"/>
+  <xsd:element name="TimingPoint" abstract="false" substitutionGroup="TimingPoint_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingPoint_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Point_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimingPointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimingPointGroup">
+    <xsd:sequence>
+      <xsd:element name="TimingPointStatus" type="TimingPointStatusEnumeration" minOccurs="0"/>
+      <xsd:element name="AllowedForWaitTime" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== TIMING LINK =================================================== -->
+  <xsd:complexType name="timingLinks_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingLink" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimingLink" abstract="false" substitutionGroup="Link">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingLink_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingLinkGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingLinkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingLink_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Link_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimingLinkGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimingLinkGroup">
+    <xsd:sequence>
+      <xsd:element name="FromPointRef" type="TimingPointRefStructure"/>
+      <xsd:element name="ToPointRef" type="TimingPointRefStructure"/>
+      <xsd:element ref="VehicleMode" minOccurs="0"/>
+      <xsd:element ref="OperationalContextRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ===TIMING PATTERN===================================================== -->
+  <xsd:element name="TimingPattern" abstract="false" substitutionGroup="LinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingPattern_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPatternGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingPattern_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="LinkSequence_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimingPatternGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimingPatternGroup">
+    <xsd:sequence>
+      <xsd:element name="RouteRef" type="RouteRefStructure" minOccurs="0"/>
+      <xsd:element ref="DirectionType" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TimeDemandTypeRef"/>
+        <xsd:element ref="TimebandRef"/>
+      </xsd:choice>
+      <xsd:element name="pointsInSequence" type="timingPointsInJourneyPattern_RelStructure" minOccurs="0"/>
+      <xsd:element name="points" type="timingPoints_RelStructure" minOccurs="0"/>
+      <xsd:element name="links" type="timingLinks_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ===== Point in pattern ================================================= -->
+  <xsd:complexType name="timingPointsInJourneyPattern_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingPointInJourneyPattern" minOccurs="2" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimingPointInJourneyPattern" abstract="false" substitutionGroup="PointInLinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingPointInJourneyPattern_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointInJourneyPatternGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingPointInJourneyPatternIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingPointInJourneyPattern_VersionedChildStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="PointInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimingPointInJourneyPatternGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimingPointInJourneyPatternGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimingPointRef"/>
+      <xsd:element name="OnwardTimingLinkRef" type="TimingLinkRefStructure" minOccurs="0"/>
+      <xsd:group ref="TimingPointWaitGroup"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======Link in pattern ========================================================= -->
+  <xsd:element name="TimingLinkInJourneyPattern" abstract="false" substitutionGroup="LinkInLinkSequence">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimingLinkInJourneyPattern_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkInLinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingLinkInJourneyPatternGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingLinkIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimingLinkInJourneyPattern_VersionedChildStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="LinkInLinkSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimingLinkInJourneyPatternGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimingLinkInJourneyPatternGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimingLinkRef"/>
+      <xsd:element name="runTimes" type="journeyRunTimes_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==GROUP OF OPERATORss============================================================ -->
+  <xsd:element name="GroupOfTimingLinks" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfTimingLinks_RelStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfTimingLinksGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfTimingLinksIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfTimingLinks_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfTimingLinksGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfTimingLinksGroup">
+    <xsd:sequence>
+      <xsd:element name="members" type="timingLinkRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="OnwardTimingLinkView" abstract="false" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OnwardTimingLink_DerivedViewStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="TimingLinkRef" minOccurs="0"/>
+              <xsd:element name="ToPointRef" type="TimingPointRefStructure" minOccurs="0"/>
+              <xsd:element name="RunTime" type="xsd:duration" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimingLinkIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OnwardTimingLink_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimingLinkInJourneyPatternRef" minOccurs="0"/>
+          <xsd:element ref="TimingLinkRef" minOccurs="0"/>
+          <xsd:element name="ToPointRef" type="TimingPointRefStructure" minOccurs="0"/>
+          <xsd:element name="RunTime" type="xsd:duration" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

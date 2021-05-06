@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterEligibility_support">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <!-- === PROFILE  USAGE PARAMETERS=================================== -->
+  <xsd:group name="ProfileRefsGroup">
+    <xsd:sequence>
+      <xsd:element ref="CommercialProfileRef" minOccurs="0"/>
+      <xsd:element ref="GroupTicketRef" minOccurs="0"/>
+      <xsd:element ref="UserProfileRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="UsageParameterProductRefGroup">
+    <xsd:sequence>
+      <xsd:element name="CommercialProfileRef" type="CommercialProfileRefStructure" minOccurs="0"/>
+      <xsd:element name="GroupTicketRef" type="GroupTicketRefStructure" minOccurs="0"/>
+      <xsd:element name="UserProfileRef" type="UserProfileRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="ProfileParameterRef" type="UsageParameterRefStructure" substitutionGroup="UsageParameterRef"/>
+  <!-- === USER PROFILE PARAMETER======================================= -->
+  <xsd:complexType name="userProfileRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="UserProfileRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UserProfileIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="UserProfileRef" type="UserProfileRefStructure" substitutionGroup="ProfileParameterRef"/>
+  <xsd:complexType name="UserProfileRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="UserProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UserTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="adult"/>
+      <xsd:enumeration value="child"/>
+      <xsd:enumeration value="infant"/>
+      <xsd:enumeration value="senior"/>
+      <xsd:enumeration value="student"/>
+      <xsd:enumeration value="youngPerson"/>
+      <xsd:enumeration value="schoolPupil"/>
+      <xsd:enumeration value="military"/>
+      <xsd:enumeration value="disabled"/>
+      <xsd:enumeration value="disabledCompanion"/>
+      <xsd:enumeration value="jobSeeker"/>
+      <xsd:enumeration value="employee"/>
+      <xsd:enumeration value="animal"/>
+      <xsd:enumeration value="anyone"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === COMMERCIAL PROFILE ===================================================== -->
+  <xsd:simpleType name="CommercialProfileIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CommercialProfileRef" type="CommercialProfileRefStructure" substitutionGroup="ProfileParameterRef"/>
+  <xsd:complexType name="CommercialProfileRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="CommercialProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CommercialProfileTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="unlimited"/>
+      <xsd:enumeration value="limited"/>
+      <xsd:enumeration value="single"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === GROUP TICKET PARAMETER====================================================== -->
+  <xsd:simpleType name="GroupTicketIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupTicketRef" type="GroupTicketRefStructure" substitutionGroup="ProfileParameterRef"/>
+  <xsd:complexType name="GroupTicketRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="GroupTicketIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="GroupTicketingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="allOnOneTicket"/>
+      <xsd:enumeration value="separateTickets"/>
+      <xsd:enumeration value="ticketWithCoupons"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GroupCheckInEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="required"/>
+      <xsd:enumeration value="allowed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GroupSizeChangesEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="noChanges"/>
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="charge"/>
+      <xsd:enumeration value="purchaseWindowSteppedCharge"/>
+      <xsd:enumeration value="numberOfPassengersSteppedCharge"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === COMPANION PROFILE ============================================== -->
+  <xsd:simpleType name="CompanionProfileIdType">
+    <xsd:restriction base="UserProfileIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CompanionProfileRef" type="CompanionProfileRefStructure" substitutionGroup="UserProfileRef"/>
+  <xsd:complexType name="CompanionProfileRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UserProfileRefStructure">
+        <xsd:attribute name="ref" type="CompanionProfileIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CompanionRelationshipEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="anyone"/>
+      <xsd:enumeration value="parent"/>
+      <xsd:enumeration value="grandparent"/>
+      <xsd:enumeration value="child"/>
+      <xsd:enumeration value="grandchild"/>
+      <xsd:enumeration value="family"/>
+      <xsd:enumeration value="spouse"/>
+      <xsd:enumeration value="partner"/>
+      <xsd:enumeration value="dependent"/>
+      <xsd:enumeration value="colleague"/>
+      <xsd:enumeration value="pupil"/>
+      <xsd:enumeration value="teacher"/>
+      <xsd:enumeration value="carer"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GroupDiscountBasisEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="free"/>
+      <xsd:enumeration value="discountForFirstPersonOnly"/>
+      <xsd:enumeration value="discountForSecondAndSubsequentPersons"/>
+      <xsd:enumeration value="stepDiscount"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ProofOfIdentityEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="noneRequired"/>
+      <xsd:enumeration value="creditCard"/>
+      <xsd:enumeration value="passport"/>
+      <xsd:enumeration value="drivingLicence"/>
+      <xsd:enumeration value="birthCertificate"/>
+      <xsd:enumeration value="membershipCard"/>
+      <xsd:enumeration value="identityDocument"/>
+      <xsd:enumeration value="medicalDocument"/>
+      <xsd:enumeration value="studentCard"/>
+      <xsd:enumeration value="letterWIthAddress"/>
+      <xsd:enumeration value="mobileDevice"/>
+      <xsd:enumeration value="emailAccount"/>
+      <xsd:enumeration value="measurement"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ProofOfIdentityListOfEnumerations">
+    <xsd:list itemType="ProofOfIdentityEnumeration"/>
+  </xsd:simpleType>
+  <!-- ===  RESIDENTIAL QUALIFICATION ============================================== -->
+  <xsd:simpleType name="ResidentialQualificationIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="ResidentialQualificationRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ResidentialQualificationIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="ResidentialQualificationRef" type="ResidentialQualificationRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:simpleType name="ResidenceTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="live"/>
+      <xsd:enumeration value="work"/>
+      <xsd:enumeration value="study"/>
+      <xsd:enumeration value="exchange"/>
+      <xsd:enumeration value="born"/>
+      <xsd:enumeration value="nonResident"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ===  ELIGIBILITY CHANGE ============================================== -->
+  <xsd:complexType name="EligibilityChangePolicyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="EligibilityChangePolicyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="EligibilityChangePolicyIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="EligibilityChangePolicyRef" type="EligibilityChangePolicyRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:simpleType name="OnBecomingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="automatic"/>
+      <xsd:enumeration value="invite"/>
+      <xsd:enumeration value="noAction"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="OnCeasingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="immediateTermination"/>
+      <xsd:enumeration value="useUntilExpiry"/>
+      <xsd:enumeration value="terminateAfterGracePeriod"/>
+      <xsd:enumeration value="automaticallySubstituteProduct"/>
+      <xsd:enumeration value="noAction"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

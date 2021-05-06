@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocalDateXmlAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">netex-java-model</a> &gt; <a href="index.source.html" class="el_package">org.rutebanken.util</a> &gt; <span class="el_source">LocalDateXmlAdapter.java</span></div><h1>LocalDateXmlAdapter.java</h1><pre class="source lang-java linenums">/*
+ * Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
+ * the European Commission - subsequent versions of the EUPL (the &quot;Licence&quot;);
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ *   https://joinup.ec.europa.eu/software/page/eupl
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ */
+
+package org.rutebanken.util;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+
+<span class="fc" id="L25">public class LocalDateXmlAdapter extends XmlAdapter&lt;String, LocalDateTime&gt; {</span>
+<span class="fc" id="L26">	private static final DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern(&quot;yyyy-MM-dd&quot;)</span>
+<span class="fc" id="L27">			.optionalStart().appendPattern(&quot;XXXXX&quot;).optionalEnd()</span>
+<span class="fc" id="L28">            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)</span>
+<span class="fc" id="L29">            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)</span>
+<span class="fc" id="L30">            .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)</span>
+<span class="fc" id="L31">            .parseDefaulting(ChronoField.OFFSET_SECONDS,OffsetDateTime.now().getLong(ChronoField.OFFSET_SECONDS) )</span>
+<span class="fc" id="L32">            .toFormatter();</span>
+
+	@Override
+	public LocalDateTime unmarshal(String inputDate) {
+<span class="fc" id="L36">		return LocalDateTime.parse(inputDate, formatter);</span>
+	}
+
+	@Override
+	public String marshal(LocalDateTime inputDate) {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if(inputDate != null) {</span>
+<span class="fc" id="L42">			return formatter.format(inputDate);</span>
+		} else {
+<span class="nc" id="L44">			return null;</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

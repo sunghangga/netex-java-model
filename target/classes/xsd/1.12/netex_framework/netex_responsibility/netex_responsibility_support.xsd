@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_responsibility_support">
+  <xsd:include schemaLocation="netex_relationship.xsd"/>
+  <!-- =====Responsibility============================================ -->
+  <xsd:simpleType name="ResponsibilitySetIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ResponsibilitySetRef" type="ResponsibilitySetRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ResponsibilitySetRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ResponsibilitySetIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====AdministrativeRole Identifiers=============================================================== -->
+  <xsd:simpleType name="StakeholderRoleTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Planning"/>
+      <xsd:enumeration value="Operation"/>
+      <xsd:enumeration value="Control"/>
+      <xsd:enumeration value="Reservation"/>
+      <xsd:enumeration value="EntityLegalOwnership"/>
+      <xsd:enumeration value="FareManagement"/>
+      <xsd:enumeration value="SecurityManagement"/>
+      <xsd:enumeration value="DataRegistrar"/>
+      <xsd:enumeration value="Other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="StakeholderRoleTypeListOfEnumerations">
+    <xsd:list itemType="StakeholderRoleTypeEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="DataRoleTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="all"/>
+      <xsd:enumeration value="creates"/>
+      <xsd:enumeration value="augments"/>
+      <xsd:enumeration value="validates"/>
+      <xsd:enumeration value="collects"/>
+      <xsd:enumeration value="aggregates"/>
+      <xsd:enumeration value="distributes"/>
+      <xsd:enumeration value="secures"/>
+      <xsd:enumeration value="redistributes"/>
+      <xsd:enumeration value="owns"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DataRoleTypeListOfEnumerations">
+    <xsd:list itemType="DataRoleTypeEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfResponsibilityRoleIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfResponsibilityRoleRef" type="TypeOfResponsibilityRoleRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="TypeOfResponsibilityRoleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfResponsibilityRoleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="organisationRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="OrganisationRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="OrganisationIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OrganisationRef" type="OrganisationRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="OrganisationRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="VersionOfObjectRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="AllOrganisationsRef" type="AllOrganisationsRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="AllOrganisationsRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="OrganisationIdType" use="required" fixed="All"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:group name="OneOrAllOrganisationsRefGroup">
+    <xsd:choice>
+      <xsd:element ref="AllOrganisationsRef"/>
+      <xsd:element ref="OrganisationRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="OrganisationPartIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OrganisationPartRef" type="OrganisationPartRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="OrganisationPartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="OrganisationPartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BrandingIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="BrandingRef" type="BrandingRefStructure" abstract="false" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="BrandingRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:extension base="TypeOfValueRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ResponsibilityRoleIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ResponsibilityRoleRef" type="ResponsibilityRoleRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ResponsibilityRoleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ResponsibilityRoleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ResponsibilityRoleAssignmentIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

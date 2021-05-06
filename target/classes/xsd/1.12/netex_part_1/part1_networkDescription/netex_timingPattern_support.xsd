@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_timingPattern_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <xsd:include schemaLocation="netex_route_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimingPatternIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingPatternRef" type="TimingPatternRefStructure" substitutionGroup="LinkSequenceRef"/>
+  <xsd:complexType name="TimingPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkSequenceRefStructure">
+        <xsd:attribute name="ref" type="TimingPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimingPointIdType">
+    <xsd:restriction base="RoutePointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingPointRef" type="TimingPointRefStructure" substitutionGroup="RoutePointRef"/>
+  <xsd:complexType name="TimingPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="RoutePointRefStructure">
+        <xsd:attribute name="ref" type="TimingPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="timingLinkRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimingLinkRef"/>
+          <xsd:element ref="TimingLinkRefByValue"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TimingLinkIdType">
+    <xsd:restriction base="LinkIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingLinkRef" type="TimingLinkRefStructure" substitutionGroup="LinkRef"/>
+  <xsd:complexType name="TimingLinkRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkRefStructure">
+        <xsd:attribute name="ref" type="TimingLinkIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TimingLinkRefByValue" type="TimingLinkRefByValueStructure" substitutionGroup="LinkRefByValue"/>
+  <xsd:complexType name="TimingLinkRefByValueStructure">
+    <xsd:complexContent>
+      <xsd:restriction base="LinkRefByValueStructure">
+        <xsd:attribute name="fromPointRef" type="TimingPointIdType" use="required"/>
+        <xsd:attribute name="toPointRef" type="TimingPointIdType" use="required"/>
+        <xsd:attribute name="nameOfPointRefClass" type="NameOfClass" use="optional" fixed="TimingPoint"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="GroupOfTimingLinksIdType">
+    <xsd:restriction base="GroupOfLinksIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfTimingLinksRef" type="GroupOfTimingLinksRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="GroupOfTimingLinksRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="GroupOfTimingLinksIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

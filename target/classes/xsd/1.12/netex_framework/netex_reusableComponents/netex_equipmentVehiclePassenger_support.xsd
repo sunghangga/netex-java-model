@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_equipmentVehiclePassenger_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleEquipmentIdType">
+    <xsd:restriction base="PassengerEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleEquipmentRef" type="InstalledEquipmentRefStructure" substitutionGroup="PassengerEquipmentRef"/>
+  <xsd:complexType name="VehicleEquipmentRefStructure" abstract="true">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerEquipmentRefStructure">
+        <xsd:attribute name="ref" type="VehicleEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AccessVehicleEquipmentIdType">
+    <xsd:restriction base="VehicleEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AccessVehicleEquipmentRef" type="AccessVehicleEquipmentRefStructure" substitutionGroup="VehicleEquipmentRef"/>
+  <xsd:complexType name="AccessVehicleEquipmentRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleEquipmentRefStructure">
+        <xsd:attribute name="ref" type="AccessVehicleEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="WheelchairVehicleEquipmentIdType">
+    <xsd:restriction base="VehicleEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WheelchairVehicleRef" type="InstalledEquipmentRefStructure" substitutionGroup="VehicleEquipmentRef"/>
+  <xsd:complexType name="WheelchairVehicleRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleEquipmentRefStructure">
+        <xsd:attribute name="ref" type="WheelchairVehicleEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AssistedBoardingLocationEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="boardAtAnyDoor"/>
+      <xsd:enumeration value="boardOnlyAtSpecifiedPositions"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="AssistanceNeededEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="levelAccess"/>
+      <xsd:enumeration value="stepNegotiation"/>
+      <xsd:enumeration value="rampRequired"/>
+      <xsd:enumeration value="hoistRequired"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

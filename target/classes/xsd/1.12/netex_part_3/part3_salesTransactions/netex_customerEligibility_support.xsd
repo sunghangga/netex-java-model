@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerEligibility_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship.xsd"/>
+  <!-- ====CUSTOMER ELIGIBILITY.======================================================== -->
+  <xsd:complexType name="customerEligibilityRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerEligibilityRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerEligibilityIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerEligibilityRef" type="CustomerEligibilityRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CustomerEligibilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CustomerEligibilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== USER PROFILE ELIGIBILITY .======================================================== -->
+  <xsd:simpleType name="UserProfileEligibilityIdType">
+    <xsd:restriction base="CustomerEligibilityIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="UserProfileEligibilityRef" type="UserProfileEligibilityRefStructure" substitutionGroup="CustomerEligibilityRef"/>
+  <xsd:complexType name="UserProfileEligibilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="CustomerEligibilityRefStructure">
+        <xsd:attribute name="ref" type="UserProfileEligibilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== COMMERCIAL PROFILE ELIGIBILITY .======================================================== -->
+  <xsd:simpleType name="CommercialProfileEligibilityIdType">
+    <xsd:restriction base="CustomerEligibilityIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CommercialProfileEligibilityRef" type="CommercialProfileEligibilityRefStructure" substitutionGroup="CustomerEligibilityRef"/>
+  <xsd:complexType name="CommercialProfileEligibilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="CustomerEligibilityRefStructure">
+        <xsd:attribute name="ref" type="CommercialProfileEligibilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== RESIDENTIAL QUALIFICATION ELIGIBILITY .======================================================== -->
+  <xsd:simpleType name="ResidentialQualificationEligibilityIdType">
+    <xsd:restriction base="CustomerEligibilityIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ResidentialQualificationEligibilityRef" type="ResidentialQualificationEligibilityRefStructure" substitutionGroup="CustomerEligibilityRef"/>
+  <xsd:complexType name="ResidentialQualificationEligibilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="CustomerEligibilityRefStructure">
+        <xsd:attribute name="ref" type="ResidentialQualificationEligibilityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterTravel_support">
+  <xsd:include schemaLocation="netex_usageParameter_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === TRAVEL=========================================== -->
+  <xsd:group name="UsageParameterTravelRefGroup">
+    <xsd:sequence>
+      <xsd:element ref="InterchangingRef" minOccurs="0"/>
+      <xsd:element name="FrequencyOfUseRef" type="FrequencyOfUseRefStructure" minOccurs="0"/>
+      <xsd:element ref="MinimumStayRef" minOccurs="0"/>
+      <xsd:element name="RoundTripRef" type="RoundTripRefStructure" minOccurs="0"/>
+      <xsd:element ref="RoutingRef" minOccurs="0"/>
+      <xsd:element name="UsageValidityPeriodRef" type="UsageValidityPeriodRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === ROUND TRIP PARAMETER====================================================== -->
+  <xsd:simpleType name="RoundTripIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoundTripRef" type="RoundTripRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="RoundTripRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="RoundTripIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="RoutingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="RoundTripTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="single"/>
+      <xsd:enumeration value="return"/>
+      <xsd:enumeration value="returnOut"/>
+      <xsd:enumeration value="returnBack"/>
+      <xsd:enumeration value="returnOnly"/>
+      <xsd:enumeration value="multiple"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === ROUTING PARAMETER====================================================== -->
+  <xsd:element name="RoutingRef" type="RoutingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="RoutingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="RoutingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === STEP LIMIT PARAMETER====================================================== -->
+  <xsd:simpleType name="StepLimitIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StepLimitRef" type="StepLimitRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="StepLimitRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="StepLimitIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="StepLimitUnitEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="stops"/>
+      <xsd:enumeration value="stopsIncludingPassThroughStops"/>
+      <xsd:enumeration value="sections"/>
+      <xsd:enumeration value="zones"/>
+      <xsd:enumeration value="networks"/>
+      <xsd:enumeration value="operators"/>
+      <xsd:enumeration value="countries"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === USAGE VALIDITY PERIOD  PARAMETER====================================================== -->
+  <xsd:simpleType name="UsageValidityPeriodIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="UsageValidityPeriodRef" type="UsageValidityPeriodRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="UsageValidityPeriodRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="UsageValidityPeriodIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UsageValidityTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="singleRide"/>
+      <xsd:enumeration value="singleTrip"/>
+      <xsd:enumeration value="returnTrip"/>
+      <xsd:enumeration value="carnet"/>
+      <xsd:enumeration value="dayPass"/>
+      <xsd:enumeration value="weeklyPass"/>
+      <xsd:enumeration value="weekendPass"/>
+      <xsd:enumeration value="monthlyPass"/>
+      <xsd:enumeration value="annualPass"/>
+      <xsd:enumeration value="seasonTicket"/>
+      <xsd:enumeration value="profileMembership"/>
+      <xsd:enumeration value="subscription"/>
+      <xsd:enumeration value="openEnded"/>
+      <xsd:enumeration value="cap"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BlackoutStartEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="mayTravelAnytime"/>
+      <xsd:enumeration value="noTravelWithinPeriod"/>
+      <xsd:enumeration value="noTravelWithinTimeband"/>
+      <xsd:enumeration value="mayCompleteIfStartedBefore"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="UsageTriggerEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="enrolment"/>
+      <xsd:enumeration value="reservation"/>
+      <xsd:enumeration value="purchase"/>
+      <xsd:enumeration value="fulfilment"/>
+      <xsd:enumeration value="activation"/>
+      <xsd:enumeration value="specifiedStartDate"/>
+      <xsd:enumeration value="startOutboundRide"/>
+      <xsd:enumeration value="endOutboundRide"/>
+      <xsd:enumeration value="startReturnRide"/>
+      <xsd:enumeration value="startOfPeriod"/>
+      <xsd:enumeration value="dayOffsetBeforeCalendarPeriod"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ActivationMeansEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="noneRequired"/>
+      <xsd:enumeration value="checkIn"/>
+      <xsd:enumeration value="useOfValidator"/>
+      <xsd:enumeration value="useOfMobileDevice"/>
+      <xsd:enumeration value="automaticByTime"/>
+      <xsd:enumeration value="automaticByProximity"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="UsageEndEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="standardDuration"/>
+      <xsd:enumeration value="endOfCalendarPeriod"/>
+      <xsd:enumeration value="endOfRide"/>
+      <xsd:enumeration value="endOfTrip"/>
+      <xsd:enumeration value="endOfFareDay"/>
+      <xsd:enumeration value="endOfFarePeriod"/>
+      <xsd:enumeration value="productExpiry"/>
+      <xsd:enumeration value="profileExpiry"/>
+      <xsd:enumeration value="deregistration"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="UsageStartConstraintTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="variable"/>
+      <xsd:enumeration value="fixed"/>
+      <xsd:enumeration value="fixedWindow"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === SUSPENDING  PARAMETER====================================================== -->
+  <xsd:simpleType name="SuspendingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SuspendingRef" type="SuspendingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="SuspendingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="SuspendingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SuspensionPolicyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="forCertifiedIllness"/>
+      <xsd:enumeration value="forParentalLeave"/>
+      <xsd:enumeration value="forHoliday"/>
+      <xsd:enumeration value="forAnyReason"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SuspensionPolicyListOfEnumerations">
+    <xsd:list itemType="SuspensionPolicyEnumeration"/>
+  </xsd:simpleType>
+  <!-- === FREQUENCY OF USE PARAMETER====================================================== -->
+  <xsd:simpleType name="FrequencyOfUseTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="unlimited"/>
+      <xsd:enumeration value="limited"/>
+      <xsd:enumeration value="twiceADay"/>
+      <xsd:enumeration value="single"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="FrequencyOfUseIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FrequencyOfUseRef" type="FrequencyOfUseRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="FrequencyOfUseRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="FrequencyOfUseIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ===  INTERCHANGING PARAMETER====================================================== -->
+  <xsd:simpleType name="InterchangingTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="unlimited"/>
+      <xsd:enumeration value="limited"/>
+      <xsd:enumeration value="single"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="InterchangingIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="InterchangingRef" type="InterchangingRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="InterchangingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="InterchangingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="RegisterBreakOfJourneyEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="markByStaff"/>
+      <xsd:enumeration value="markByValidator"/>
+      <xsd:enumeration value="markByMobileApp"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="RegisterBreakOfJourneyListOfEnumerations">
+    <xsd:list itemType="SuspensionPolicyEnumeration"/>
+  </xsd:simpleType>
+  <!-- === MINIMUM STAY  PARAMETER====================================================== -->
+  <xsd:simpleType name="MinimumStayIdType">
+    <xsd:restriction base="UsageParameterIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="MinimumStayRef" type="MinimumStayRefStructure" substitutionGroup="UsageParameterRef"/>
+  <xsd:complexType name="MinimumStayRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="UsageParameterRefStructure">
+        <xsd:attribute name="ref" type="MinimumStayIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="MinimumStayTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="specifiedNightsAway"/>
+      <xsd:enumeration value="countNightsAway"/>
+      <xsd:enumeration value="both"/>
+      <xsd:enumeration value="either"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

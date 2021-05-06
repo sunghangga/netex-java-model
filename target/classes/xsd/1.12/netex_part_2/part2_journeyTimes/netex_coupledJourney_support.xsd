@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_coupledJourney_support">
+  <xsd:include schemaLocation="netex_vehicleJourney_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfCouplingListOfEnumerations">
+    <xsd:list itemType="TypeOfCouplingEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="TypeOfCouplingEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="serviceFacility"/>
+      <xsd:enumeration value="coupling"/>
+      <xsd:enumeration value="tariffSection"/>
+      <xsd:enumeration value="uncoupled"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ===JOURNEY PART====================================================== -->
+  <xsd:simpleType name="JourneyPartIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyPartRef" type="JourneyPartRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="JourneyPartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="JourneyPartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="journeyPartRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="JourneyPartRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CoupledJourneyIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CoupledJourneyRef" type="CoupledJourneyRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CoupledJourneyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CoupledJourneyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="JourneyPartCoupleIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyPartCoupleRef" type="JourneyPartCoupleRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="JourneyPartCoupleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="JourneyPartCoupleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="JourneyPartEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="joiningTo"/>
+      <xsd:enumeration value="splittingFrom"/>
+      <xsd:enumeration value="splittingTo"/>
+      <xsd:enumeration value="joinFrom"/>
+      <xsd:enumeration value="connectTo"/>
+      <xsd:enumeration value="identificationNumberChange"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="JourneyPartPositionIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PurposeOfJourneyPartitionIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PurposeOfJourneyPartitionRef" type="PurposeOfJourneyPartitionRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="PurposeOfJourneyPartitionRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="PurposeOfJourneyPartitionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ====BLOCK======================================================== -->
+  <xsd:simpleType name="BlockIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="BlockRef" type="BlockRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="BlockRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="BlockIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainBlockIdType">
+    <xsd:restriction base="BlockIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainBlockRef" type="TrainBlockRefStructure" substitutionGroup="BlockRef"/>
+  <xsd:complexType name="TrainBlockRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="BlockRefStructure">
+        <xsd:attribute name="ref" type="TrainBlockIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BlockPartIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="BlockPartRef" type="BlockPartRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="BlockPartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="BlockPartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainBlockPartIdType">
+    <xsd:restriction base="BlockPartIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainBlockPartRef" type="TrainBlockPartRefStructure" substitutionGroup="BlockPartRef"/>
+  <xsd:complexType name="TrainBlockPartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="BlockPartRefStructure">
+        <xsd:attribute name="ref" type="TrainBlockPartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

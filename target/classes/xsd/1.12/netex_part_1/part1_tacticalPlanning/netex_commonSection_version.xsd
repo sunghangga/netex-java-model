@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_commonSection_version">
+  <xsd:include schemaLocation="netex_commonSection_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_section_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="SectionInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="commonSections" type="commonSectionsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="generalSections" type="generalSectionsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="commonSectionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CommonSection" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ========= ============================================================== -->
+  <!-- ==COMMON SECTION=========================================================== -->
+  <!-- ======================================================================= -->
+  <xsd:element name="CommonSection" abstract="false" substitutionGroup="Section_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CommonSection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SectionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CommonSectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CommonSectionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CommonSection_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Section_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CommonSectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CommonSectionGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="pointsOnSection" type="pointsOnSection_RelStructure"/>
+        <xsd:element name="members" type="commonSectionPointMembers_RelStructure"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+</xsd:schema>

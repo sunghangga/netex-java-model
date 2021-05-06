@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesOfferPackageEntitlement_version">
+  <xsd:include schemaLocation="netex_salesOfferPackageEntitlement_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameterEntitlement_version.xsd"/>
+  <xsd:include schemaLocation="netex_salesOfferPackage_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====SALES OFFER PACKAGE ENTITLEMENT GIVEN================================================= -->
+  <xsd:element name="SalesOfferPackageEntitlementGiven" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackageEntitlementGiven_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackageEntitlementGivenGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackageEntitlementGivenIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackageEntitlementGiven_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackageEntitlementGivenGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackageEntitlementGivenGroup">
+    <xsd:sequence>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:group ref="EntitlementCommonPropertiesGroup"/>
+      <xsd:element name="EntitlementType" type="EntitlementTypeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====SALES OFFER PACKAGE ENTITLEMENT REQUIRED================================================= -->
+  <xsd:element name="SalesOfferPackageEntitlementRequired" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SalesOfferPackageEntitlementRequired_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SalesOfferPackageEntitlementRequiredGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SalesOfferPackageEntitlementRequiredIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SalesOfferPackageEntitlementRequired_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SalesOfferPackageEntitlementRequiredGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SalesOfferPackageEntitlementRequiredGroup">
+    <xsd:sequence>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:group ref="EntitlementCommonPropertiesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

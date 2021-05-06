@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesContract_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_securityList_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_loggable_support.xsd"/>
+  <!-- ====CUSTOMER.======================================================== -->
+  <xsd:complexType name="customerRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerRef" type="CustomerRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CustomerRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CustomerIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="AccountStatusTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="unused"/>
+      <xsd:enumeration value="active"/>
+      <xsd:enumeration value="dormant"/>
+      <xsd:enumeration value="suspended"/>
+      <xsd:enumeration value="archived"/>
+      <xsd:enumeration value="closed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====  CUSTOMER SECURITY LISTING .======================================================== -->
+  <xsd:complexType name="CustomerSecurityListingRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerSecurityListingRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerSecurityListingIdType">
+    <xsd:restriction base="SecurityListingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerSecurityListingRef" type="CustomerSecurityListingRefStructure" substitutionGroup="SecurityListingRef"/>
+  <xsd:complexType name="CustomerSecurityListingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListingRefStructure">
+        <xsd:attribute name="ref" type="CustomerSecurityListingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =============================================================== -->
+  <!-- ==== FARE CONTRACT.======================================================== -->
+  <xsd:complexType name="contractRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareContractRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FareContractIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareContractRef" type="FareContractRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="FareContractRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="FareContractIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF FARE CONTRACT  -->
+  <xsd:complexType name="typeOfFareContractRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfFareContractRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfFareContractIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFareContractRef" type="TypeOfFareContractRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfFareContractRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFareContractIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== FARE CONTRACT SECURITY LISTING .======================================================== -->
+  <xsd:complexType name="FareContractSecurityListingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListingRefStructure">
+        <xsd:attribute name="ref" type="FareContractSecurityListingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="FareContractSecurityListingRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareContractSecurityListingRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="FareContractSecurityListingIdType">
+    <xsd:restriction base="SecurityListingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareContractSecurityListingRef" type="FareContractSecurityListingRefStructure" substitutionGroup="SecurityListingRef"/>
+  <!-- ====FARE CONTRACT ENTRY.======================================================== -->
+  <xsd:simpleType name="FareContractEntryIdType">
+    <xsd:restriction base="LogEntryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareContractEntryRef" type="FareContractEntryRefStructure" substitutionGroup="LogEntryRef"/>
+  <xsd:complexType name="FareContractEntryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LogEntryRefStructure">
+        <xsd:attribute name="ref" type="FareContractEntryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF FARE CONTRACT ENTRY================================================== -->
+  <xsd:complexType name="typeOfFareContractEntryRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfFareContractEntryRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfFareContractEntryIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfFareContractEntryRef" type="TypeOfFareContractEntryRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfFareContractEntryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfFareContractEntryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER ACCOUNT.======================================================== -->
+  <xsd:complexType name="customerAccountRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerAccountRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerAccountIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerAccountRef" type="CustomerAccountRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CustomerAccountRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CustomerAccountIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER ACCOUNT SECURITY LISTING .======================================================== -->
+  <xsd:complexType name="customerAccountSecurityListingRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerAccountSecurityListingRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="CustomerAccountSecurityListingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SecurityListingRefStructure">
+        <xsd:attribute name="ref" type="CustomerAccountSecurityListingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerAccountSecurityListingIdType">
+    <xsd:restriction base="SecurityListingIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerAccountSecurityListingRef" type="CustomerAccountSecurityListingRefStructure" substitutionGroup="SecurityListingRef"/>
+  <!-- ====TYPE OF CUSTOMER ACCOUNT ================================================== -->
+  <xsd:complexType name="typeOfCustomerAccountRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfCustomerAccountRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfCustomerAccountIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfCustomerAccountRef" type="TypeOfCustomerAccountRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfCustomerAccountRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfCustomerAccountIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== CUSTOMER ACCOUNT STATUS ================================================== -->
+  <xsd:complexType name="customerAccountStatusRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerAccountStatusRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CustomerAccountStatusIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerAccountStatusRef" type="CustomerAccountStatusRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="CustomerAccountStatusRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="CustomerAccountStatusIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

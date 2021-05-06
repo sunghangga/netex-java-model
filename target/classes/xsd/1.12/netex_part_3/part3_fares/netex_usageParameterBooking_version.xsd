@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_usageParameterBooking_version">
+  <xsd:include schemaLocation="netex_usageParameterBooking_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_version.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====  PURCHASE  WINDOW================================================ -->
+  <xsd:element name="PurchaseWindow" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PurchaseWindow_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PurchaseWindowGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PurchaseWindowIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PurchaseWindow_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PurchaseWindowGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PurchaseWindowGroup">
+    <xsd:sequence>
+      <xsd:element name="PurchaseAction" type="PurchaseActionEnumeration" minOccurs="0"/>
+      <xsd:element name="PurchaseWhen" type="PurchaseWhenEnumeration" default="advanceAndDayOfTravel" minOccurs="0"/>
+      <xsd:element name="LatestTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="MinimumPeriodBeforeDeparture" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MinimumPeriodIntervalRef" type="TimeIntervalRefStructure" minOccurs="0"/>
+      <xsd:element name="MaximumPeriodBeforeDeparture" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumPeriodIntervalRef" type="TimeIntervalRefStructure" minOccurs="0"/>
+      <xsd:element name="PurchaseMoment" type="PurchaseMomentListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====RESERVING=================================================== -->
+  <xsd:element name="Reserving" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Reserving_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ReservingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ReservingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Reserving_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ReservingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ReservingGroup">
+    <xsd:sequence>
+      <xsd:element name="ReservingRequirements" type="ServiceReservationFacilityListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="MinimumNumberToReserve" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MaximumNumberToReserve" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="MustReserveWholeCompartment" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:group ref="ReservingCalculationGroup"/>
+      <xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0"/>
+      <xsd:element name="SeatAllocationMethod" type="SeatAllocationMethodEnumeration" minOccurs="0"/>
+      <xsd:element name="ReservationExpiryPeriod" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ReservingCalculationGroup">
+    <xsd:sequence>
+      <xsd:element name="ReservationChargeType" type="ReservationChargeTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="FeeBasis" type="PerBasisEnumeration" minOccurs="0"/>
+      <xsd:element name="HasFreeConnectingReservations" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="NumberOfFreeConnectingReservations" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="IsFeeRefundable" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====RESERVING=================================================== -->
+  <xsd:element name="Cancelling" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Cancelling_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CancellingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CancellingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Cancelling_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CancellingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CancellingGroup">
+    <xsd:sequence>
+      <xsd:element name="BookingArrangements" type="BookingArrangementsStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

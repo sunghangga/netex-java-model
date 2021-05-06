@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by christophe duquesne (Dryade SARL) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_versionDelta_version">
+  <xsd:include schemaLocation="netex_relationship_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- == NeTEX Entities for holding differences between versions of an ENTITY In VERSION=============================================================== -->
+  <xsd:simpleType name="TraceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="traces_RelStructure">
+    <xsd:sequence>
+      <xsd:element ref="Trace" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Trace">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TraceStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TraceStructure">
+    <xsd:group ref="TraceGroup"/>
+    <xsd:attribute name="id" type="TraceIdType"/>
+    <xsd:attribute name="created" type="xsd:dateTime" use="optional"/>
+  </xsd:complexType>
+  <xsd:group name="TraceGroup">
+    <xsd:sequence>
+      <xsd:element name="ObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+      <xsd:element name="ChangedAt" type="xsd:dateTime"/>
+      <xsd:element name="ChangedBy" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="Description" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element ref="Delta" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DeltaIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="deltas_RelStructure">
+    <xsd:sequence>
+      <xsd:element ref="Delta" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Delta" type="DeltaStructure"/>
+  <xsd:complexType name="DeltaStructure">
+    <xsd:group ref="DeltaGroup"/>
+    <xsd:attribute name="id" type="DeltaIdType"/>
+    <xsd:attribute name="created" type="xsd:dateTime" use="optional"/>
+  </xsd:complexType>
+  <xsd:group name="DeltaGroup">
+    <xsd:sequence>
+      <xsd:element ref="SimpleObjectRef" minOccurs="0"/>
+      <xsd:element name="FromVersionRef" minOccurs="0">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:restriction base="SimpleObjectRefStructure">
+              <xsd:attribute name="ref" type="VersionIdType" use="required"/>
+            </xsd:restriction>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ToVersionRef">
+        <xsd:complexType>
+          <xsd:simpleContent>
+            <xsd:restriction base="SimpleObjectRefStructure">
+              <xsd:attribute name="ref" type="VersionIdType" use="required"/>
+            </xsd:restriction>
+          </xsd:simpleContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Modification" type="ModificationEnumeration" default="revise" minOccurs="0"/>
+      <xsd:element name="deltaValues" type="deltaValues_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DeltaValueIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:complexType name="deltaValues_RelStructure">
+    <xsd:sequence>
+      <xsd:element ref="DeltaValue" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="DeltaValue" type="DeltaValueStructure"/>
+  <xsd:complexType name="DeltaValueStructure">
+    <xsd:group ref="DeltaValueGroup"/>
+    <xsd:attribute name="id" type="DeltaValueIdType"/>
+  </xsd:complexType>
+  <xsd:group name="DeltaValueGroup">
+    <xsd:sequence>
+      <xsd:element name="DeltaRef" type="DeltaIdType" minOccurs="0"/>
+      <xsd:element name="Modification" type="ModificationEnumeration" default="revise" minOccurs="0"/>
+      <xsd:element name="ValueName" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="OldValue" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="NewValue" type="xsd:anyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_checkConstraint_version">
+  <xsd:include schemaLocation="netex_ifopt_checkConstraint_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+  <!--============================================================================================-->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SITE FRAME)=================================================== -->
+  <xsd:group name="CheckConstraintInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="checkConstraints" type="checkConstraintInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="checkConstraintDelays" type="checkConstraintDelaysInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="checkConstraintThroughputs" type="checkConstraintThroughputsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="checkConstraintInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CheckConstraint" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="checkConstraintDelaysInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CheckConstraintDelay" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="checkConstraintThroughputsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CheckConstraintDelay" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--======CHECK CONSTRAINT ============================================================================-->
+  <xsd:complexType name="checkConstraints_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CheckConstraintRef"/>
+          <xsd:element ref="CheckConstraint" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CheckConstraint" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CheckConstraint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CheckConstraintGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CheckConstraintIdType"/>
+          <xsd:attribute name="responsibilitySetRef" type="ResponsibilitySetIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CheckConstraint_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CheckConstraintGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CheckConstraintGroup">
+    <xsd:sequence>
+      <xsd:element ref="PlaceRef" minOccurs="0"/>
+      <xsd:group ref="CheckConstraintPropertiesGroup"/>
+      <xsd:group ref="CheckConstraintRelationGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CheckConstraintPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="CheckDirection" type="CheckDirectionEnumeration" minOccurs="0"/>
+      <xsd:element name="CheckProcess" type="CheckProcessTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="CheckService" type="CheckServiceEnumeration" minOccurs="0"/>
+      <xsd:element name="AccessFeatureType" type="AccessFeatureEnumeration" minOccurs="0"/>
+      <xsd:element name="Congestion" type="CongestionEnumeration" minOccurs="0"/>
+      <xsd:element ref="TypeOfCongestionRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CheckConstraintRelationGroup">
+    <xsd:sequence>
+      <xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfEquipmentRef" minOccurs="0"/>
+      <xsd:element ref="FacilityRef" minOccurs="0"/>
+      <xsd:element ref="EquipmentRef" minOccurs="0"/>
+      <xsd:element name="delays" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="checkConstraintDelays_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="throughput" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="checkConstraintThroughputs_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!--======CHECK CONSTRAINT  DELAY=================================================================-->
+  <xsd:complexType name="checkConstraintDelays_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CheckConstraintDelayRef"/>
+          <xsd:element ref="CheckConstraintDelay"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CheckConstraintDelay" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CheckConstraintDelay_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CheckConstraintDelayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CheckConstraintDelayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CheckConstraintDelay_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CheckConstraintDelayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CheckConstraintDelayGroup">
+    <xsd:sequence>
+      <xsd:element ref="CheckConstraintRef" minOccurs="0"/>
+      <xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+      <xsd:element name="MinimumLikelyDelay" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="AverageDelay" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumLikelyDelay" type="xsd:duration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!--======CHECK CONSTRAINT THROUGHPUT ==============================================================================-->
+  <xsd:complexType name="checkConstraintThroughputs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CheckConstraintThroughputRef"/>
+          <xsd:element ref="CheckConstraintThroughput"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CheckConstraintThroughput" substitutionGroup="Assignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CheckConstraintThroughput_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CheckConstraintThroughputGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CheckConstraintThroughputIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CheckConstraintThroughput_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CheckConstraintThroughputGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CheckConstraintThroughputGroup">
+    <xsd:sequence>
+      <xsd:element ref="CheckConstraintRef" minOccurs="0"/>
+      <xsd:element name="Period" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MaximumPassengers" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="AveragePassengers" type="NumberOfPassengers" minOccurs="0"/>
+      <xsd:element name="WheelchairPassengers" type="NumberOfPassengers" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfCongestion" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfCongestion_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfCongestionIdType"/>
+          <xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Congestion"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfCongestion_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--============================================================================================-->
+</xsd:schema>

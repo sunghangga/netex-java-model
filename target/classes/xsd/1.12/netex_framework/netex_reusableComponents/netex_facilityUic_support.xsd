@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ifopt="http://www.ifopt.org.uk/ifopt" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_facilityUic_support">
+  <xsd:include schemaLocation="../netex_responsibility/netex_relationship.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="UicProductCharacteristicEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="tariffCommunVoyageurs"/>
+      <xsd:enumeration value="allIInclusivePrice"/>
+      <xsd:enumeration value="eastWestTariff"/>
+      <xsd:enumeration value="trainWithTcvAndMarketPrice"/>
+      <xsd:enumeration value="noPublishedTariff"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="UicRateTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="discountInTrainOtherThanTGV"/>
+      <xsd:enumeration value="specialFare"/>
+      <xsd:enumeration value="supplement"/>
+      <xsd:enumeration value="noPublishedTariff"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

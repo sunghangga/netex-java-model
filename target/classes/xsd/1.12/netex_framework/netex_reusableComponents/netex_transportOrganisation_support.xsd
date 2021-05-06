@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_transportOrganisation_version">
+  <xsd:include schemaLocation="../netex_genericFramework/netex_organisation_support.xsd"/>
+  <!-- ==== TRANSPORT OPERATOR ========================================== -->
+  <xsd:element name="TransportOrganisationRef" type="OrganisationRefStructure" abstract="true" substitutionGroup="OrganisationRef"/>
+  <xsd:complexType name="transportOrganisationRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TransportOrganisationRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AllTransportOrganisationsRef" type="AllTransportOrganisationsRefStructure" substitutionGroup="AllOrganisationsRef"/>
+  <xsd:complexType name="AllTransportOrganisationsRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AllOrganisationsRefStructure">
+        <xsd:attribute name="ref" type="OrganisationIdType" use="required" fixed="All"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:group name="OneOrAllTransportOperatorsRefGroup">
+    <xsd:choice>
+      <xsd:element ref="AllTransportOrganisationsRef"/>
+      <xsd:element ref="TransportOrganisationRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ====  OPERATOR ======================================================= -->
+  <xsd:simpleType name="OperatorIdType">
+    <xsd:restriction base="OrganisationIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OperatorRef" type="OperatorRefStructure" substitutionGroup="TransportOrganisationRef"/>
+  <xsd:complexType name="OperatorRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrganisationRefStructure">
+        <xsd:attribute name="ref" type="OperatorIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="AllOperatorsRef" type="AllTransportOrganisationsRefStructure" substitutionGroup="AllTransportOrganisationsRef"/>
+  <xsd:group name="OneOrAllOperatorsRefGroup">
+    <xsd:choice>
+      <xsd:element ref="AllOperatorsRef"/>
+      <xsd:element ref="OperatorRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===== AUTHORITY ========================================================= -->
+  <xsd:simpleType name="AuthorityIdType">
+    <xsd:restriction base="OrganisationIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AuthorityRef" type="AuthorityRefStructure" substitutionGroup="TransportOrganisationRef"/>
+  <xsd:complexType name="AuthorityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrganisationRefStructure">
+        <xsd:attribute name="ref" type="AuthorityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="AllAuthoritiesRef" type="AllTransportOrganisationsRefStructure" substitutionGroup="AllTransportOrganisationsRef"/>
+  <xsd:group name="OneOrAllAuthoritiesRefGroup">
+    <xsd:choice>
+      <xsd:element ref="AllAuthoritiesRef"/>
+      <xsd:element ref="AuthorityRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===== AUTHORITY ========================================================= -->
+  <xsd:complexType name="groupsOfTransportOrganisationsRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfOperatorsRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==GROUP OF OPERATORss============================================================ -->
+  <xsd:simpleType name="GroupOfOperatorsIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GroupOfOperatorsRef" type="GroupOfOperatorsRefStructure" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="GroupOfOperatorsRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="GroupOfOperatorsIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== OPERATIONAL CONTEX ======================================================= -->
+  <xsd:simpleType name="OperationalContextIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OperationalContextRef" type="OperationalContextRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="OperationalContextRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="OperationalContextIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="operationalContexRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="OperationalContextRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== OPERATING DEPARTMENT======================================================= -->
+  <xsd:simpleType name="OperatingDepartmentIdType">
+    <xsd:restriction base="DepartmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="OperatingDepartmentRef" type="OperatingDepartmentRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="OperatingDepartmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="DepartmentRefStructure">
+        <xsd:attribute name="ref" type="OperatingDepartmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== CONTROL CENTRE ================================================== -->
+  <xsd:simpleType name="ControlCentreIdType">
+    <xsd:restriction base="OrganisationPartIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ControlCentreRef" type="ControlCentreRefStructure" substitutionGroup="OrganisationPartRef"/>
+  <xsd:complexType name="ControlCentreRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrganisationPartRefStructure">
+        <xsd:attribute name="ref" type="ControlCentreIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== CONTROL CENTRE ================================================== -->
+  <xsd:simpleType name="TransportAdministrativeZoneIdType">
+    <xsd:restriction base="AdministrativeZoneIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TransportAdministrativeZoneRef" substitutionGroup="ZoneRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TransportAdministrativeZoneRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TransportAdministrativeZoneRefStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AdministrativeZoneRefStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== Activities================================================= -->
+  <xsd:simpleType name="ListOfOperatorActivities">
+    <xsd:list itemType="OperatorActivitiesEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="OperatorActivitiesEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="passenger"/>
+      <xsd:enumeration value="freight"/>
+      <xsd:enumeration value="infrastructure"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

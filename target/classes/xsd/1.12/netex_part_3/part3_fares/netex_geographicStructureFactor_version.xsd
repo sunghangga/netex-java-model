@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_geographicStructureFactor_version">
+  <xsd:include schemaLocation="netex_geographicStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_distanceMatrixElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_farePrice_version.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructure_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === ENTIITY IN VERSION IN FRAME= === ================================================== -->
+  <xsd:group name="GeographicFactorsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="geographicalUnits" type="geographicalUnits_RelStructure" minOccurs="0"/>
+      <xsd:element name="geographicalIntervals" type="geographicalIntervals_RelStructure" minOccurs="0"/>
+      <xsd:element name="geographicalStructureFactors" type="geographicalStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====GEOGRAPHICAL UNIT======================================== -->
+  <xsd:complexType name="geographicalUnits_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeographicalUnitRef"/>
+          <xsd:element ref="GeographicalUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeographicalUnit" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeographicalUnit_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+              <xsd:group ref="GeographicalUnitGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeographicalUnitIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeographicalUnit_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareUnit_VersionStructure">
+        <xsd:sequence>
+          <xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+          <xsd:group ref="GeographicalUnitGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeographicalUnitGroup">
+    <xsd:sequence>
+      <xsd:element name="prices" type="geographicalUnitPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====GEOGRAPHICAL INTERVAL ========================================== -->
+  <xsd:complexType name="geographicalIntervals_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeographicalIntervalRef"/>
+          <xsd:element ref="GeographicalInterval"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeographicalInterval" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeographicalInterval_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeographicalIntervalGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeographicalIntervalIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeographicalInterval_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareInterval_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeographicalIntervalGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeographicalIntervalGroup">
+    <xsd:sequence>
+      <xsd:element name="StartGeographicalValue" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="EndGeographicalValue" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="NumberOfUnits" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="IntervalType" type="IntervalTypeEnumeration" minOccurs="0"/>
+      <xsd:element ref="GeographicalUnitRef" minOccurs="0"/>
+      <xsd:element name="prices" type="geographicalIntervalPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE STRUCTURE ELEMENT.============================================= -->
+  <!-- ==== GEOGRAPHICAL STRUCTURE FACTOR.============================= -->
+  <xsd:complexType name="geographicalStructureFactors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeographicalStructureFactorRef"/>
+          <xsd:element ref="GeographicalStructureFactor" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeographicalStructureFactor" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeographicalStructureFactor_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeographicalStructureFactorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeographicalStructureFactorIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeographicalStructureFactor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeographicalStructureFactorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeographicalStructureFactorGroup">
+    <xsd:sequence>
+      <xsd:element ref="TariffRef" minOccurs="0"/>
+      <xsd:element ref="GeographicalIntervalRef" minOccurs="0"/>
+      <xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+      <xsd:element ref="GeographicalUnitRef" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element name="NumberOfUnits" type="xsd:integer"/>
+        <xsd:element name="AmountFactor" type="xsd:decimal"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == GEOGRAPHICAL INTERVAL PRICE.================================ -->
+  <xsd:complexType name="geographicalUnitPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeographicalUnitPriceRef"/>
+          <xsd:element name="GeographicalUnitPrice" type="GeographicalUnitPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeographicalUnitPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeographicalUnitPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeographicalUnitPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeographicalUnitPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeographicalUnitPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeographicalUnitPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeographicalUnitPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="GeographicalUnitRef" minOccurs="0"/>
+      <xsd:element name="prices" type="geographicalUnitPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- == GEOGRAPHICAL INTERVAL PRICE.================================ -->
+  <xsd:complexType name="geographicalIntervalPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GeographicalIntervalPriceRef"/>
+          <xsd:element name="GeographicalIntervalPrice" type="GeographicalIntervalPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeographicalIntervalPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeographicalIntervalPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GeographicalIntervalPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeographicalIntervalPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeographicalIntervalPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="GeographicalIntervalPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GeographicalIntervalPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="GeographicalIntervalRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

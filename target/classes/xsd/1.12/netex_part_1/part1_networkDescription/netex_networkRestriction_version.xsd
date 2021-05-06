@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_networkRestriction_version">
+  <xsd:include schemaLocation="netex_networkInfrastructure_version.xsd"/>
+  <xsd:include schemaLocation="netex_networkRestriction_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_version.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <!-- ======================================================================= -->
+  <xsd:group name="NetworkDescriptionInFrameGroup">
+    <xsd:sequence>
+      <xsd:group ref="NetworkInfrastuctureInFrameGroup"/>
+      <xsd:group ref="NetworkRestrictionInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="NetworkRestrictionInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="restrictions" type="networkRestrictionsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="networkRestrictionsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="NetworkRestriction" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===NETWORK RESTRICTIONs================================================= -->
+  <xsd:element name="NetworkRestriction" type="NetworkRestriction_VersionStructure" abstract="true" substitutionGroup="Assignment_"/>
+  <xsd:complexType name="NetworkRestriction_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Assignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="NetworkRestrictionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NetworkRestrictionGroup">
+    <xsd:sequence>
+      <xsd:element name="Restricted" type="xsd:boolean" default="true"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ====Point Restriction====================================================== -->
+  <xsd:element name="VehicleTypeAtPoint" abstract="false" substitutionGroup="NetworkRestriction">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleTypeAtPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkRestrictionGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="VehicleTypeAtPointGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleTypeAtPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleTypeAtPoint_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="NetworkRestriction_VersionStructure">
+        <xsd:group ref="VehicleTypeAtPointGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleTypeAtPointGroup">
+    <xsd:sequence>
+      <xsd:element name="ForVehicleTypeRef" type="VehicleTypeRefStructure"/>
+      <xsd:element name="Capacity" type="NumberOfVehicles" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Link Restrictions===================================================== -->
+  <xsd:element name="InfrastructureLinkRestriction" abstract="true" substitutionGroup="NetworkRestriction">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="InfrastructureLinkRestriction_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkRestrictionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="FromLinkRef" type="LinkRefStructure"/>
+              <xsd:element name="ToLinkRef" type="LinkRefStructure"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NetworkRestrictionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="InfrastructureLinkRestriction_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="NetworkRestriction_VersionStructure">
+        <xsd:group ref="InfrastructureLinkRestrictionGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="InfrastructureLinkRestrictionGroup">
+    <xsd:sequence>
+      <xsd:element name="FromLinkRef" type="LinkRefStructure"/>
+      <xsd:element name="ToLinkRef" type="LinkRefStructure"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RestrictedManoeuvre" abstract="false" substitutionGroup="NetworkRestriction">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RestrictedManoeuvre_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkRestrictionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="FromLinkRef" type="LinkRefStructure"/>
+              <xsd:element name="ToLinkRef" type="LinkRefStructure"/>
+            </xsd:sequence>
+            <xsd:group ref="RestrictedManoeuvreGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RestrictedManoeuvreIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RestrictedManoeuvre_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructureLinkRestriction_VersionStructure">
+        <xsd:group ref="RestrictedManoeuvreGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RestrictedManoeuvreGroup">
+    <xsd:sequence>
+      <xsd:element name="VehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="MeetingRestriction" abstract="false" substitutionGroup="NetworkRestriction">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="MeetingRestriction_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkRestrictionGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="InfrastructureLinkRestrictionGroup"/>
+            <xsd:group ref="MeetingRestrictionGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="MeetingRestrictionIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="MeetingRestriction_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="InfrastructureLinkRestriction_VersionStructure">
+        <xsd:group ref="MeetingRestrictionGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="MeetingRestrictionGroup">
+    <xsd:sequence>
+      <xsd:element name="ForVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+      <xsd:element name="AgainstVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="OvertakingPossibility" abstract="false" substitutionGroup="NetworkRestriction">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OvertakingPossibility_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NetworkRestrictionGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:element name="OvertakingWidth" type="LengthType" minOccurs="0"/>
+                <xsd:element name="OvertakingOnLinkRef" type="LinkRefStructure"/>
+                <xsd:element name="OvertakingAtPointRef" type="PointRefStructure"/>
+                <xsd:element name="OvertakingVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+                <xsd:element name="OvertakenVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OvertakingPossibilityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OvertakingPossibility_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="NetworkRestriction_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OvertakingPossibilityGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OvertakingPossibilityGroup">
+    <xsd:sequence>
+      <xsd:element name="OvertakingWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="OvertakingOnLinkRef" type="LinkRefStructure"/>
+      <xsd:element name="OvertakingAtPointRef" type="PointRefStructure" minOccurs="0"/>
+      <xsd:element name="OvertakingVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+      <xsd:element name="OvertakenVehicleTypeRef" type="VehicleTypeRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_stopAssignment_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- =========================================================== -->
+  <xsd:simpleType name="StopAssignmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StopAssignmentRef" type="StopAssignmentRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="StopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="StopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====PASSENGER STOP ASSIGNMENT ====================================================== -->
+  <xsd:simpleType name="PassengerStopAssignmentIdType">
+    <xsd:restriction base="StopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerStopAssignmentRef" type="PassengerStopAssignmentRefStructure" substitutionGroup="StopAssignmentRef"/>
+  <xsd:complexType name="PassengerStopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="StopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="PassengerStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======sTRAIN STOP ASSIGNMENT.================================= -->
+  <xsd:simpleType name="TrainStopAssignmentIdType">
+    <xsd:restriction base="StopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainStopAssignmentRef" type="TrainStopAssignmentRefStructure" substitutionGroup="StopAssignmentRef"/>
+  <xsd:complexType name="TrainStopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="StopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="TrainStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====DYNAMIC STOP ASSIGNMENT=================================== -->
+  <xsd:simpleType name="DynamicStopAssignmentIdType">
+    <xsd:restriction base="PassengerStopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DynamicStopAssignmentRef" type="DynamicStopAssignmentRefStructure" substitutionGroup="PassengerStopAssignmentRef"/>
+  <xsd:complexType name="DynamicStopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerStopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="DynamicStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======Path ASSIGNMENT=================================================== -->
+  <xsd:simpleType name="PathAssignmentIdType">
+    <xsd:restriction base="StopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PathAssignmentRef" type="PathAssignmentRefStructure" substitutionGroup="StopAssignmentRef"/>
+  <xsd:complexType name="PathAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="StopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="PathAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

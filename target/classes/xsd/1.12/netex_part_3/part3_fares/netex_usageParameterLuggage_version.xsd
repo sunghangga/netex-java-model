@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_usageParameterLuggage_version">
+  <xsd:include schemaLocation="netex_usageParameterLuggage_support.xsd"/>
+  <xsd:include schemaLocation="netex_usageParameter_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====LUGGAGE ALLOWANCE=================================================== -->
+  <xsd:element name="LuggageAllowance" abstract="false" substitutionGroup="UsageParameter_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LuggageAllowance_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="UsageParameterGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LuggageAllowanceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LuggageAllowanceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LuggageAllowance_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="UsageParameter_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="LuggageAllowanceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LuggageAllowanceGroup">
+    <xsd:sequence>
+      <xsd:element name="BaggageUseType" type="BaggageUseTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="BaggageType" type="BaggageTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="LuggageAllowanceType" type="LuggageAllowanceTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="MaximumNumberItems" type="xsd:integer" minOccurs="0"/>
+      <xsd:group ref="LuggageAllowanceSizeGroup"/>
+      <xsd:element name="LuggageChargingBasis" type="LuggageChargingBasisEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LuggageAllowanceSizeGroup">
+    <xsd:sequence>
+      <xsd:element name="MaximumBagHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagWidth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagDepth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumBagWeight" type="WeightType" minOccurs="0"/>
+      <xsd:element name="TotalWeight" type="WeightType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

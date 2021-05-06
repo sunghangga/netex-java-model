@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_alternativeName_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <xsd:simpleType name="AlternativeNameIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AlternativeNameRef" type="AlternativeNameRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="AlternativeNameRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="nameOfRefClass" type="NameOfClass" use="optional"/>
+        <xsd:attribute name="ref" type="AlternativeNameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="NameTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="alias"/>
+      <xsd:enumeration value="translation"/>
+      <xsd:enumeration value="copy"/>
+      <xsd:enumeration value="label"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

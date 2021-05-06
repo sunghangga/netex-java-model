@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_siteConnection_version">
+  <xsd:include schemaLocation="netex_siteConnection_support.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_pointOfInterest_support.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_parking_support.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_stopPlace_support.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_navigationPath_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="SiteConnection" abstract="false" substitutionGroup="Transfer">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SiteConnection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TransferGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteConnectionGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SiteConnectionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SiteConnection_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Transfer_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteConnectionGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteConnectionGroup">
+    <xsd:sequence>
+      <xsd:element name="From" type="SiteConnectionEndStructure" minOccurs="0"/>
+      <xsd:element name="To" type="SiteConnectionEndStructure" minOccurs="0"/>
+      <xsd:element name="navigationPaths" type="navigationPaths_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="SiteConnectionEndStructure" abstract="false">
+    <xsd:sequence>
+      <xsd:element name="TransportMode" type="AllVehicleModesOfTransportEnumeration" default="all" minOccurs="0"/>
+      <xsd:element name="StopAreaRef" type="StopAreaRefStructure" minOccurs="0"/>
+      <xsd:element name="ScheduledStopPointRef" type="ScheduledStopPointRefStructure" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:group ref="StopPlaceEndGroup"/>
+        <xsd:group ref="PointOfInterestEndGroup"/>
+        <xsd:group ref="ParkingEndGroup"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element ref="OperatorRef" minOccurs="0"/>
+        <xsd:element ref="OperatorView" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="StopPlaceEndGroup">
+    <xsd:sequence>
+      <xsd:element ref="StopPlaceRef"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="AccessSpaceRef"/>
+        <xsd:element ref="BoardingPositionRef"/>
+        <xsd:element ref="QuayRef"/>
+      </xsd:choice>
+      <xsd:element ref="StopPlaceEntranceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ParkingEndGroup">
+    <xsd:sequence>
+      <xsd:element ref="ParkingRef"/>
+      <xsd:element ref="ParkingAreaRef" minOccurs="0"/>
+      <xsd:element ref="ParkingEntranceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PointOfInterestEndGroup">
+    <xsd:sequence>
+      <xsd:element ref="PointOfInterestRef"/>
+      <xsd:element ref="PointOfInterestSpaceRef" minOccurs="0"/>
+      <xsd:element ref="PointOfInterestEntranceRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="DefaultConnection" abstract="false" substitutionGroup="Transfer">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DefaultConnection_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TransferGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="DefaultConnectionGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DefaultConnectionIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DefaultConnection_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Transfer_VersionStructure">
+        <xsd:group ref="DefaultConnectionGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DefaultConnectionGroup">
+    <xsd:sequence>
+      <xsd:element name="From" type="DefaultConnectionEndStructure" minOccurs="0"/>
+      <xsd:element name="To" type="DefaultConnectionEndStructure" minOccurs="0"/>
+      <xsd:element ref="TopographicPlaceView" minOccurs="0"/>
+      <xsd:element ref="StopAreaRef" minOccurs="0"/>
+      <xsd:element ref="SiteElementRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="DefaultConnectionEndStructure" abstract="false">
+    <xsd:sequence>
+      <xsd:element name="TransportMode" type="VehicleModeEnumeration" minOccurs="0"/>
+      <xsd:element ref="OperatorView" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

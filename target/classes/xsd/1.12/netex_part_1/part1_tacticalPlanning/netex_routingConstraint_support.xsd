@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_routingConstraint_support_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_place_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_assignment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ServiceExclusionIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ServiceExclusionRef" type="ServiceExclusionRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="ServiceExclusionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="ServiceExclusionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TransferRestrictionIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TransferRestrictionRef" type="TransferRestrictionRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="TransferRestrictionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="TransferRestrictionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RoutingConstraintZoneIdType">
+    <xsd:restriction base="ZoneIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoutingConstraintZoneRef" type="RoutingConstraintZoneRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="RoutingConstraintZoneRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ZoneRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TransferConstraintTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="canTransfer"/>
+      <xsd:enumeration value="cannotTransfer"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ZoneUseEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="cannotBoardAndAlightInSameZone"/>
+      <xsd:enumeration value="mustAlightInZone"/>
+      <xsd:enumeration value="cannotAlightInZone"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_siteFrame_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_frames/netex_commonFrame_version.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_flexibleStopPlace_version.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_pointOfInterest_version.xsd"/>
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_parking_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="SiteFrameIdType">
+    <xsd:restriction base="VersionFrameIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SiteFrameRef" type="SiteFrameRefStructure" abstract="false" substitutionGroup="VersionFrameRef"/>
+  <xsd:complexType name="SiteFrameRefStructure" abstract="false">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionFrameRefStructure">
+        <xsd:attribute name="ref" type="SiteFrameIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="SiteFrame" abstract="false" substitutionGroup="CommonFrame">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Site_VersionFrameStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionFrameGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteFrameGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SiteFrameIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Site_VersionFrameStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Common_VersionFrameStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteFrameGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteFrameGroup">
+    <xsd:sequence>
+      <xsd:group ref="PlaceInFrameGroup"/>
+      <xsd:group ref="SiteInFrameGroup"/>
+      <xsd:group ref="PathInFrameGroup"/>
+      <xsd:group ref="CheckConstraintInFrameGroup"/>
+      <xsd:group ref="PointOfInterestClassificationInFrameGroup"/>
+      <xsd:group ref="TariffZoneInFrameGroup"/>
+      <xsd:group ref="SiteFacilitySetsInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="SiteInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="groupsOfStopPlaces" type="groupsOfStopPlacesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="stopPlaces" type="stopPlacesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="flexibleStopPlaces" type="flexibleStopPlacesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="pointsOfInterest" type="pointsOfInterestInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="parkings" type="parkingsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="PlaceInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="countries" type="countriesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="topographicPlaces" type="topographicPlacesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="addresses" type="addressesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="accesses" type="accessesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffZoneInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="tariffZones" type="tariffZonesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

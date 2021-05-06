@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_timeDemandProfile_version">
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_timeDemandType_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyPatternTimings_version.xsd"/>
+  <xsd:include schemaLocation="netex_vehicleJourney_version.xsd"/>
+  <!-- === TIme Demand ========================================================= -->
+  <xsd:element name="TimeDemandProfile" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeDemandProfile_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeDemandProfileGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeDemandProfileIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeDemandProfile_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeDemandProfileGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeDemandProfileGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TimeDemandTypeRef"/>
+        <xsd:element ref="TimebandRef"/>
+      </xsd:choice>
+      <xsd:element ref="JourneyPatternRef" minOccurs="0"/>
+      <xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+      <xsd:element name="members" type="timeDemandProfileMembers_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="timeDemandProfileMembers_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TimeDemandProfileMember" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimeDemandProfileMember" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeDemandProfileMember_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="GroupRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="MemberObjectRef" type="VersionOfObjectRefStructure"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeDemandProfileMemberGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeDemandProfileMemberIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeDemandProfileMember_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupMember_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeDemandProfileMemberGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeDemandProfileMemberGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="TimeDemandTypeRef" minOccurs="0"/>
+      <xsd:element ref="JourneyPatternRunTime" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

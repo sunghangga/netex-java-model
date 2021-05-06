@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 2 sp1 (x64) (http://www.altova.com) by Christophe Duquesne (Dryade) -->
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri_request_errorConditions">
+  <xsd:include schemaLocation="../siri_utility/siri_types-v2.0.xsd"/>
+  <xsd:include schemaLocation="siri_request_support-v2.0.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="ErrorCondition" type="ErrorConditionStructure"/>
+  <xsd:complexType name="ErrorConditionStructure">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:group ref="ApplicationErrorGroup"/>
+      </xsd:choice>
+      <xsd:element name="Description" type="NaturalLanguageStringStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="SuccessInfoGroup">
+    <xsd:sequence>
+      <xsd:element name="ValidUntil" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="ShortestPossibleCycle" type="PositiveDurationType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ErrorConditionElement" type="ErrorConditionElementStructure" abstract="false"/>
+  <xsd:complexType name="ErrorConditionElementStructure">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:group ref="ServiceRequestErrorGroup"/>
+        <xsd:element ref="UnknownSubscriptionError"/>
+      </xsd:choice>
+      <xsd:element name="Description" type="ErrorDescriptionStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ErrorDescriptionStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =======Error conditions========================================================== -->
+  <xsd:element name="ErrorCode" type="ErrorCodeStructure" abstract="true"/>
+  <xsd:complexType name="ErrorCodeStructure">
+    <xsd:sequence>
+      <xsd:element name="ErrorText" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="number" type="xsd:integer"/>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ServiceDeliveryErrorConditionElement" type="ServiceDeliveryErrorConditionStructure" abstract="false"/>
+  <xsd:complexType name="ServiceDeliveryErrorConditionStructure">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:group ref="ServiceRequestErrorGroup"/>
+      </xsd:choice>
+      <xsd:element name="Description" type="ErrorDescriptionStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="ServiceRequestErrorGroup">
+    <xsd:choice>
+      <xsd:group ref="DistributionErrorGroup"/>
+      <xsd:group ref="ApplicationErrorGroup"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===  DISTRIBUTION (+SIRI v2.0)================================================== -->
+  <xsd:group name="DistributionErrorGroup">
+    <xsd:choice>
+      <xsd:element ref="UnapprovedKeyAccessError"/>
+      <xsd:element ref="UnknownParticipantError"/>
+      <xsd:element ref="UnknownEndpointError"/>
+      <xsd:element ref="EndpointDeniedAccessError"/>
+      <xsd:element ref="EndpointNotAvailableAccessError"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===Error: Unapproved Key Access ============================================= -->
+  <xsd:element name="UnapprovedKeyAccessError" type="UnapprovedKeyAccessStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnapprovedKeyAccessStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="Key" type="xsd:normalizedString" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Capability Not Supported============================================== -->
+  <xsd:element name="UnknownParticipantError" type="UnknownParticipantErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnknownParticipantErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="ParticipantRef" type="ParticipantRefStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Unknown Endpoint ============================================ -->
+  <xsd:element name="UnknownEndpointError" type="UnknownEndpointErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnknownEndpointErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="Endpoint" type="EndpointAddress" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Endpoint Denied Access ============================================= -->
+  <xsd:element name="EndpointDeniedAccessError" type="EndpointDeniedAccessStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="EndpointDeniedAccessStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="Endpoint" type="EndpointAddress" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Endpoint Not Available============================================= -->
+  <xsd:element name="EndpointNotAvailableAccessError" type="EndpointNotAvailableAccessStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="EndpointNotAvailableAccessStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="Endpoint" type="EndpointAddress" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===APPLICATION================================================== -->
+  <!-- ===== ============================================ -->
+  <xsd:group name="ApplicationErrorGroup">
+    <xsd:choice>
+      <xsd:element ref="ServiceNotAvailableError"/>
+      <xsd:element ref="CapabilityNotSupportedError"/>
+      <xsd:element ref="AccessNotAllowedError"/>
+      <xsd:element ref="InvalidDataReferencesError"/>
+      <xsd:element ref="BeyondDataHorizon"/>
+      <xsd:element ref="NoInfoForTopicError"/>
+      <xsd:element ref="ParametersIgnoredError"/>
+      <xsd:element ref="UnknownExtensionsError"/>
+      <xsd:element ref="AllowedResourceUsageExceededError"/>
+      <xsd:element ref="OtherError"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===Error: Service Not Available ============================================= -->
+  <xsd:element name="ServiceNotAvailableError" type="ServiceNotAvailableErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="ServiceNotAvailableErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="ExpectedRestartTime" type="xsd:dateTime" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Capability Not Supported============================================== -->
+  <xsd:element name="CapabilityNotSupportedError" type="CapabilityNotSupportedErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="CapabilityNotSupportedErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="CapabilityRef" type="CapabilityCodeType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Beyond Data Horizon ============================================== -->
+  <xsd:element name="BeyondDataHorizon" type="BeyondDataHorizonErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="BeyondDataHorizonErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===== AUTHORISATION========================================= -->
+  <!-- ===Error: Access not allowed ============================================= -->
+  <xsd:element name="AccessNotAllowedError" type="AccessNotAllowedErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="AccessNotAllowedErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: No Info for Topic================================================= -->
+  <xsd:element name="NoInfoForTopicError" type="NoInfoForTopicErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="NoInfoForTopicErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Invalid Data References ======================================= -->
+  <xsd:element name="InvalidDataReferencesError" type="InvalidDataReferencesErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="InvalidDataReferencesErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="InvalidRef" type="xsd:NMTOKEN" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Invalid Data References ======================================= -->
+  <xsd:element name="ParametersIgnoredError" type="ParametersIgnoredErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="ParametersIgnoredErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="ParameterName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Unknown Extensions======================================= -->
+  <xsd:element name="UnknownExtensionsError" type="UnknownExtensionsErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnknownExtensionsErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="ExtensionName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Allowed Resource Usage Exceeded ============================================= -->
+  <xsd:element name="AllowedResourceUsageExceededError" type="AllowedResourceUsageExceededErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="AllowedResourceUsageExceededErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ==== SUBSCRIPTION ERRORS=========================================== -->
+  <!-- ===Error: Unknown Subscriber  ============================================= -->
+  <xsd:element name="UnknownSubscriberError" type="UnknownSubscriberErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnknownSubscriberErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="SubscriberRef" type="ParticipantRefStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ===Error: Unknown Subscription  ============================================= -->
+  <xsd:element name="UnknownSubscriptionError" type="UnknownSubscriptionErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="UnknownSubscriptionErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure">
+        <xsd:sequence>
+          <xsd:element name="SubscriptionCode" type="SubscriptionQualifierStructure" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Error: Other Error ============================================= -->
+  <xsd:element name="OtherError" type="OtherErrorStructure" substitutionGroup="ErrorCode"/>
+  <xsd:complexType name="OtherErrorStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ErrorCodeStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_alternativeName_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
+  <xsd:include schemaLocation="netex_alternativeText_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <xsd:complexType name="alternativeTexts_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="AlternativeText" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="AlternativeText" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AlternativeText_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="DataManagedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="Text" type="MultilingualString"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AlternativeTextIdType" use="optional"/>
+          <xsd:attribute name="attributeName" type="xsd:NCName"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AlternativeText_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="DataManagedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+          <xsd:element name="Text" type="MultilingualString"/>
+        </xsd:sequence>
+        <xsd:attribute name="attributeName" type="xsd:NCName"/>
+        <xsd:attribute name="useForLanguage" type="xsd:language"/>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

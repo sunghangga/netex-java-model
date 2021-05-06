@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleJourneyFrequency_version">
+  <xsd:include schemaLocation="netex_vehicleJourneyFrequency_support.xsd"/>
+  <xsd:include schemaLocation="netex_vehicleJourneyTimes_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyTiming_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_grouping_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="frequencyGroupsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="HeadwayJourneyGroup"/>
+          <xsd:element ref="RhythmicalJourneyGroup"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- =================================================== -->
+  <xsd:complexType name="FrequencyStructure">
+    <xsd:sequence>
+      <xsd:group ref="HeadwayIntervalGroup"/>
+      <xsd:element name="HeadwayDisplay" type="HeadwayUseEnumeration" default="DisplayInsteadOfPassingTimes" minOccurs="0"/>
+      <xsd:element name="FrequencyRegulated" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- =================================================== -->
+  <!-- ===VehicleJourney Frequency=================================================== -->
+  <xsd:complexType name="vehicleJourneyHeadways_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="VehicleJourneyHeadway" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleJourneyHeadway" abstract="false" substitutionGroup="JourneyTiming">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleJourneyHeadway_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="JourneyTimingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="HeadwayIntervalGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleJourneyHeadwayGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleJourneyHeadwayIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleJourneyHeadway_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyHeadway_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleJourneyHeadwayGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleJourneyHeadwayGroup">
+    <xsd:sequence>
+      <xsd:element ref="VehicleJourneyRef" minOccurs="0"/>
+      <xsd:element ref="TimingPointInJourneyPatternRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="frequencyGroups_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="HeadwayJourneyGroupRef" maxOccurs="1"/>
+          <xsd:element ref="HeadwayJourneyGroup" maxOccurs="1"/>
+          <xsd:element ref="RhythmicalJourneyGroupRef"/>
+          <xsd:element ref="RhythmicalJourneyGroup" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="JourneyFrequencyGroup" type="JourneyFrequencyGroup_VersionStructure" abstract="true" substitutionGroup="GroupOfEntities"/>
+  <xsd:complexType name="JourneyFrequencyGroup_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:group ref="JourneyFrequencyGroupGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="JourneyFrequencyGroupGroup">
+    <xsd:sequence>
+      <xsd:element name="FirstDepartureTime" type="xsd:time"/>
+      <xsd:element name="FirstDayOffset" type="DayOffsetType" default="0" minOccurs="0"/>
+      <xsd:element name="LastDepartureTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="LastDayOffset" type="DayOffsetType" default="0" minOccurs="0"/>
+      <xsd:element name="timeDemandTypes" type="timeDemandTypeRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="journeys" type="explicitJourneyRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="HeadwayJourneyGroup" abstract="false" substitutionGroup="JourneyFrequencyGroup">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="HeadwayJourneyGroup_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyFrequencyGroupGroup"/>
+            <xsd:group ref="HeadwayJourneyGroupGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="HeadwayJourneyGroupIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="HeadwayJourneyGroup_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyFrequencyGroup_VersionStructure">
+        <xsd:group ref="HeadwayJourneyGroupGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="HeadwayJourneyGroupGroup">
+    <xsd:sequence>
+      <xsd:group ref="HeadwayIntervalGroup"/>
+      <xsd:element name="HeadwayDisplay" type="HeadwayUseEnumeration" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RhythmicalJourneyGroup" abstract="false" substitutionGroup="JourneyFrequencyGroup">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RhythmicalJourneyGroup_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyFrequencyGroupGroup"/>
+            <xsd:group ref="RhythmicalJourneyGroupGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RhythmicalJourneyGroupIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RhythmicalJourneyGroup_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyFrequencyGroup_VersionStructure">
+        <xsd:group ref="RhythmicalJourneyGroupGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RhythmicalJourneyGroupGroup">
+    <xsd:sequence>
+      <xsd:element name="timebands" type="timebandRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

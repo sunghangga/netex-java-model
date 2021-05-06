@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_datedVehicleJourney_support">
+  <xsd:include schemaLocation="netex_serviceJourney_support.xsd"/>
+  <!-- === DATED VEHICLE JOURNEY====================================================== -->
+  <xsd:simpleType name="DatedVehicleJourneyIdType">
+    <xsd:restriction base="VehicleJourneyIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DatedVehicleJourneyRef" type="VehicleJourneyRefStructure" substitutionGroup="JourneyRef"/>
+  <xsd:complexType name="DatedVehicleJourneyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleJourneyRefStructure">
+        <xsd:attribute name="ref" type="DatedVehicleJourneyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === NORMAL DATED VEHICLE JOURNEY====================================================== -->
+  <xsd:simpleType name="NormalDatedVehicleJourneyIdType">
+    <xsd:restriction base="DatedVehicleJourneyIdType"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="NormalDatedVehicleJourneyTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="garageRunOut"/>
+      <xsd:enumeration value="garageRunIn"/>
+      <xsd:enumeration value="turningManoeuvre"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ===DEAD RUN====================================================== -->
+  <!-- ===Service Journey====================================================== -->
+  <xsd:simpleType name="DatedSpecialServiceIdType">
+    <xsd:restriction base="SpecialServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DatedSpecialServiceRef" type="DatedSpecialServiceRefStructure" substitutionGroup="SpecialServiceRef"/>
+  <xsd:complexType name="DatedSpecialServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SpecialServiceRefStructure">
+        <xsd:attribute name="ref" type="DatedSpecialServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="DatedSpecialServiceRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="DatedSpecialServiceRef"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

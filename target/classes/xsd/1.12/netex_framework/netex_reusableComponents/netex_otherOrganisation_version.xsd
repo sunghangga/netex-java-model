@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_otherOrganisation_version">
+  <xsd:include schemaLocation="netex_otherOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
+  <xsd:include schemaLocation="netex_serviceCalendar_version.xsd"/>
+  <xsd:include schemaLocation="netex_address_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="OtherOrganisation" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="OtherOrganisation_VersionStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OtherOrganisation_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Organisation_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OtherOrganisationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OtherOrganisationGroup">
+    <xsd:sequence>
+      <xsd:element name="Address" type="PostalAddress_VersionStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TravelAgent" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TravelAgent_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OtherOrganisationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TravelAgentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TravelAgent_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="OtherOrganisation_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ManagementAgent" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ManagementAgent_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OtherOrganisationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ManagementAgentIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ManagementAgent_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="OtherOrganisation_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="GeneralOrganisation" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeneralOrganisation_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OtherOrganisationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GeneralOrganisationIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeneralOrganisation_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="OtherOrganisation_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ServicedOrganisation" substitutionGroup="Organisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ServicedOrganisation_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OtherOrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="ServicedOrganisationGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ServicedOrganisationIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ServicedOrganisation_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="OtherOrganisation_VersionStructure">
+        <xsd:group ref="ServicedOrganisationGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ServicedOrganisationGroup">
+    <xsd:sequence>
+      <xsd:element ref="ServiceCalendarRef" minOccurs="0"/>
+      <xsd:element name="ServicedOrganisationType" type="ServicedOrganisationTypeEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="OrganisationDayType" substitutionGroup="DayType_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OrganisationDayType_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DayTypeGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="OrganisationDayTypeGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DayTypeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OrganisationDayType_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DayType_VersionStructure">
+        <xsd:group ref="OrganisationDayTypeGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OrganisationDayTypeGroup">
+    <xsd:sequence>
+      <xsd:element name="IsServiceDay" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="ServicedOrganisationRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by christophe duquesne (Dryade SARL) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_versionFrame_version">
+  <xsd:include schemaLocation="netex_versionFrame_support.xsd"/>
+  <xsd:include schemaLocation="netex_typeOfValue_version.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_layer_support.xsd"/>
+  <xsd:include schemaLocation="../netex_utility/netex_location_types.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_versionDelta_version.xsd"/>
+  <xsd:include schemaLocation="../netex_utility/netex_units.xsd"/>
+  <!-- ====VERSION FRAME TYPES ======================================= -->
+  <xsd:element name="VersionFrame" type="VersionFrame_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="VersionFrame_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="VersionFrameGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VersionFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="TypeOfFrameRef" minOccurs="0"/>
+      <xsd:element name="BaselineVersionFrameRef" type="VersionRefStructure" minOccurs="0"/>
+      <xsd:element name="codespaces" type="codespaces_RelStructure" minOccurs="0"/>
+      <xsd:element name="FrameDefaults" type="VersionFrameDefaultsStructure" minOccurs="0"/>
+      <xsd:element name="versions" type="versions_RelStructure" minOccurs="0"/>
+      <xsd:element name="prerequisites" type="versionFrameRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="traces" type="traces_RelStructure" minOccurs="0"/>
+      <xsd:group ref="VersionFrameValiditiesGroup"/>
+      <xsd:element name="layers" type="layerRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VersionFrameValiditiesGroup">
+    <xsd:sequence>
+      <xsd:element name="contentValidityConditions" type="validityConditions_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="VersionFrameDefaultsGroup">
+    <xsd:sequence>
+      <xsd:element name="DefaultDataSourceRef" type="DataSourceRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultResponsibilitySetRef" type="ResponsibilitySetRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultBrandingRef" type="BrandingRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultLocale" type="LocaleStructure" minOccurs="0"/>
+      <xsd:element name="DefaultLocationSystem" type="SrsNameType" minOccurs="0"/>
+      <xsd:element name="DefaultSystemOfUnits" type="SystemOfUnits" default="SiMetres" minOccurs="0"/>
+      <xsd:element name="DefaultCurrency" type="CurrencyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="VersionFrameDefaultsStructure">
+    <xsd:sequence>
+      <xsd:element name="DefaultCodespaceRef" type="CodespaceRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultDataSourceRef" type="DataSourceRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultResponsibilitySetRef" type="ResponsibilitySetRefStructure" minOccurs="0"/>
+      <xsd:element name="DefaultLocale" type="LocaleStructure" minOccurs="0"/>
+      <xsd:element name="DefaultLocationSystem" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="DefaultSystemOfUnits" type="SystemOfUnits" default="SiMetres" minOccurs="0"/>
+      <xsd:element name="DefaultCurrency" type="CurrencyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="codespaces_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CodespaceRef"/>
+          <xsd:element ref="Codespace"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====== TypeofFrame ================================================ -->
+  <xsd:complexType name="typesOfFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfFrameRef"/>
+          <xsd:element ref="TypeOfFrame"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfFrame" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFrame_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="TypeOfValidityRef" minOccurs="0"/>
+              <xsd:element name="FrameClassRef" type="ClassRefStructure" minOccurs="0"/>
+              <xsd:element name="classes" type="classesInRepository_RelStructure" minOccurs="0"/>
+              <xsd:element name="typesOfEntity" type="typeOfEntityRefs_RelStructure" minOccurs="0"/>
+              <xsd:element name="includes" type="typesOfFrame_RelStructure" minOccurs="0"/>
+              <xsd:element name="LocatingSystemRef" type="SrsNameType" minOccurs="0"/>
+              <xsd:element name="ModificationSet" type="ModificationSetEnumeration" minOccurs="0"/>
+              <xsd:element ref="LayerRef" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFrameIdType"/>
+          <xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="VersionFrame"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfFrame_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure">
+        <xsd:group ref="TypeOfFrameGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfFrameGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfValidityRef" minOccurs="0"/>
+      <xsd:element name="FrameClassRef" type="ClassRefStructure" minOccurs="0"/>
+      <xsd:element name="classes" type="classesInRepository_RelStructure" minOccurs="0"/>
+      <xsd:element name="typesOfEntity" type="typeOfEntityRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="includes" type="typesOfFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="LocatingSystemRef" type="SrsNameType" minOccurs="0"/>
+      <xsd:element name="ModificationSet" type="ModificationSetEnumeration" minOccurs="0"/>
+      <xsd:element ref="LayerRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="classesInRepository_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ClassInFrameRef"/>
+          <xsd:element ref="ClassInFrame"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== TypeOfValidity================================================ -->
+  <xsd:element name="TypeOfValidity" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfValidity_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="TypeOfValidityGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfValidityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfValidity_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:group ref="TypeOfValidityGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfValidityGroup">
+    <xsd:sequence>
+      <xsd:element name="Periodicity" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="Nature" type="FrameNatureEnumeration" minOccurs="0"/>
+      <xsd:element name="classes" type="classRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== Entity MetaClass =================================================================== -->
+  <xsd:element name="ClassInFrame" type="ClassInFrameStructure" abstract="false"/>
+  <xsd:complexType name="ClassInFrameStructure">
+    <xsd:sequence>
+      <xsd:group ref="ClassInFrameGroup"/>
+    </xsd:sequence>
+    <xsd:attribute name="nameOfClass" type="NameOfClass"/>
+  </xsd:complexType>
+  <xsd:group name="ClassInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="ClassRefType" type="ClassRefTypeEnumeration" default="members" minOccurs="0"/>
+      <xsd:element name="TypeOfFrameRef" type="TypeOfFrameIdType" minOccurs="0"/>
+      <xsd:element name="Mandatory" type="MandatoryEnumeration" default="optional" minOccurs="0"/>
+      <xsd:element name="attributes" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ClassAttributeInFrame" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="relationships" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ClassRelationshipInFrame" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== Entity MetaClass Attribute =================================================================== -->
+  <xsd:element name="ClassAttributeInFrame">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="ClassAttributeInFrameStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ClassAttributeInFrameStructure">
+    <xsd:sequence>
+      <xsd:element name="Type" type="xsd:QName" minOccurs="0"/>
+      <xsd:element name="Mandatory" type="MandatoryEnumeration" default="optional" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:QName"/>
+  </xsd:complexType>
+  <!-- ==== Entity MetaClass Attribute =================================================================== -->
+  <xsd:element name="ClassRelationshipInFrame" type="ClassRelationshipInFrameStructure"/>
+  <xsd:complexType name="ClassRelationshipInFrameStructure">
+    <xsd:sequence>
+      <xsd:element ref="RelationshipRef"/>
+      <xsd:element name="Mandatory" type="MandatoryEnumeration" default="optional" minOccurs="0"/>
+      <xsd:element name="Containment" type="ContainmentEnumeration" default="both" minOccurs="0"/>
+      <xsd:element name="ModificationSet" type="ModificationSetEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:QName"/>
+  </xsd:complexType>
+</xsd:schema>

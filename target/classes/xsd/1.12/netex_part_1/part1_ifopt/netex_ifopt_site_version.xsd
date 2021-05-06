@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_site_version">
+  <xsd:include schemaLocation="netex_ifopt_site_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_accessibility/netex_acsb_accessibility.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_mode_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_topographicPlace_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_checkConstraint_version.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAll.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="SiteElement" type="SiteElement_VersionStructure" abstract="true" substitutionGroup="Place"/>
+  <xsd:complexType name="SiteElement_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AddressablePlace_VersionStructure">
+        <xsd:group ref="SiteElementGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteElementGroup">
+    <xsd:sequence>
+      <xsd:element ref="AccessibilityAssessment" minOccurs="0"/>
+      <xsd:element name="AccessModes" type="AccessModeListOfEnumerations" minOccurs="0"/>
+      <xsd:group ref="SiteElementNamesGroup"/>
+      <xsd:group ref="RelativeLocationGroup"/>
+      <xsd:group ref="SiteElementPropertiesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SiteElementNamesGroup">
+    <xsd:sequence>
+      <xsd:element name="NameSuffix" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SiteElementPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="PublicUse" type="PublicUseEnumeration" default="all" minOccurs="0"/>
+      <xsd:element name="Covered" type="CoveredEnumeration" default="indoors" minOccurs="0"/>
+      <xsd:element name="Gated" type="GatedEnumeration" minOccurs="0"/>
+      <xsd:element name="Lighting" type="LightingEnumeration" default="wellLit" minOccurs="0"/>
+      <xsd:element name="AllAreasWheelchairAccessible" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="PersonCapacity" type="xsd:nonNegativeInteger" minOccurs="0"/>
+      <xsd:element name="facilities" type="siteFacilitySets_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="RelativeLocationGroup">
+    <xsd:sequence>
+      <xsd:element name="CrossRoad" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Landmark" type="MultilingualString" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Site" type="Site_VersionStructure" abstract="true" substitutionGroup="SiteElement"/>
+  <xsd:complexType name="Site_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="SiteElement_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TopographicPlaceRef"/>
+        <xsd:element ref="TopographicPlaceView"/>
+      </xsd:choice>
+      <xsd:element name="additionalTopographicPlaces" type="topographicPlaceRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="SiteType" type="SiteTypeEnumeration" minOccurs="0"/>
+      <xsd:element name="AtCentre" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="Locale" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="OrganisationRef"/>
+        <xsd:element name="OperatingOrganisationView" type="Organisation_DerivedViewStructure"/>
+      </xsd:choice>
+      <xsd:group ref="SiteRelationGroup" minOccurs="0"/>
+      <xsd:element name="levels" type="levels_RelStructure" minOccurs="0"/>
+      <xsd:element name="entrances" type="siteEntrances_RelStructure" minOccurs="0"/>
+      <xsd:group ref="AllEquipmentGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SiteRelationGroup">
+    <xsd:sequence>
+      <xsd:element name="ParentSiteRef" type="SiteRefStructure" minOccurs="0"/>
+      <xsd:element name="adjacentSites" type="siteRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="ContainedInPlaceRef" type="TopographicPlaceRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="SiteComponent" type="SiteComponent_VersionStructure" abstract="true" substitutionGroup="SiteElement"/>
+  <xsd:complexType name="SiteComponent_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="SiteElement_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteComponentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteComponentGroup">
+    <xsd:sequence>
+      <xsd:element name="SiteRef" type="SiteRefStructure" minOccurs="0"/>
+      <xsd:element ref="LevelRef" minOccurs="0"/>
+      <xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+      <xsd:element name="checkConstraints" type="checkConstraints_RelStructure" minOccurs="0"/>
+      <xsd:group ref="AllEquipmentGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="siteEntrances_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="EntranceRef"/>
+          <xsd:element ref="Entrance"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Entrance" type="SiteEntrance_VersionStructure" abstract="false" substitutionGroup="SiteComponent"/>
+  <xsd:complexType name="SiteEntrance_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="SiteComponent_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SiteEntranceGroup"/>
+          <xsd:group ref="ExternalEntranceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SiteEntranceGroup">
+    <xsd:sequence>
+      <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="Label" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="EntranceType" type="EntranceEnumeration" minOccurs="0"/>
+      <xsd:element name="IsExternal" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="IsEntry" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="IsExit" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element name="Width" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Height" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="ExternalEntranceGroup">
+    <xsd:sequence>
+      <xsd:element name="DroppedKerbOutside" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="DropOffPointClose" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="vehicleEntrances_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="VehicleEntranceRef"/>
+          <xsd:element ref="VehicleEntrance"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VehicleEntrance" abstract="true" substitutionGroup="Entrance">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="VehicleEntrance_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteComponentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SiteEntranceGroup"/>
+              <xsd:group ref="ExternalEntranceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VehicleEntranceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="VehicleEntranceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="VehicleEntrance_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="SiteEntrance_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="VehicleEntranceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="VehicleEntranceGroup">
+    <xsd:sequence>
+      <xsd:element name="Public" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Level=========================================================== -->
+  <xsd:complexType name="levels_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="LevelRef"/>
+          <xsd:element ref="Level" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Level" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Level_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LevelGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LevelIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Level_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="LevelGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LevelGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="PublicCode" type="xsd:normalizedString" minOccurs="0"/>
+      <xsd:element name="PublicUse" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AccessibilityAssessment" type="AccessibilityAssessment_VersionedChildStructure" minOccurs="0"/>
+      <xsd:element name="AllAreasWheelchairAccessible" type="xsd:boolean" default="true" minOccurs="0"/>
+      <xsd:element ref="SiteRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="accessZones_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="AccessZoneRef"/>
+          <xsd:element ref="AccessZone"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AccessZone" substitutionGroup="Zone">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AccessZone_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessZoneGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AccessZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AccessZone_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Zone_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AccessZoneGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AccessZoneGroup">
+    <xsd:sequence>
+      <xsd:element name="AccessibilityAssessment" type="AccessibilityAssessment_VersionedChildStructure" minOccurs="0"/>
+      <xsd:element name="AllAreasWheelchairAccessible" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ServiceSite" substitutionGroup="Site">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ServiceSite_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="SiteElementGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SiteGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ServiceSiteGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ServiceSiteIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ServiceSite_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Site_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ServiceSiteGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ServiceSiteGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

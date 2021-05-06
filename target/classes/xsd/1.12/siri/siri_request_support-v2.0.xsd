@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri_requests">
+  <xsd:include schemaLocation="../siri_utility/siri_participant-v2.0.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="MessageQualifierStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="MessageRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="MessageQualifierStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="SubscriptionQualifierStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:NMTOKEN"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="SubscriptionFilterStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:NMTOKEN"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="SubscriptionFilterRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:NMTOKEN"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="RequestTimestamp" type="xsd:dateTime"/>
+  <xsd:element name="RequestorRef" type="ParticipantRefStructure"/>
+  <xsd:simpleType name="EndpointAddress">
+    <xsd:restriction base="xsd:anyURI"/>
+  </xsd:simpleType>
+  <xsd:element name="ResponseTimestamp" type="xsd:dateTime"/>
+  <!-- ============WSDL========================================================= -->
+  <xsd:simpleType name="ItemIdentifierType">
+    <xsd:restriction base="xsd:NMTOKEN"/>
+  </xsd:simpleType>
+  <xsd:complexType name="ItemRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="ItemIdentifierType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="IncludeTranslations" type="xsd:boolean"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="CapabilityRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="CapabilityCodeType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CapabilityCodeType">
+    <xsd:restriction base="xsd:NMTOKEN"/>
+  </xsd:simpleType>
+  <!-- ==== Enums =================================== -->
+  <xsd:simpleType name="CommunicationsTransportMethodEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="httpPost"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="wsdlSoap"/>
+      <xsd:enumeration value="wsdlSoapDocumentLiteral"/>
+      <xsd:enumeration value="httpUrlJSON"/>
+      <xsd:enumeration value="httpUrlProtoBuffers"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CompressionMethodEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="gzip"/>
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

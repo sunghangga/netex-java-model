@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_timeDemandTimes_version.xsd">
+  <xsd:include schemaLocation="netex_serviceJourney_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_journeyPatternTimings_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === TIme Demand ========================================================= -->
+  <!-- ===DefaultServiceRunTime===================================================== -->
+  <xsd:complexType name="defaultServiceJourneyRunTimes_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="DefaultServiceJourneyRunTime" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DefaultServiceJourneyRunTime" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DefaultServiceJourneyRunTime_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="JourneyTimingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DefaultServiceJourneyRunTimeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DefaultServiceJourneyTimeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DefaultServiceJourneyRunTime_VersionedChildStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyTiming_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="DefaultServiceJourneyRunTimeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DefaultServiceJourneyRunTimeGroup">
+    <xsd:sequence>
+      <xsd:element name="RunTime" type="xsd:duration"/>
+      <xsd:element ref="ServiceJourneyRef" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== Metamodel ================================================================ -->
+  <!-- ===DefaultSDeadRunTime===================================================== -->
+  <xsd:complexType name="defaultDeadRunRunTimes_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="DefaultDeadRunRunTime" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DefaultDeadRunRunTime" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DefaultDeadRunRunTime_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="JourneyTimingGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DefaultDeadRunRunTimeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DefaultDeadRunRunTimeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DefaultDeadRunRunTime_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="JourneyTiming_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="DefaultDeadRunRunTimeGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DefaultDeadRunRunTimeGroup">
+    <xsd:sequence>
+      <xsd:element name="RunTime" type="xsd:duration"/>
+      <xsd:element ref="DeadRunRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_layer_version">
+  <xsd:include schemaLocation="netex_layer_support.xsd"/>
+  <xsd:include schemaLocation="../netex_utility/netex_location_types.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_versionFrame_support.xsd"/>
+  <xsd:include schemaLocation="netex_grouping_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:element name="Layer" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Layer_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="LocationSystem" type="SrsNameType" minOccurs="0"/>
+              <xsd:element name="versionFrames" type="versionFrameRefs_RelStructure" minOccurs="0"/>
+              <xsd:element name="members" type="objectRefs_RelStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LayerIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Layer_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:group ref="LayerGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LayerGroup">
+    <xsd:sequence>
+      <xsd:element name="LocationSystem" type="SrsNameType" minOccurs="0"/>
+      <xsd:element name="versionFrames" type="versionFrameRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="members" type="objectRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

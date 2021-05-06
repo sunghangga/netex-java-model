@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_transportOrganisation_version">
+  <xsd:include schemaLocation="netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../netex_reusableComponents/netex_mode_version.xsd"/>
+  <xsd:include schemaLocation="../netex_genericFramework/netex_organisation_version.xsd"/>
+  <xsd:include schemaLocation="netex_address_version.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="OrganisationInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="organisations" type="organisationsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfOperators" type="groupsOfOperatorsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="operationalContexts" type="operationalContextsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="controlCentres" type="controlCentresInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="groupsOfOperatorsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="GroupOfOperators" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="transportOperatorsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="Authority"/>
+          <xsd:element ref="Operator"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="operationalContextsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="OperationalContext" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="controlCentresInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ControlCentre" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TransportOrganisation_" type="Organisation_VersionStructure" abstract="true" substitutionGroup="Organisation_"/>
+  <!-- ====Operator========================================================== -->
+  <xsd:element name="Operator" substitutionGroup="TransportOrganisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Operator_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OperatorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OperatorIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Operator_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Organisation_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OperatorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OperatorGroup">
+    <xsd:sequence>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element name="Address" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:restriction base="PostalAddress_VersionStructure">
+              <xsd:sequence>
+                <xsd:sequence>
+                  <xsd:group ref="GroupOfEntitiesGroup"/>
+                </xsd:sequence>
+                <xsd:group ref="PlaceGroup"/>
+                <xsd:sequence>
+                  <xsd:group ref="AddressGroup"/>
+                </xsd:sequence>
+                <xsd:sequence>
+                  <xsd:group ref="PostalAddressGroup"/>
+                  <xsd:element name="RoadAddressRef" type="AddressRefStructure" minOccurs="0"/>
+                </xsd:sequence>
+              </xsd:sequence>
+            </xsd:restriction>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="PrimaryMode" type="VehicleModeEnumeration" minOccurs="0"/>
+      <xsd:element name="OperatorActivities" type="ListOfOperatorActivities" default="passenger" minOccurs="0"/>
+      <xsd:element name="CustomerServiceContactDetails" type="ContactStructure" minOccurs="0"/>
+      <xsd:element name="departments" type="departments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Authority" substitutionGroup="TransportOrganisation_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Authority_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AuthorityGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="AuthorityIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Authority_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Organisation_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AuthorityGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AuthorityGroup">
+    <xsd:sequence>
+      <xsd:element ref="CountryRef" minOccurs="0"/>
+      <xsd:element name="Address" type="PostalAddress_VersionStructure" minOccurs="0"/>
+      <xsd:element name="authorityTypes" type="typeOfOrganisationRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==GROUP OF OPERATORs============================================================ -->
+  <xsd:element name="GroupOfOperators" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfOperatorsStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfOperatorsGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfOperatorsIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfOperatorsStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfOperatorsGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfOperatorsGroup">
+    <xsd:sequence>
+      <xsd:element name="UseToExclude" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="members" type="transportOrganisationRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====Operator========================================================== -->
+  <xsd:element name="OperationalContext" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OperationalContext_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OperationalContextGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OperationalContextIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OperationalContext_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="OperationalContextGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OperationalContextGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element ref="OrganisationPartRef" minOccurs="0"/>
+      <xsd:element ref="VehicleMode" minOccurs="0"/>
+      <xsd:element ref="TransportSubmode" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====OperatingDepartment========================================================= -->
+  <xsd:element name="OperatingDepartment" substitutionGroup="OrganisationPart_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OperatingDepartment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationPartGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DepartmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OperatingDepartmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OperatingDepartmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OperatingDepartment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="Department_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OperatingDepartmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OperatingDepartmentGroup">
+    <xsd:sequence>
+      <xsd:element name="operationalContexts" type="operationalContexRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="OperatorView" substitutionGroup="DerivedView">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="Operator_DerivedViewStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Operator_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="OperatorRef" minOccurs="0"/>
+          <xsd:group ref="OrganisationNameGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="ControlCentres_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="ControlCentreRef"/>
+          <xsd:element ref="ControlCentre"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ControlCentre" substitutionGroup="OrganisationPart_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ControlCentre_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OrganisationPartGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ControlCentreGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ControlCentreIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ControlCentre_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="OrganisationPart_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ControlCentreGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ControlCentreGroup">
+    <xsd:sequence>
+      <xsd:element name="Number" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="ControlCentreCode" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="DepartmentRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TransportAdministrativeZone" abstract="false" substitutionGroup="AdministrativeZone_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TransportAdministrativeZone_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AdministrativeZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TransportAdministrativeZoneGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TransportAdministrativeZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TransportAdministrativeZone_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AdministrativeZone_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TransportAdministrativeZoneGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TransportAdministrativeZoneGroup">
+    <xsd:sequence>
+      <xsd:element name="VehicleModes" type="AllVehicleModesListOfEnumeration" default="all" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>

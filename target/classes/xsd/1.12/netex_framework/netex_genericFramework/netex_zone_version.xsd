@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_zone_version">
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gml_extract_all_objects_v_3_2_1.xsd"/>
+  <!--Actual dependency-->
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="../../gml/gmlBasic2d-extract-v3_2_1-.xsd"/>
+  <xsd:include schemaLocation="netex_pointAndLink_version.xsd"/>
+  <xsd:include schemaLocation="netex_zone_support.xsd"/>
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in RESOURCE FRAME)=================================================== -->
+  <xsd:complexType name="zonesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Zone" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===ENTIITY IN VERSION IN FRAME====(Used in SERVICE FRAME)=================================================== -->
+  <xsd:complexType name="tariffZonesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="TariffZone_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====Zone======================================================= -->
+  <xsd:element name="Zone" type="Zone_VersionStructure" abstract="false" substitutionGroup="GroupOfEntities"/>
+  <xsd:complexType name="Zone_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfPoints_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ZoneGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ZoneGroup">
+    <xsd:sequence>
+      <xsd:element name="types" type="typeOfZoneRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="Centroid" type="SimplePoint_VersionStructure" minOccurs="0"/>
+      <xsd:element ref="gml:Polygon" minOccurs="0"/>
+      <xsd:element name="projections" type="projections_RelStructure" minOccurs="0"/>
+      <xsd:element name="ParentZoneRef" type="ZoneRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="GeneralZone" abstract="false" substitutionGroup="Zone">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GeneralZone_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GeneralZone_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Zone_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TariffZone_" type="Zone_VersionStructure" abstract="true" substitutionGroup="Zone"/>
+  <xsd:element name="TariffZone" abstract="false" substitutionGroup="TariffZone_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TariffZone_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TariffZoneGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TariffZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TariffZone_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="Zone_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TariffZoneGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TariffZoneGroup">
+    <xsd:sequence>
+      <xsd:element name="Presentation" type="PresentationStructure" minOccurs="0"/>
+      <xsd:element name="PrintedPresentation" type="PrintPresentationStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="TypeOfZone" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfZone_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfZoneIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfZone_ValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="ZoneView" type="Zone_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView"/>
+  <xsd:complexType name="Zone_DerivedViewStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:element ref="ZoneRef" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+          <xsd:element ref="TypeOfZoneRef" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredefinedSchemaListClasspathResourceResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">netex-java-model</a> &gt; <a href="index.source.html" class="el_package">org.rutebanken.netex.validation</a> &gt; <span class="el_source">PredefinedSchemaListClasspathResourceResolver.java</span></div><h1>PredefinedSchemaListClasspathResourceResolver.java</h1><pre class="source lang-java linenums">/*
+ * Licensed under the EUPL, Version 1.2 or - as soon they will be approved by
+ * the European Commission - subsequent versions of the EUPL (the &quot;Licence&quot;);
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ *   https://joinup.ec.europa.eu/software/page/eupl
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ */
+
+package org.rutebanken.netex.validation;
+
+import org.w3c.dom.ls.LSInput;
+import org.w3c.dom.ls.LSResourceResolver;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class PredefinedSchemaListClasspathResourceResolver implements LSResourceResolver {
+
+<span class="nc" id="L27">    private Map&lt;String, String&gt; resourceToPathMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L29">    public PredefinedSchemaListClasspathResourceResolver(String schemaList) throws IOException {</span>
+
+<span class="nc" id="L31">        InputStream resourceAsStream = getClass().getResourceAsStream(schemaList);</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if(resourceAsStream == null) {</span>
+<span class="nc" id="L33">        	throw new IOException(&quot;Unable to load &quot;+schemaList+&quot; as resource stream&quot;);</span>
+        }
+<span class="nc" id="L35">        BufferedReader r = new BufferedReader(new InputStreamReader(resourceAsStream));</span>
+        String resource;
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        while ((resource = r.readLine()) != null) {</span>
+<span class="nc" id="L38">            String name = resource.substring(resource.lastIndexOf('/') + 1);</span>
+<span class="nc" id="L39">            String existing = resourceToPathMap.put(name, resource);</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            if (existing != null) {</span>
+<span class="nc" id="L41">                throw new RuntimeException(&quot;Duplicate resource file on classpath &quot; + name);</span>
+            }
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">    }</span>
+
+    @Override
+    public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI) {
+        try {
+
+<span class="nc" id="L50">            String[] parts = systemId.split(&quot;/&quot;);</span>
+<span class="nc" id="L51">            String filename = parts[parts.length - 1];</span>
+
+<span class="nc" id="L53">            LSInput lsInput = createInput(systemId, baseURI);</span>
+<span class="nc" id="L54">            String path = resourceToPathMap.get(filename);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if (path != null) {</span>
+<span class="nc" id="L56">                InputStream stream = getClass().getResourceAsStream(path);</span>
+<span class="nc" id="L57">                lsInput.setByteStream(stream);</span>
+            }
+<span class="nc" id="L59">            return lsInput;</span>
+<span class="nc" id="L60">        } catch (Exception e) {</span>
+<span class="nc" id="L61">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    protected LSInput createInput(final String systemId, final String baseUri) {
+
+<span class="nc" id="L67">        return new LSInput() {</span>
+
+            private InputStream is;
+
+            @Override
+            public void setSystemId(String systemId) {
+<span class="nc" id="L73">            }</span>
+
+            @Override
+            public void setStringData(String stringData) {
+<span class="nc" id="L77">            }</span>
+
+            @Override
+            public void setPublicId(String publicId) {
+<span class="nc" id="L81">            }</span>
+
+            @Override
+            public void setEncoding(String encoding) {
+<span class="nc" id="L85">            }</span>
+
+            @Override
+            public void setCharacterStream(Reader characterStream) {
+<span class="nc" id="L89">            }</span>
+
+            @Override
+            public void setCertifiedText(boolean certifiedText) {
+<span class="nc" id="L93">            }</span>
+
+            @Override
+            public void setByteStream(InputStream byteStream) {
+<span class="nc" id="L97">                is = byteStream;</span>
+<span class="nc" id="L98">            }</span>
+
+            @Override
+            public void setBaseURI(String baseURI) {
+<span class="nc" id="L102">            }</span>
+
+            @Override
+            public String getSystemId() {
+<span class="nc" id="L106">                return systemId;</span>
+            }
+
+            @Override
+            public String getStringData() {
+<span class="nc" id="L111">                return null;</span>
+            }
+
+            @Override
+            public String getPublicId() {
+<span class="nc" id="L116">                return null;</span>
+            }
+
+            @Override
+            public String getEncoding() {
+<span class="nc" id="L121">                return null;</span>
+            }
+
+            @Override
+            public Reader getCharacterStream() {
+<span class="nc" id="L126">                return null;</span>
+            }
+
+            @Override
+            public boolean getCertifiedText() {
+<span class="nc" id="L131">                return false;</span>
+            }
+
+            @Override
+            public InputStream getByteStream() {
+<span class="nc" id="L136">                return is;</span>
+            }
+
+            @Override
+            public String getBaseURI() {
+<span class="nc" id="L141">                return baseUri;</span>
+            }
+        };
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

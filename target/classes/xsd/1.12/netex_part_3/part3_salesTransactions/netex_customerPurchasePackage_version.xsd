@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_customerPurchasePackage_version">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../part3_fares/netex_geographicStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="../part3_PiQuery/netex_piRequest_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_fareStructureElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_customerPurchasePackage_support.xsd"/>
+  <xsd:include schemaLocation="netex_salesTransaction_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_validableElement_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_salesOfferPackage_version.xsd"/>
+  <xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
+  <xsd:include schemaLocation="netex_salesContract_version.xsd"/>
+  <xsd:include schemaLocation="netex_travelSpecificationSummary_version.xsd"/>
+  <xsd:include schemaLocation="netex_travelDocument_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="CustomerPurchasePackageInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="customerPurchasePackages" type="customerPurchasePackagesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="customerPurchasePackagesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerPurchasePackage" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="travelSpecificationsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="TravelSpecification" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PaymentAmountGroup">
+    <xsd:sequence>
+      <xsd:group ref="FarePriceAmountWithDerivationGroup"/>
+      <xsd:element name="PaymentMethod" type="PaymentMethodEnumeration" minOccurs="0"/>
+      <xsd:element ref="TypeOfPaymentMethodRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==== TRAVEL SPECIFICATION  ================================================ -->
+  <xsd:complexType name="travelSpecifications_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TravelSpecificationRef"/>
+          <xsd:element ref="TravelSpecification_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TravelSpecification_" type="DataManagedObjectStructure" substitutionGroup="FareContractEntry_"/>
+  <xsd:element name="TravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TravelSpecification_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LogEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TravelSpecificationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TravelSpecificationIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TravelSpecification_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareContractEntry_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TravelSpecificationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TravelSpecificationGroup">
+    <xsd:sequence>
+      <xsd:element ref="SalesTransactionRef" minOccurs="0"/>
+      <xsd:element ref="PassengerInformationRequestRef" minOccurs="0"/>
+      <xsd:group ref="TravelSpecificationPriceGroup"/>
+      <xsd:element name="StartOfValidity" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="EndOfValidity" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element ref="TravelSpecificationSummaryView" minOccurs="0"/>
+      <xsd:element name="specificParameterAssignments" type="specificParameterAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TravelSpecificationPriceGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="FarePriceRef"/>
+        <xsd:element ref="CellRef_"/>
+      </xsd:choice>
+      <xsd:group ref="PaymentAmountGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====  REQUESTED TRAVEL SPECIFICATION  ================================================ -->
+  <xsd:element name="RequestedTravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RequestedTravelSpecification_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LogEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TravelSpecificationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RequestedTravelSpecificationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RequestedTravelSpecificationIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RequestedTravelSpecification_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TravelSpecification_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RequestedTravelSpecificationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RequestedTravelSpecificationGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ====  OFFEREDTRAVEL SPECIFICATION  ================================================ -->
+  <xsd:complexType name="offeredTravelSpecifications_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="OfferedTravelSpecificationRef"/>
+          <xsd:element ref="OfferedTravelSpecification"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OfferedTravelSpecification" abstract="false" substitutionGroup="TravelSpecification_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="OfferedTravelSpecification_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LogEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareContractEntryGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TravelSpecificationGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="OfferedTravelSpecificationGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="OfferedTravelSpecificationIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="OfferedTravelSpecification_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TravelSpecification_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="OfferedTravelSpecificationGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="OfferedTravelSpecificationGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ==== SPECIFIC PARAMETER ASSIGNMENT=================================================== -->
+  <xsd:complexType name="specificParameterAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="SpecificParameterAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpecificParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="SpecificParameterAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="SpecificParameterAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="SpecificParameterAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SpecificParameterAssignment_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityParameterAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="SpecificParameterAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="SpecificParameterAssignmentGroup">
+    <xsd:sequence>
+      <xsd:element name="AccessNumber" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:group ref="SpecificParameterAssignmentIncludesGroup"/>
+      <xsd:element ref="DistributionAssignmentRef" minOccurs="0"/>
+      <xsd:element name="RetailingOrganizationRef" type="OrganisationRefStructure" minOccurs="0"/>
+      <xsd:element name="CollectionPointRef" type="PointRefStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="SpecificParameterAssignmentIncludesGroup">
+    <xsd:sequence>
+      <xsd:element name="IncludesGroupingType" type="BooleanOperatorEnumeration" default="OR" minOccurs="0"/>
+      <xsd:element name="includes" type="specificParameterAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====CUSTOMER PURCHASE PACKAGE=================================================== -->
+  <xsd:complexType name="customerPurchasePackages_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CustomerPurchasePackage"/>
+          <xsd:element ref="CustomerPurchasePackageRef"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerPurchasePackage" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerPurchasePackage_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerPurchasePackageGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerPurchasePackageIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerPurchasePackage_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerPurchasePackageGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerPurchasePackageGroup">
+    <xsd:sequence>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageRef" minOccurs="0"/>
+      <xsd:group ref="CustomerPurchasePackageCustomerGroup"/>
+      <xsd:element name="CustomerPurchasePackageStatus" type="CustomerPurchasePackageStatusEnumeration" minOccurs="0"/>
+      <xsd:group ref="CustomerPurchasePackageSelectionGroup"/>
+      <xsd:element ref="SalesTransactionRef" minOccurs="0"/>
+      <xsd:element name="salesTransactions" type="salesTransactionRefs_RelStructure" minOccurs="0"/>
+      <xsd:group ref="CustomerPurchasePackagePricingGroup"/>
+      <xsd:element name="travelDocuments" type="travelDocuments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerPurchasePackageCustomerGroup">
+    <xsd:sequence>
+      <xsd:element ref="CustomerRef" minOccurs="0"/>
+      <xsd:element ref="CustomerAccountRef" minOccurs="0"/>
+      <xsd:element ref="FareContractRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerPurchasePackageSelectionGroup">
+    <xsd:sequence>
+      <xsd:element ref="TravelSpecificationSummaryView" minOccurs="0"/>
+      <xsd:element name="travelSpecifications" type="travelSpecifications_RelStructure" minOccurs="0"/>
+      <xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="distributionAssignments" type="distributionAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="customerPurchasePackageElements" type="customerPurchasePackageElements_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerPurchasePackageValidationGroup">
+    <xsd:sequence>
+      <xsd:element name="MarkedAs" type="MarkedAsEnumeration" minOccurs="0"/>
+      <xsd:element name="Blocked" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="elementAccesses" type="customerPurchasePackageElementAccesses_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerPurchasePackagePricingGroup">
+    <xsd:sequence>
+      <xsd:element name="prices" type="customerPurchasePackagePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====CUSTOMER PURCHASE PACKAGE ELEMENT================================================= -->
+  <xsd:complexType name="customerPurchasePackageElements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerPurchasePackageElement" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerPurchasePackageElement" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerPurchasePackageElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerPurchasePackageElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerPurchasePackageElementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerPurchasePackageElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerPurchasePackageElementGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerPurchasePackageElementGroup">
+    <xsd:sequence>
+      <xsd:element ref="CustomerPurchasePackageRef" minOccurs="0"/>
+      <xsd:element ref="SalesOfferPackageElementRef" minOccurs="0"/>
+      <xsd:group ref="CustomerPurchasePackageValidationGroup"/>
+      <xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="prices" type="customerPurchasePackagePrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="CustomerPurchasePackageElementSelectionGroup">
+    <xsd:sequence>
+      <xsd:element ref="DistanceMatrixElementRef" minOccurs="0"/>
+      <xsd:element ref="GeographicalStructureFactorRef" minOccurs="0"/>
+      <xsd:element ref="GeographicalIntervalRef" minOccurs="0"/>
+      <xsd:element ref="TimeStructureFactorRef" minOccurs="0"/>
+      <xsd:element ref="TimeIntervalRef" minOccurs="0"/>
+      <xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====CUSTOMER PURCHASE PACKAGE ELEMENT ACCESS ======================================== -->
+  <xsd:complexType name="customerPurchasePackageElementAccesses_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerPurchasePackageElementAccess" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerPurchasePackageElementAccess" abstract="false">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerPurchasePackageElementAccess_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerPurchasePackageElementAccessGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerPurchasePackageElementAccessIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerPurchasePackageElementAccess_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerPurchasePackageElementAccessGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerPurchasePackageElementAccessGroup">
+    <xsd:sequence>
+      <xsd:element ref="CustomerPurchasePackageElementRef" minOccurs="0"/>
+      <xsd:element ref="ValidableElementRef" minOccurs="0"/>
+      <xsd:element ref="FareStructureElementRef" minOccurs="0"/>
+      <xsd:element ref="FareStructureElementInSequenceRef" minOccurs="0"/>
+      <xsd:element name="MarkedAs" type="MarkedAsEnumeration" minOccurs="0"/>
+      <xsd:element name="validityParameterAssignments" type="customerPurchaseParameterAssignments_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == CUSTOMER PURCHASE PACKAGE PRICE.================================ -->
+  <xsd:complexType name="customerPurchasePackagePrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="CustomerPurchasePackagePriceRef"/>
+          <xsd:element name="CustomerPurchasePackagePrice" type="CustomerPurchasePackagePrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerPurchasePackagePrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerPurchasePackagePrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerPurchasePackagePriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerPurchasePackagePriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerPurchasePackagePrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerPurchasePackagePriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerPurchasePackagePriceGroup">
+    <xsd:choice>
+      <xsd:element ref="CustomerPurchasePackageRef" minOccurs="0"/>
+      <xsd:element ref="CustomerPurchasePackageElementRef" minOccurs="0"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- == CUSTOMER PURCHASE PARAMETER ASSIGNMENT PRICE.================================ -->
+  <xsd:complexType name="customerPurchaseParameterAssignments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CustomerPurchaseParameterAssignment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CustomerPurchaseParameterAssignment" abstract="false" substitutionGroup="AccessRightParameterAssignment_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CustomerPurchaseParameterAssignment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DataManagedObjectGroup"/>
+              </xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="AssignmentGroup"/>
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessRightParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ValidityParameterAssignmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CustomerPurchaseParameterAssignmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CustomerPurchaseParameterAssignmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CustomerPurchaseParameterAssignment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="ValidityParameterAssignment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CustomerPurchaseParameterAssignmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CustomerPurchaseParameterAssignmentGroup">
+    <xsd:sequence/>
+  </xsd:group>
+</xsd:schema>

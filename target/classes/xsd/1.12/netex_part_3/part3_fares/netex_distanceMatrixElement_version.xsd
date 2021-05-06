@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.10" id="netex_distanceMatrixElement_version">
+  <xsd:include schemaLocation="netex_fareSeries_version.xsd"/>
+  <xsd:include schemaLocation="netex_fareTable_version.xsd"/>
+  <xsd:include schemaLocation="netex_geographicStructureFactor_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === ENTIITY IN VERSION IN FRAME= === ================================================== -->
+  <xsd:group name="DistanceMatrixElementsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="distanceMatrixElements" type="distanceMatrixElements_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfDistanceMatrixElements" type="groupsOfDistanceMatrixElements_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="distanceMatrixElementsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="DistanceMatrixElement" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="groupsOfDistanceMatrixElementsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="DistanceMatrixElement" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- == GROUP OF DISTANCE MATRIX ELEMENT  ======================-->
+  <xsd:complexType name="groupsOfDistanceMatrixElements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GroupOfDistanceMatrixElementsRef"/>
+          <xsd:element ref="GroupOfDistanceMatrixElements"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GroupOfDistanceMatrixElements" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="GroupOfDistanceMatrixElements_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfDistanceMatrixElementsGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GroupOfDistanceMatrixElementsIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GroupOfDistanceMatrixElements_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GroupOfDistanceMatrixElementsGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GroupOfDistanceMatrixElementsGroup">
+    <xsd:sequence>
+      <xsd:element name="UseToExclude" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:group ref="PriceableObjectPricesGroup"/>
+      <xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+      <xsd:element name="structureFactors" type="geographicalStructureFactors_RelStructure" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="members" type="distanceMatrixElements_RelStructure" minOccurs="0"/>
+      <xsd:element name="prices" minOccurs="0">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="distanceMatrixElementPrices_RelStructure"/>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === DISTANCE MATRIX ELEMENT  ================================================= -->
+  <xsd:complexType name="distanceMatrixElements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DistanceMatrixElementRef"/>
+          <xsd:element ref="DistanceMatrixElement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DistanceMatrixElement" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DistanceMatrixElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DistanceMatrixElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DistanceMatrixElementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DistanceMatrixElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DistanceMatrixElementGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DistanceMatrixElementGroup">
+    <xsd:sequence>
+      <xsd:group ref="DistanceMatrixElementDetailsGroup"/>
+      <xsd:group ref="DistanceMatrixElementODGroup"/>
+      <xsd:group ref="DistanceMatrixElementComponentGroup"/>
+      <xsd:group ref="DistanceMatrixElementPricingGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistanceMatrixElementODGroup">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:choice>
+          <xsd:element name="StartStopPointRef" type="ScheduledStopPointRefStructure"/>
+          <xsd:element name="StartStopPointView" type="ScheduledStopPoint_DerivedViewStructure"/>
+        </xsd:choice>
+        <xsd:choice>
+          <xsd:element name="StartTariffZoneRef" type="TariffZoneRefStructure"/>
+          <xsd:element name="StartTariffZoneView" type="Zone_DerivedViewStructure"/>
+        </xsd:choice>
+        <xsd:element name="FromFareSectionRef" type="FareSectionRefStructure" minOccurs="0"/>
+        <xsd:element name="FromFarePointInPatternRef" type="FarePointInPatternRefStructure" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:choice>
+          <xsd:element name="EndStopPointRef" type="ScheduledStopPointRefStructure"/>
+          <xsd:element name="EndStopPointView" type="ScheduledStopPoint_DerivedViewStructure"/>
+        </xsd:choice>
+        <xsd:choice>
+          <xsd:element name="EndTariffZoneRef" type="TariffZoneRefStructure"/>
+          <xsd:element name="EndTariffZoneView" type="Zone_DerivedViewStructure"/>
+        </xsd:choice>
+        <xsd:element name="ToFareSectionRef" type="FareSectionRefStructure" minOccurs="0"/>
+        <xsd:element name="ToFarePointInPatternRef" type="FarePointInPatternRefStructure" minOccurs="0"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistanceMatrixElementComponentGroup">
+    <xsd:sequence>
+      <xsd:element name="seriesConstraints" type="SeriesConstraints_RelStructure" minOccurs="0"/>
+      <xsd:element name="structureFactors" type="geographicalStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistanceMatrixElementDetailsGroup">
+    <xsd:sequence>
+      <xsd:element name="Distance" type="DistanceType" minOccurs="0"/>
+      <xsd:element name="RelativeRanking" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="IsDirect" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="InverseAllowed" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DistanceMatrixElementPricingGroup">
+    <xsd:sequence>
+      <xsd:element name="tariffs" type="tariffRefs_RelStructure" minOccurs="0"/>
+      <xsd:element ref="FareTableRef" minOccurs="0"/>
+      <xsd:element name="prices" type="distanceMatrixElementPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == DISTANCE MATRIX ELEMENT PRICE.================================ -->
+  <xsd:complexType name="distanceMatrixElementPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DistanceMatrixElementPriceRef"/>
+          <xsd:element ref="DistanceMatrixElementPrice"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DistanceMatrixElementPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DistanceMatrixElementPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DistanceMatrixElementPriceGroup" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DistanceMatrixElementPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DistanceMatrixElementPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="DistanceMatrixElementPriceGroup" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DistanceMatrixElementPriceGroup">
+    <xsd:choice>
+      <xsd:element ref="DistanceMatrixElementRef"/>
+      <xsd:element ref="GroupOfDistanceMatrixElementsRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- == DISTANCE MATRIX ELEMENT View-->
+  <xsd:element name="DistanceMatrixElementView" type="DistanceMatrixElement_DerivedViewStructure" abstract="false" substitutionGroup="DerivedView"/>
+  <xsd:complexType name="DistanceMatrixElement_DerivedViewStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DerivedViewStructure">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="StartStopPointRef" type="ScheduledStopPointRefStructure"/>
+            <xsd:element name="StartTariffZoneRef" type="TariffZoneRefStructure"/>
+          </xsd:choice>
+          <xsd:element name="StartName" type="MultilingualString" minOccurs="0"/>
+          <xsd:choice>
+            <xsd:element name="EndStopPointRef" type="ScheduledStopPointRefStructure"/>
+            <xsd:element name="EndTariffZoneRef" type="TariffZoneRefStructure"/>
+          </xsd:choice>
+          <xsd:element name="EndName" type="MultilingualString" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

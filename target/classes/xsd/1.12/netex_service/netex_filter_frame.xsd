@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_dataObjectRequest_service">
+  <!-- ===Dependencies ======================================= -->
+  <xsd:include schemaLocation="../netex_framework/netex_responsibility/netex_versionFrame_support.xsd"/>
+  <xsd:include schemaLocation="../netex_part_1/part1_networkDescription/netex_line_support.xsd"/>
+  <xsd:include schemaLocation="netex_filter_object.xsd"/>
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!-- ======================================================================= -->
+  <!-- ==== Filter  ============================================================ -->
+  <xsd:element name="NetworkFrameTopic" substitutionGroup="Topic">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="NetworkFrameTopicStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="NetworkFrameTopicStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TopicStructure">
+        <xsd:sequence>
+          <xsd:group ref="TopicTemporalScopeGroup"/>
+          <xsd:element ref="TypeOfFrameRef" minOccurs="0"/>
+          <xsd:group ref="TopicFrameScopeGroup" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TopicFrameScopeGroup">
+    <xsd:choice>
+      <xsd:element ref="VersionFrameRef" maxOccurs="unbounded"/>
+      <xsd:element name="NetworkFilterByValue" type="NetworkFilterByValueStructure"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ==== Filter  ============================================================ -->
+  <xsd:complexType name="NetworkFilterByValueStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ObjectFilterByValueStructure">
+        <xsd:sequence>
+          <xsd:group ref="NetworkFilterByValueGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NetworkFilterByValueGroup">
+    <xsd:sequence>
+      <xsd:element ref="NetworkRef" minOccurs="0"/>
+      <xsd:element name="places" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="PlaceRef_" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- == Policies======================================================== -->
+  <xsd:complexType name="NetworkFrameRequestPolicyStructure">
+    <xsd:sequence>
+      <xsd:element name="MaximumNumberOfElements" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="IncludeDeleted" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="Urgency" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MustHaveBy" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="Language" type="xsd:language" minOccurs="0"/>
+      <xsd:element name="RequestDetail" type="OutputDetailListOfEnumerations" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="NetworkFrameSubscriptionPolicyStructure">
+    <xsd:sequence>
+      <xsd:element name="IncrementalUpdates" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

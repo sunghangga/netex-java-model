@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_dayType_propertiesOfDay">
+  <xsd:include schemaLocation="../netex_responsibility/netex_relationship.xsd"/>
+  <xsd:include schemaLocation="../netex_utility/netex_utility_xml.xsd"/>
+  <xsd:include schemaLocation="netex_country_support.xsd"/>
+  <xsd:complexType name="propertiesOfDay_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PropertyOfDay" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PropertyOfDay">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="PropertyOfDayStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PropertyOfDayStructure">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:group ref="PropertyOfDayGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="PropertyOfDayGroup">
+    <xsd:sequence>
+      <xsd:element name="DaysOfWeek" type="DaysOfWeekListOfEnumerations" minOccurs="0"/>
+      <xsd:element name="WeeksOfMonth" type="WeeksOfMonthListOfEnumerations" default="EveryWeek" minOccurs="0"/>
+      <xsd:choice>
+        <xsd:element name="MonthOfYear" type="xsd:gMonth" minOccurs="0"/>
+        <xsd:element name="DayOfMonth" type="xsd:gDay" minOccurs="0"/>
+        <xsd:element name="DayOfYear" type="xsd:gMonthDay" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:element name="CountryRef" type="CountryRefStructure" minOccurs="0"/>
+      <xsd:element name="HolidayTypes" type="HolidayTypesListOfEnumerations" default="AnyDay" minOccurs="0"/>
+      <xsd:element name="Seasons" type="SeasonsListOfEnumerations" default="Perennially" minOccurs="0"/>
+      <xsd:element name="Tides" type="TidesListOfEnumerations" default="AllTides" minOccurs="0"/>
+      <xsd:element name="DayEvent" type="DayEventEnumeration" minOccurs="0"/>
+      <xsd:element name="Crowding" type="CrowdingEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DaysOfWeekListOfEnumerations">
+    <xsd:list itemType="DayOfWeekEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="DayOfWeekEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Monday"/>
+      <xsd:enumeration value="Tuesday"/>
+      <xsd:enumeration value="Wednesday"/>
+      <xsd:enumeration value="Thursday"/>
+      <xsd:enumeration value="Friday"/>
+      <xsd:enumeration value="Saturday"/>
+      <xsd:enumeration value="Sunday"/>
+      <xsd:enumeration value="Everyday"/>
+      <xsd:enumeration value="Weekdays"/>
+      <xsd:enumeration value="Weekend"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="WeeksOfMonthEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+      <xsd:enumeration value="4"/>
+      <xsd:enumeration value="5"/>
+      <xsd:enumeration value="EveryWeek"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="WeeksOfMonthListOfEnumerations">
+    <xsd:list itemType="WeekOfMonthEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="WeekOfMonthEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+      <xsd:enumeration value="4"/>
+      <xsd:enumeration value="5"/>
+      <xsd:enumeration value="EveryWeek"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="HolidayTypesListOfEnumerations">
+    <xsd:list itemType="HolidayTypeEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="HolidayTypeEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="AnyDay"/>
+      <xsd:enumeration value="WorkingDay"/>
+      <xsd:enumeration value="SchoolDay"/>
+      <xsd:enumeration value="NotHoliday"/>
+      <xsd:enumeration value="NotWorkingDay"/>
+      <xsd:enumeration value="NotSchoolDay"/>
+      <xsd:enumeration value="AnyHoliday"/>
+      <xsd:enumeration value="LocalHoliday"/>
+      <xsd:enumeration value="RegionalHoliday"/>
+      <xsd:enumeration value="NationalHoliday"/>
+      <xsd:enumeration value="HolidayDisplacementDay"/>
+      <xsd:enumeration value="EveOfHoliday"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SeasonsListOfEnumerations">
+    <xsd:list itemType="SeasonEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="SeasonEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Spring"/>
+      <xsd:enumeration value="Summer"/>
+      <xsd:enumeration value="Autumn"/>
+      <xsd:enumeration value="Winter"/>
+      <xsd:enumeration value="Perennially"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TidesListOfEnumerations">
+    <xsd:list itemType="TideEnumeration"/>
+  </xsd:simpleType>
+  <xsd:simpleType name="TideEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="HighTide"/>
+      <xsd:enumeration value="LowTide"/>
+      <xsd:enumeration value="NeapTide"/>
+      <xsd:enumeration value="AllTides"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CrowdingEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="veryQuiet"/>
+      <xsd:enumeration value="quiet"/>
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="busy"/>
+      <xsd:enumeration value="veryBusy"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DayEventEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="anyDay"/>
+      <xsd:enumeration value="normalDay"/>
+      <xsd:enumeration value="marketDay"/>
+      <xsd:enumeration value="matchDay"/>
+      <xsd:enumeration value="eventDay"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ====Time zone======================================================= -->
+</xsd:schema>

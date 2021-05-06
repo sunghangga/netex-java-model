@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_calculationParameters_version">
+  <xsd:include schemaLocation="netex_calculationParameters_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in FARE FRAME)=================================================== -->
+  <xsd:group name="CalculationParametersInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="pricingServices" type="pricingServices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === PRICING PARAMETERs================================================ -->
+  <xsd:element name="PricingParameterSet" substitutionGroup="DataManagedObject" id="PricingParameterSet">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PricingParameterSet_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingParameterSetGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PricingParameterSetIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PricingParameterSet_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="PricingParameterSetGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PricingParameterSetGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PriceUnitRef" minOccurs="0"/>
+      <xsd:element name="priceUnits" type="priceUnits_RelStructure" minOccurs="0"/>
+      <xsd:element name="pricingRules" type="pricingRules_RelStructure" minOccurs="0"/>
+      <xsd:element name="AllowCumulativeDiscounts" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element ref="RoundingRef" minOccurs="0"/>
+      <xsd:element name="roundings" type="roundings_RelStructure" minOccurs="0"/>
+      <xsd:element ref="DayTypeRef" minOccurs="0"/>
+      <xsd:element name="monthValidityOffsets" type="monthValidityOffsets_RelStructure" minOccurs="0"/>
+      <xsd:element name="pricingServices" type="pricingServices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====PRICE UNIT======================================== -->
+  <xsd:complexType name="priceUnits_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PriceUnitRef"/>
+          <xsd:element ref="PriceUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PriceUnit" abstract="false" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PriceUnit_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Precision" type="xsd:integer" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PriceUnitIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PriceUnit_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:group ref="PriceUnitGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PriceUnitGroup">
+    <xsd:sequence>
+      <xsd:element name="Precision" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ===ROUNDING================================================= -->
+  <xsd:complexType name="roundings_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="Rounding" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Rounding" substitutionGroup="DataManagedObject" id="Rounding">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Rounding_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoundingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoundingIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Rounding_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoundingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoundingGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="RoundingMethod" type="RoundingMethodEnumeration" minOccurs="0"/>
+      <xsd:element name="RoundingModulus" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="roundingSteps" type="roundingSteps_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RoundingStep">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoundingStep_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoundingStepGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoundingStepIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoundingStep_VersionedChildStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoundingStepGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoundingStepGroup">
+    <xsd:sequence>
+      <xsd:element ref="RoundingStepRef" minOccurs="0"/>
+      <xsd:element name="RoundIfGreaterThan" type="CurrencyAmountType"/>
+      <xsd:element name="RoundTo" type="CurrencyAmountType"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="roundingSteps_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="RoundingStep" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===ROUNDING================================================= -->
+  <xsd:element name="FareDayType" substitutionGroup="DayType_" id="FareDayType">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareDayType_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DayTypeGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareDayTypeIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareDayType_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DayType_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- === MONTH VALIDITY OFFSET================================================= -->
+  <xsd:complexType name="monthValidityOffsets_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="MonthValidityOffset" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MonthValidityOffset" substitutionGroup="DataManagedObject" id="MonthValidityOffset">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="MonthValidityOffset_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="MonthValidityOffsetGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="MonthValidityOffsetIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="MonthValidityOffset_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="MonthValidityOffsetGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="MonthValidityOffsetGroup">
+    <xsd:sequence>
+      <xsd:element name="Month" type="xsd:gMonth"/>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="DayOffset" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === PRICING RULE ================================================= -->
+  <xsd:complexType name="pricingRules_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="PricingRule_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PricingRule_" type="DataManagedObjectStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:element name="PricingRule" substitutionGroup="PricingRule_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PricingRule_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingRuleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PricingRuleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PricingRule_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="PricingRuleGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PricingRuleGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="MethodName" type="xsd:NCName" minOccurs="0"/>
+      <xsd:element ref="TypeOfPricingRuleRef" minOccurs="0"/>
+      <xsd:element ref="PricingRuleRef" minOccurs="0"/>
+      <xsd:element name="Factor" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="Currency" type="CurrencyType" minOccurs="0"/>
+      <xsd:element ref="PriceUnitRef" minOccurs="0"/>
+      <xsd:element name="url" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====DISCOUNTING RULE======================================= -->
+  <xsd:element name="DiscountingRule" substitutionGroup="PricingRule_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DiscountingRule_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingRuleGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DiscountingRuleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DiscountingRuleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DiscountingRule_VersionedStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="PricingRule_VersionedStructure">
+        <xsd:sequence>
+          <xsd:group ref="DiscountingRuleGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DiscountingRuleGroup">
+    <xsd:sequence>
+      <xsd:element name="DiscountAsPercentage" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="DiscountAsValue" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="CanBeCumulative" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- =====DISCOUNTING RULE======================================= -->
+  <xsd:element name="LimitingRule" substitutionGroup="PricingRule_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LimitingRule_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingRuleGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DiscountingRuleGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LimitingRuleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LimitingRuleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LimitingRule_VersionedStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DiscountingRule_VersionedStructure">
+        <xsd:sequence>
+          <xsd:group ref="LimitingRuleGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LimitingRuleGroup">
+    <xsd:sequence>
+      <xsd:group ref="LimitingRuleCappingGroup"/>
+      <xsd:group ref="LimitingRuleLimitGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LimitingRuleCappingGroup">
+    <xsd:sequence>
+      <xsd:element name="MinimumPrice" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="MinimumPriceAsPercentage" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="MinimumPriceAsMultiple" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="MaximumPrice" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="MaximumPriceAsPercentage" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="MaximumPriceAsMultiple" type="xsd:integer" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LimitingRuleLimitGroup">
+    <xsd:sequence>
+      <xsd:element name="MinimumLimitPriceAsPercentage" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="MinimumLimitPrice" type="CurrencyAmountType" minOccurs="0"/>
+      <xsd:element name="MaximumLimitPriceAsPercentage" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="MaximumLimitPrice" type="CurrencyAmountType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:element name="LimitingRuleInContext" substitutionGroup="PricingRule_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LimitingRule_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingRuleGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DiscountingRuleGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LimitingRuleGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LimitingRuleIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ==== TYPE OF PRICING RULE. ================================== -->
+  <xsd:element name="TypeOfPricingRule" abstract="false" substitutionGroup="TypeOfValue">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfPricingRule_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="TypeOfPricingRuleGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfPricingRuleIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfPricingRule_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfValue_VersionStructure">
+        <xsd:group ref="TypeOfPricingRuleGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfPricingRuleGroup">
+    <xsd:sequence>
+      <xsd:element name="TaxCategory" type="TaxCategoryEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- === PRICING SERVICE================================================= -->
+  <xsd:complexType name="pricingServices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="PricingService" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PricingService" substitutionGroup="DataManagedObject" id="PricingService">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PricingService_VersionedStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PricingServiceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PricingServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PricingService_VersionedStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="PricingServiceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PricingServiceGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="OrganisationRef" minOccurs="0"/>
+      <xsd:element name="Url" type="xsd:anyURI" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

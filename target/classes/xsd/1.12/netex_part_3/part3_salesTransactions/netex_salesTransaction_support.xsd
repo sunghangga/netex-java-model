@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_salesTransaction_support">
+  <xsd:include schemaLocation="netex_salesContract_support.xsd"/>
+  <!-- =============================================================== -->
+  <!-- ====SALES TRANSACTION.======================================================== -->
+  <xsd:complexType name="salesTransactionRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="SalesTransactionRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="SalesTransactionIdType">
+    <xsd:restriction base="FareContractEntryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SalesTransactionRef" type="SalesTransactionRefStructure" abstract="false" substitutionGroup="FareContractEntryRef"/>
+  <xsd:complexType name="SalesTransactionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareContractEntryRefStructure">
+        <xsd:attribute name="ref" type="SalesTransactionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

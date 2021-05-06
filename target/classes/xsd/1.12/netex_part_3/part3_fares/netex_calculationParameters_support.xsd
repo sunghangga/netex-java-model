@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_calculationParameters_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_dayType_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_relationship_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- === PRICING PARAMETERS =================================================== -->
+  <xsd:simpleType name="PricingParameterSetIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PricingParameterSetRef" type="PricingParameterSetRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PricingParameterSetRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PricingParameterSetIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==== PRICE UNIT ================================================== -->
+  <xsd:complexType name="priceUnitRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="PriceUnitRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="PriceUnitIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PriceUnitRef" type="PriceUnitRefStructure" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="PriceUnitRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="PriceUnitIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === ROUNDING====================================================== -->
+  <xsd:simpleType name="RoundingIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoundingRef" type="RoundingRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="RoundingRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="RoundingIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====ROUNDING STEP======================================================== -->
+  <xsd:simpleType name="RoundingStepIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RoundingStepRef" type="RoundingStepRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="RoundingStepRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="RoundingStepIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="RoundingMethodEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="down"/>
+      <xsd:enumeration value="up"/>
+      <xsd:enumeration value="split"/>
+      <xsd:enumeration value="stepTable"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === FARE DAY-->
+  <xsd:simpleType name="FareDayTypeIdType">
+    <xsd:restriction base="DayTypeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareDayTypeRef" type="FareDayTypeRefStructure" substitutionGroup="DayTypeRef"/>
+  <xsd:complexType name="FareDayTypeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="DayTypeRefStructure">
+        <xsd:attribute name="ref" type="FareDayTypeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === PRICING SERVICE ================================================== -->
+  <xsd:simpleType name="PricingServiceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PricingServiceRef" type="PricingServiceRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PricingServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PricingServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === PRICING RULE====================================================== -->
+  <xsd:simpleType name="PricingRuleIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PricingRuleRef" type="PricingRuleRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PricingRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="PricingRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === PRICING RULE====================================================== -->
+  <xsd:simpleType name="DiscountingRuleIdType">
+    <xsd:restriction base="PricingRuleIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DiscountingRuleRef" type="DiscountingRuleRefStructure" substitutionGroup="PricingRuleRef"/>
+  <xsd:complexType name="DiscountingRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PricingRuleRefStructure">
+        <xsd:attribute name="ref" type="DiscountingRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === LIMITING RULE====================================================== -->
+  <xsd:simpleType name="LimitingRuleIdType">
+    <xsd:restriction base="DiscountingRuleIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LimitingRuleRef" type="LimitingRuleRefStructure" substitutionGroup="DiscountingRuleRef"/>
+  <xsd:complexType name="LimitingRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="DiscountingRuleRefStructure">
+        <xsd:attribute name="ref" type="LimitingRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === MONTH VALIDITY OFFSET ================================================== -->
+  <xsd:simpleType name="MonthValidityOffsetIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="MonthValidityOffsetRef" type="MonthValidityOffsetRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="MonthValidityOffsetRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="MonthValidityOffsetIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TYPE OF PRICING RULE  ================================================== -->
+  <xsd:complexType name="TypeOfPricingRuleRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfPricingRuleRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfPricingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="valueAddedTax"/>
+      <xsd:enumeration value="salesTax"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TaxCategoryEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="exempt"/>
+      <xsd:enumeration value="general"/>
+      <xsd:enumeration value="transportation"/>
+      <xsd:enumeration value="parking"/>
+      <xsd:enumeration value="food"/>
+      <xsd:enumeration value="alcoholicBeverage"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TypeOfPricingRuleIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfPricingRuleRef" type="TypeOfPricingRuleRefStructure" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfPricingRuleRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfPricingRuleIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

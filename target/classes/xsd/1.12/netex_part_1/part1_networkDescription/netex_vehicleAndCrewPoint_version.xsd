@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleAndCrewPoint_version">
+  <xsd:include schemaLocation="netex_vehicleAndCrewPoint_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_version.xsd"/>
+  <xsd:include schemaLocation="../part1_tacticalPlanning/netex_timingPattern_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in SERVICE FRAME)=================================================== -->
+  <xsd:group name="VehicleAndCrewInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="crewBases" type="crewBasesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="garages" type="garagesInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="vehicleAndCrewPoints" type="reliefPointsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="crewBasesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CrewBase" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="garagesInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Garage" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="reliefPointsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="ReliefPoint_" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==Activation============================================================ -->
+  <xsd:element name="CrewBase" abstract="false" substitutionGroup="GroupOfEntities">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CrewBase_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="CrewBaseGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CrewBaseIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CrewBase_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="GroupOfEntities_VersionStructure">
+        <xsd:group ref="CrewBaseGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CrewBaseGroup">
+    <xsd:sequence>
+      <xsd:element ref="ReliefPointRef"/>
+      <xsd:element name="garages" type="garageRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ================================================================== -->
+  <xsd:element name="ReliefPoint_" type="TimingPoint_VersionStructure" abstract="true" substitutionGroup="TimingPoint_"/>
+  <xsd:element name="ReliefPoint" abstract="false" substitutionGroup="ReliefPoint_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ReliefPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ReliefPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ReliefPointIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ReliefPoint_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TimingPoint_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="ReliefPointGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ReliefPointGroup">
+    <xsd:sequence>
+      <xsd:element ref="CrewBaseRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="ParkingPoint_" type="ReliefPoint_VersionStructure" abstract="true" substitutionGroup="ReliefPoint_"/>
+  <xsd:element name="ParkingPoint" abstract="false" substitutionGroup="ReliefPoint_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ReliefPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="ParkingPointIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ParkingPoint_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ReliefPoint_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="ParkingPointGroup">
+    <xsd:sequence>
+      <xsd:element ref="GarageRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="garagePoints_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="GaragePointRef"/>
+          <xsd:element ref="GaragePoint"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GaragePoint" abstract="false" substitutionGroup="ParkingPoint_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="ParkingPoint_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimingPointGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ReliefPointGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="GaragePointIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="GaragePoint_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ParkingPoint_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GaragePointGroup">
+    <xsd:sequence>
+      <xsd:element ref="GarageRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="Garage" abstract="false" substitutionGroup="Place">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Garage_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfEntitiesGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GroupOfPointsGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="ZoneGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="PlaceGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="AddressablePlaceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="GarageGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PlaceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Garage_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AddressablePlace_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="GarageGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="GarageGroup">
+    <xsd:sequence>
+      <xsd:element name="ContactDetails" type="ContactStructure" minOccurs="0"/>
+      <xsd:element ref="OrganisationRef" minOccurs="0"/>
+      <xsd:element name="operators" type="transportOrganisationRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="garagePoints" type="garagePoints_RelStructure" minOccurs="0"/>
+      <xsd:element name="crewBases" type="crewBaseRefs_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

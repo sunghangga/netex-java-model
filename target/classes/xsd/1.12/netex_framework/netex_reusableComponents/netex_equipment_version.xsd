@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_equipment_version">
+  <xsd:include schemaLocation="../netex_utility/netex_utility_types.xsd"/>
+  <xsd:include schemaLocation="netex_equipment_support.xsd"/>
+  <xsd:include schemaLocation="../netex_responsibility/netex_typeOfValue_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME====Used in RESOURCE FRAME)=================================================== -->
+  <xsd:group name="EquipmentInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="equipments" type="equipmentsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="equipmentsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="Equipment" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="equipments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="EquipmentRef"/>
+          <xsd:element ref="Equipment" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="Equipment" type="Equipment_VersionStructure" abstract="true" substitutionGroup="DataManagedObject"/>
+  <xsd:complexType name="Equipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="EquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="EquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element ref="PrivateCode" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="PublicCode" type="PrivateCodeStructure" minOccurs="0"/>
+      <xsd:element name="Image" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element ref="TypeOfEquipmentRef" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="Note" type="MultilingualString" default="false." minOccurs="0"/>
+      <xsd:element name="infoLinks" type="infoLinks_RelStructure" minOccurs="0"/>
+      <xsd:element name="OutOfService" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="InstalledEquipment" type="InstalledEquipment_VersionStructure" abstract="true" substitutionGroup="Equipment"/>
+  <xsd:complexType name="InstalledEquipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="Equipment_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== PASSENGER================================================ -->
+  <xsd:complexType name="passengerEquipments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="PassengerEquipmentRef"/>
+          <xsd:element ref="PassengerEquipment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PassengerEquipment" type="PassengerEquipment_VersionStructure" abstract="true" substitutionGroup="InstalledEquipment"/>
+  <xsd:complexType name="PassengerEquipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="InstalledEquipment_VersionStructure">
+        <xsd:group ref="PassengerEquipmentGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PassengerEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Fixed" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="placeEquipments_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="InstalledEquipmentRef"/>
+          <xsd:element ref="InstalledEquipment" maxOccurs="1"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PlaceEquipment" type="PlaceEquipment_VersionStructure" abstract="true" substitutionGroup="InstalledEquipment"/>
+  <xsd:complexType name="PlaceEquipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="InstalledEquipment_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OtherPlaceEquipment" type="PlaceEquipment_VersionStructure"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="typesOfEquipment_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TypeOfEquipmentRef"/>
+          <xsd:element ref="TypeOfEquipment"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeOfEquipment" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfEquipment_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfEquipment_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

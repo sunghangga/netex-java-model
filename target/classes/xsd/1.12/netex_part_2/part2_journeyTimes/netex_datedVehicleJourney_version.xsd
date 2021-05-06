@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_dateVehicleJourney_version">
+  <xsd:include schemaLocation="netex_datedVehicleJourney_support.xsd"/>
+  <xsd:include schemaLocation="netex_serviceJourney_version.xsd"/>
+  <xsd:include schemaLocation="netex_datedPassingTimes_version.xsd"/>
+  <xsd:include schemaLocation="netex_call_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:group name="ServiceJourneyFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="serviceJourneys" type="journeysInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfServices" type="groupsOfServicesInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="passengerJourneysInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="DatedServiceJourney"/>
+          <xsd:element ref="ServiceJourney"/>
+          <xsd:element ref="SpecialService"/>
+          <xsd:element ref="TemplateServiceJourney"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="journeysInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="VehicleJourney"/>
+          <xsd:element ref="DatedVehicleJourney"/>
+          <xsd:element ref="NormalDatedVehicleJourney"/>
+          <xsd:element ref="ServiceJourney"/>
+          <xsd:element ref="DatedServiceJourney"/>
+          <xsd:element ref="DeadRun"/>
+          <xsd:element ref="SpecialService"/>
+          <xsd:element ref="TemplateServiceJourney"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="DatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DatedVehicleJourney_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="VehicleJourneyGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DatedVehicleJourneyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DatedVehicleJourneyIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DatedVehicleJourney_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VehicleJourney_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DatedVehicleJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DatedVehicleJourneyGroup">
+    <xsd:sequence>
+      <xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
+      <xsd:element name="datedPassingTimes" type="targetPassingTimes_RelStructure" minOccurs="0"/>
+      <xsd:element name="datedCalls" type="datedCalls_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="DatedVehicleJourneyReferencesGroup">
+    <xsd:sequence>
+      <xsd:element ref="JourneyRef" minOccurs="0"/>
+      <xsd:element ref="OperatingDayRef"/>
+      <xsd:element name="ExternalDatedVehicleJourneyRef" type="ExternalObjectRefStructure" minOccurs="0"/>
+      <xsd:element name="DatedJourneyPatternRef" type="JourneyPatternRefStructure" minOccurs="0"/>
+      <xsd:element ref="DriverRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====DATED SERVICE JOURNEY====================================-->
+  <xsd:element name="DatedServiceJourney" abstract="false" substitutionGroup="ServiceJourney_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DatedServiceJourney_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:group ref="ServiceJourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="DatedServiceJourneyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DatedVehicleJourneyIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DatedServiceJourney_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="ServiceJourney_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DatedServiceJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DatedServiceJourneyGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="OperatingDayRef"/>
+        <xsd:element ref="UicOperatingPeriod"/>
+      </xsd:choice>
+      <xsd:element ref="DriverRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="NormalDatedVehicleJourney" abstract="false" substitutionGroup="Journey_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="NormalDatedVehicleJourney_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="VehicleJourneyGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DatedVehicleJourneyGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="NormalDatedVehicleJourneyGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="NormalDatedVehicleJourneyIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="NormalDatedVehicleJourney_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DatedVehicleJourney_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="NormalDatedVehicleJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="NormalDatedVehicleJourneyGroup">
+    <xsd:sequence>
+      <xsd:element name="ServiceAlterationType" type="ServiceAlterationEnumeration" default="planned" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="DatedSpecialService" abstract="false" substitutionGroup="Journey_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="DatedSpecialService_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LinkSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="JourneyGroup"/>
+            <xsd:sequence>
+              <xsd:group ref="SpecialServiceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:group ref="DatedVehicleJourneyReferencesGroup"/>
+                <xsd:element name="datedPassingTimes" type="targetPassingTimes_RelStructure" minOccurs="0"/>
+                <xsd:element name="datedCalls" type="datedCalls_RelStructure" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="DatedSpecialServiceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="DatedSpecialService_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="SpecialService_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="DatedVehicleJourneyGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_vehicleService_support">
+  <xsd:include schemaLocation="netex_coupledJourney_support.xsd"/>
+  <!-- ====BLOCK======================================================== -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CompoundBlockIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CompoundBlockRef" type="CompoundBlockRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CompoundBlockRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CompoundBlockIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====VEHICLE SERVICE================================================== -->
+  <xsd:simpleType name="VehicleServiceIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleServiceRef" type="VehicleServiceRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="VehicleServicePartIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleServicePartRef" type="VehicleServicePartRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="VehicleServicePartRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="VehicleServicePartIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === Driver ====================================================== -->
+  <xsd:simpleType name="DriverIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DriverRef" type="DriverRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="DriverRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="DriverIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === CourseOfJourneys ====================================================== -->
+  <xsd:simpleType name="CourseOfJourneysIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CourseOfJourneysRef" type="CourseOfJourneysRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CourseOfJourneysRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="CourseOfJourneysIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- === RELIEF OPPORTUNITY.=========================================== -->
+  <xsd:simpleType name="ReliefOpportunityIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ReliefOpportunityRef" type="ReliefOpportunityRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="ReliefOpportunityRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="ReliefOpportunityIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

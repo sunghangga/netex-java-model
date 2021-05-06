@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_commonSection_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_section_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==Section=========================================================== -->
+  <!-- ==Common Section=========================================================== -->
+  <xsd:simpleType name="CommonSectionIdType">
+    <xsd:restriction base="SectionIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CommonSectionRef" type="CommonSectionRefStructure" abstract="false" substitutionGroup="SectionRef"/>
+  <xsd:complexType name="CommonSectionRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SectionRefStructure">
+        <xsd:attribute name="ref" type="CommonSectionIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="ParentCommonSectionRef" type="CommonSectionRefStructure" abstract="false" substitutionGroup="SectionRef"/>
+  <!-- ==Common Section=========================================================== -->
+</xsd:schema>

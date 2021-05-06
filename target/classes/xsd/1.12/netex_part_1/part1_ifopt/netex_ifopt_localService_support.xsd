@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_localService_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:element name="LocalServiceRef" type="LocalServiceRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="LocalServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="LocalServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LocalServiceIdType">
+    <xsd:restriction base="EquipmentIdType"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TicketingServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TicketingServiceRef" type="TicketingServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="TicketingServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="TicketingServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AssistanceServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AssistanceServiceRef" type="AssistanceServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="AssistanceServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="AssistanceServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CustomerServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CustomerServiceRef" type="CustomerServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="CustomerServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="CustomerServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ComplaintsServiceIdType">
+    <xsd:restriction base="CustomerServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ComplaintsServiceRef" type="ComplaintsServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="ComplaintsServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="ComplaintsServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LostPropertyServiceIdType">
+    <xsd:restriction base="CustomerServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LostPropertyServiceRef" type="LostPropertyServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="LostPropertyServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="LostPropertyServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LuggageServiceIdType">
+    <xsd:restriction base="CustomerServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LuggageServiceRef" type="LuggageServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="LuggageServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="LuggageServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LeftLuggageServiceIdType">
+    <xsd:restriction base="CustomerServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LeftLuggageServiceRef" type="LeftLuggageServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="LeftLuggageServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="LeftLuggageServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="MeetingPointServiceIdType">
+    <xsd:restriction base="CustomerServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="MeetingPointServiceRef" type="MeetingPointServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="MeetingPointServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="MeetingPointServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

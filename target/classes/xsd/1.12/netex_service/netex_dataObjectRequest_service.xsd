@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_dataObjectRequest_service">
+  <!-- ===Dependencies ======================================= -->
+  <xsd:import namespace="http://www.siri.org.uk/siri" schemaLocation="../siri/siri_requests-v2.0.xsd"/>
+  <xsd:include schemaLocation="netex_filter_frame.xsd"/>
+  <xsd:include schemaLocation="../netex_framework/netex_all_objects_framework.xsd"/>
+  <!-- ===eGIF/GovTalk Documentation ======================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="NetexIndexGroup">
+    <xsd:sequence>
+      <xsd:element ref="DataObjectRequest"/>
+      <xsd:element ref="DataObjectSubscriptionRequest"/>
+      <xsd:element ref="DataObjectDelivery"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ==== Service=============================================== -->
+  <xsd:element name="DataObjectRequest" type="DataObjectRequestStructure" substitutionGroup="siri:AbstractFunctionalServiceRequest"/>
+  <xsd:complexType name="DataObjectRequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractFunctionalServiceRequestStructure">
+        <xsd:sequence>
+          <xsd:group ref="DataObjectRequestGroup"/>
+          <xsd:element ref="siri:Extensions" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="DataObjectRequestGroup">
+    <xsd:sequence>
+      <xsd:element name="topics">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="NetworkFrameTopic"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Policy" type="NetworkFrameRequestPolicyStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <!-- ====Subscription ============================================================ -->
+  <xsd:element name="DataObjectSubscriptionRequest" type="DataObjectSubscriptionStructure" substitutionGroup="siri:AbstractFunctionalServiceSubscriptionRequest"/>
+  <xsd:complexType name="DataObjectSubscriptionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractSubscriptionStructure">
+        <xsd:sequence>
+          <xsd:element ref="DataObjectRequest"/>
+          <xsd:element name="SubscriptionPolicy" type="NetworkFrameSubscriptionPolicyStructure" minOccurs="0"/>
+          <xsd:element ref="siri:Extensions" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="DeliveriesStructure">
+    <xsd:sequence>
+      <xsd:element ref="DataObjectDelivery" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="DataObjectDelivery" type="DataObjectDeliveryStructure" substitutionGroup="siri:AbstractFunctionalServiceDelivery"/>
+  <xsd:complexType name="DataObjectDeliveryStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractServiceDeliveryStructure">
+        <xsd:sequence>
+          <xsd:element ref="DataObjectRequest" minOccurs="0"/>
+          <xsd:group ref="PayloadGroup"/>
+          <xsd:element ref="Extensions" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- ==== CS: Capability Request=================================================================== -->
+  <xsd:element name="DataObjectCapabilitiesRequest" type="siri:ServiceCapabilitiesRequestStructure" substitutionGroup="siri:AbstractFunctionalServiceCapabilitiesRequest"/>
+  <!-- ==== CS: Capability Response =================================================================== -->
+  <xsd:element name="DataObjectCapabilitiesResponse" type="DataObjectCapabilitiesResponseStructure" substitutionGroup="siri:AbstractFunctionalServiceCapabilitiesResponse"/>
+  <xsd:complexType name="DataObjectCapabilitiesResponseStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractServiceCapabilitiesResponseStructure">
+        <xsd:sequence>
+          <xsd:element ref="DataObjectServiceCapabilities" minOccurs="0"/>
+          <xsd:element ref="DataObjectPermissions" minOccurs="0"/>
+          <xsd:element ref="Extensions" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="version" type="siri:VersionString" default="2.0"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DataObjectServiceCapabilities" type="DataObjectServiceCapabilitiesStructure"/>
+  <xsd:complexType name="DataObjectServiceCapabilitiesStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:AbstractCapabilitiesStructure">
+        <xsd:sequence>
+          <xsd:element name="TopicFiltering" minOccurs="0">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="FilterByFrame" type="xsd:boolean" default="true" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="RequestPolicy" minOccurs="0">
+            <xsd:complexType>
+              <xsd:complexContent>
+                <xsd:extension base="DataObjectCapabilityRequestPolicyStructure">
+                  <xsd:sequence/>
+                </xsd:extension>
+              </xsd:complexContent>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="SubscriptionPolicy" minOccurs="0">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="HasIncrementalUpdates" type="xsd:boolean" default="true" minOccurs="0"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="ResponseFeatures" minOccurs="0">
+            <xsd:complexType>
+              <xsd:sequence/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="DataObjectCapabilityRequestPolicyStructure">
+    <xsd:complexContent>
+      <xsd:extension base="siri:CapabilityRequestPolicyStructure">
+        <xsd:sequence/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== Permissions =================================================== -->
+  <xsd:element name="DataObjectPermissions">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="DataObjectPermission" type="DataObjectServicePermissionStructure" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:group name="DataObjectVolumeGroup">
+    <xsd:sequence>
+      <xsd:element name="HasDetailLevel" type="xsd:boolean" default="false" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====permissions=================================================================== -->
+  <xsd:complexType name="DataObjectServicePermissionStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="siri:AbsoluteBearingType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

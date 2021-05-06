@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_ifopt_equipmentTicketing_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==== TICKETING EQUIPMENT============================================= -->
+  <xsd:simpleType name="TicketingEquipmentIdType">
+    <xsd:restriction base="EquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TicketingEquipmentRef" type="TicketingEquipmentRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="TicketingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="TicketingEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="QueueManagementEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="maze"/>
+      <xsd:enumeration value="separateLines"/>
+      <xsd:enumeration value="ticketed"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TicketValidatorEquipmentIdType">
+    <xsd:restriction base="EquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TicketValidatorEquipmentRef" type="TicketValidatorEquipmentRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="TicketValidatorEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="TicketValidatorEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TicketValidatorEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="paperStamp"/>
+      <xsd:enumeration value="contactLess"/>
+      <xsd:enumeration value="magnetic"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TicketValidatorListOfEnumerations">
+    <xsd:list itemType="TicketValidatorEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_vehicleAndCrewPoint_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_address_support.xsd"/>
+  <xsd:include schemaLocation="netex_timingPattern_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ReliefPointIdType">
+    <xsd:restriction base="TimingPointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ReliefPointRef" type="ReliefPointRefStructure" substitutionGroup="TimingPointRef"/>
+  <xsd:complexType name="ReliefPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TimingPointRefStructure">
+        <xsd:attribute name="ref" type="ReliefPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ParkingPointIdType">
+    <xsd:restriction base="ReliefPointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ParkingPointRef" type="ParkingPointRefStructure" substitutionGroup="ReliefPointRef"/>
+  <xsd:complexType name="ParkingPointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ReliefPointRefStructure">
+        <xsd:attribute name="ref" type="ParkingPointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==Garage ========================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="GaragePointIdType">
+    <xsd:restriction base="ParkingPointIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GaragePointRef" type="GaragePointRefStructure" substitutionGroup="ParkingPointRef"/>
+  <xsd:complexType name="GaragePointRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="ParkingPointRefStructure">
+        <xsd:attribute name="ref" type="GaragePointIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="GarageIdType">
+    <xsd:restriction base="AddressablePlaceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="GarageRef" type="GarageRefStructure" substitutionGroup="AddressablePlaceRef"/>
+  <xsd:complexType name="GarageRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AddressablePlaceRefStructure">
+        <xsd:attribute name="ref" type="GarageIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="garageRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="GarageRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:complexType name="crewBaseRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="CrewBaseRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CrewBaseIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CrewBaseRef" type="CrewBaseRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="CrewBaseRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="CrewBaseIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="CrewBaseMemberIdType">
+    <xsd:restriction base="GroupMemberIdType"/>
+  </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Nicholas Knowles (Kizoom) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentAccess_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_support.xsd"/>
+  <xsd:include schemaLocation="netex_ifopt_equipmentAccess_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipmentPlace_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:group name="AccessEquipmentChoice">
+    <xsd:choice>
+      <xsd:element ref="RoughSurface"/>
+      <xsd:element ref="EntranceEquipment"/>
+      <xsd:element ref="StaircaseEquipment"/>
+      <xsd:element ref="LiftEquipment"/>
+      <xsd:element ref="EscalatorEquipment"/>
+      <xsd:element ref="TravelatorEquipment"/>
+      <xsd:element ref="RampEquipment"/>
+      <xsd:element ref="QueueingEquipment"/>
+      <xsd:element ref="CrossingEquipment"/>
+      <xsd:element ref="PlaceLighting"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="AccessEquipmentListGroup">
+    <xsd:sequence>
+      <xsd:element ref="CrossingEquipment" minOccurs="0"/>
+      <xsd:element ref="EntranceEquipment" minOccurs="0"/>
+      <xsd:element ref="EscalatorEquipment" minOccurs="0"/>
+      <xsd:element ref="LiftEquipment" minOccurs="0"/>
+      <xsd:element ref="PlaceLighting" minOccurs="0"/>
+      <xsd:element ref="QueueingEquipment" minOccurs="0"/>
+      <xsd:element ref="RampEquipment" minOccurs="0"/>
+      <xsd:element ref="RoughSurface" minOccurs="0"/>
+      <xsd:element ref="StaircaseEquipment" minOccurs="0"/>
+      <xsd:element ref="TravelatorEquipment" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====ACCESS=================================================================== -->
+  <xsd:element name="AccessEquipment" type="AccessEquipment_VersionStructure" substitutionGroup="InstalledEquipment"/>
+  <xsd:complexType name="AccessEquipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="InstalledEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="AccessEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="AccessEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Width" type="LengthType" minOccurs="0"/>
+      <xsd:element name="DirectionOfUse" type="DirectionOfUseEnumeration" default="both" minOccurs="0"/>
+      <xsd:element name="PassengersPerMinute" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="RelativeWeighting" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="SafeForGuideDog" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RoughSurface" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RoughSurfaceStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RoughSurfaceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RoughSurfaceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RoughSurfaceStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RoughSurfaceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RoughSurfaceGroup">
+    <xsd:sequence>
+      <xsd:element name="SurfaceType" type="SurfaceTypeEnumeration"/>
+      <xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="PlaceLighting" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="PlaceLighting_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PlaceLightingGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="PlaceLightingIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="PlaceLighting_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="PlaceLightingGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="PlaceLightingGroup">
+    <xsd:sequence>
+      <xsd:element name="Lighting" type="LightingEnumeration" minOccurs="0"/>
+      <xsd:element name="AlwaysLit" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="LightingOnMethod" type="LightingOnMethodEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="StairEquipment" abstract="true" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="StairEquipment_VersionStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="StairEquipment_VersionStructure" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="StairGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="StairGroup">
+    <xsd:sequence>
+      <xsd:element name="Depth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="NumberOfSteps" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element name="StepHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="StepColourContrast" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="HandrailType" type="HandrailEnumeration" minOccurs="0"/>
+      <xsd:element name="HandrailHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="LowerHandrailHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="TopEnd" type="StairEndStructure" minOccurs="0"/>
+      <xsd:element name="BottomEnd" type="StairEndStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="EscalatorEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="EscalatorEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StairGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EscalatorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="EscalatorEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="EscalatorEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="StairEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="EscalatorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="EscalatorGroup">
+    <xsd:sequence>
+      <xsd:element name="TactileActuators" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EnergySaving" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="DogsMustBeCarried" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EscalatorWithLanding" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="StaircaseEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="StaircaseEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StairGroup"/>
+            </xsd:sequence>
+            <xsd:group ref="StaircaseGroup"/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="StaircaseEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="StaircaseEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="StairEquipment_VersionStructure">
+        <xsd:group ref="StaircaseGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="StaircaseGroup">
+    <xsd:sequence>
+      <xsd:element name="ContinuousHandrail" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="WithoutRiser" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SpiralStair" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="NumberOfFlights" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="flights" type="stairFlights_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="stairFlights_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="StairFlight" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StairFlight" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="StairFlight_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="StairGroup"/>
+              <xsd:element name="ContinuousHandrail" type="xsd:boolean" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="StairFlighttIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="StairFlight_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="StairGroup"/>
+          <xsd:element name="ContinuousHandrail" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="StairEndStructure">
+    <xsd:sequence>
+      <xsd:element name="ContinuingHandrail" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="TexturedSurface" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="VisualContrast" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:element name="TravelatorEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TravelatorEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TravelatorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TravelatorEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TravelatorEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TravelatorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TravelatorGroup">
+    <xsd:sequence>
+      <xsd:element name="TactileActuators" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EnergySaving" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Speed" type="SpeedType" minOccurs="0"/>
+      <xsd:element name="Length" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Gradient" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="IntegratesAnEscalatorPart" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="LiftEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="LiftEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="LiftEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="LiftEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="LiftEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="LiftEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="LiftEquipmentGroup">
+    <xsd:sequence>
+      <xsd:group ref="LiftDimensionsGroup"/>
+      <xsd:group ref="LiftHandrailGroup"/>
+      <xsd:group ref="LiftButtonsGroup"/>
+      <xsd:group ref="LiftPropertiesGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LiftHandrailGroup">
+    <xsd:sequence>
+      <xsd:element name="HandrailType" type="HandrailEnumeration" minOccurs="0"/>
+      <xsd:element name="HandrailHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="LowerHandrailHeight" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LiftDimensionsGroup">
+    <xsd:sequence>
+      <xsd:element name="Depth" type="LengthType" minOccurs="0"/>
+      <xsd:element name="MaximumLoad" type="WeightType" minOccurs="0"/>
+      <xsd:element name="WheelchairPassable" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="WheelchairTurningCircle" type="LengthType" minOccurs="0"/>
+      <xsd:element name="InternalWidth" type="LengthType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LiftButtonsGroup">
+    <xsd:sequence>
+      <xsd:element name="CallButtonHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="DirectionButtonHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="RaisedButtons" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="BrailleButtons" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="TactileGroundFloorButton" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="GroundMarkAlignedWithButton" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="LiftPropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="ThroughLoader" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MirrorOnOppositeSide" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Attendant" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Automatic" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="ExternalFloorSelection" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AlarmButton" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="TactileActuators" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AudioAnnouncements" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AccousticAnnouncements" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="MagneticInductionLoop" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SignageToLift" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="RampEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="RampEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="RampEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="RampEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="RampEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="RampEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="RampEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="Length" type="LengthType" minOccurs="0"/>
+      <xsd:element name="Gradient" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element name="GradientType" type="GradientEnumeration" minOccurs="0"/>
+      <xsd:element name="Pedestal" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="HandrailHeight" type="LengthType" minOccurs="0"/>
+      <xsd:element name="HandrailType" type="HandrailEnumeration" minOccurs="0"/>
+      <xsd:element name="TactileGuidanceStrips" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="VisualGuidanceBands" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Temporary" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="EntranceEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="EntranceEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntranceEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="EntranceEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="EntranceEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="EntranceEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="EntranceEquipmentGroup">
+    <xsd:sequence>
+      <xsd:group ref="EntrancePropertiesGroup"/>
+      <xsd:group ref="EntranceUsageGroup"/>
+      <xsd:group ref="EntranceAccessibilityGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="EntrancePropertiesGroup">
+    <xsd:sequence>
+      <xsd:element name="Door" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="KeptOpen" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="RevolvingDoor" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Barrier" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="NumberOfGates" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="Staffing" type="StaffingEnumeration" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="EntranceUsageGroup">
+    <xsd:sequence>
+      <xsd:element name="EntranceRequiresStaffing" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EntranceRequiresTicket" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EntranceRequiresPassport" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="EntranceAccessibilityGroup">
+    <xsd:sequence>
+      <xsd:element name="DropKerbOutside" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AcousticSensor" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AutomaticDoor" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="GlassDoor" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="Airlock" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="WheelchairPassable" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="WheechairUnaided" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="AudioOrVideoIntercom" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="EntranceAttention" type="EntranceAttentionEnumeration" minOccurs="0"/>
+      <xsd:element name="DoorstepMark" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="NecessaryForceToOpen" type="NecessaryForceEnumeration" minOccurs="0"/>
+      <xsd:element name="AudioPassthroughIndicator" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="QueueingEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="QueueingEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="QueueingEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="QueueingEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="QueueingEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="QueueingEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="QueueingEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="NumberOfServers" type="xsd:positiveInteger" minOccurs="0"/>
+      <xsd:element name="RailedQueue" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="TicketedQueue" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="DisabledPriority" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="QueuingSeatedPossible" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+  <xsd:element name="CrossingEquipment" substitutionGroup="AccessEquipment">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="CrossingEquipment_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="AccessEquipmentGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="CrossingEquipmentGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="CrossingEquipmentIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CrossingEquipment_VersionStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="AccessEquipment_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="CrossingEquipmentGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="CrossingEquipmentGroup">
+    <xsd:sequence>
+      <xsd:element name="CrossingType" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="CrossingTypeEnumeration"/>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="ZebraCrossing" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="PedestrianLights" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="AcousticDeviceSensors" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="AcousticCrossingAids" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="TactileGuidanceStrips" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="TactileWarningStrip" type="TactileWarningStripEnumeration" minOccurs="0"/>
+      <xsd:element name="VisualGuidanceBands" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element name="DroppedKerb" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="SuitableForCycles" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

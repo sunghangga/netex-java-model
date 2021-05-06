@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_journeyPattern_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===JOURNEY PATTERN====================================================== -->
+  <xsd:complexType name="journeyPatternRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="JourneyPatternRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="JourneyPatternIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyPatternRef" type="JourneyPatternRefStructure" substitutionGroup="LinkSequenceRef"/>
+  <xsd:complexType name="JourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkSequenceRefStructure">
+        <xsd:attribute name="ref" type="JourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="DeadRunJourneyPatternIdType">
+    <xsd:restriction base="JourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DeadRunJourneyPatternRef" type="DeadRunJourneyPatternRefStructure" substitutionGroup="JourneyPatternRef"/>
+  <xsd:complexType name="DeadRunJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="DeadRunJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="PointInJourneyPatternIdType">
+    <xsd:restriction base="PointInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PointInJourneyPatternRef" type="PointInJourneyPatternRefStructure" substitutionGroup="PointInSequenceRef"/>
+  <xsd:complexType name="PointInJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointInSequenceRefStructure">
+        <xsd:attribute name="ref" type="PointInJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LinkInJourneyPatternIdType">
+    <xsd:restriction base="LinkInSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LinkInJourneyPatternRef" type="LinkInJourneyPatternRefStructure" substitutionGroup="LinkInSequenceRef"/>
+  <xsd:complexType name="LinkInJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkInSequenceRefStructure">
+        <xsd:attribute name="ref" type="LinkInJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TypeOfJourneyPatternIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfJourneyPatternRef" type="TypeOfJourneyPatternRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimingPointInJourneyPatternIdType">
+    <xsd:restriction base="PointInJourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingPointInJourneyPatternRef" type="TimingPointInJourneyPatternRefStructure" substitutionGroup="PointInJourneyPatternRef"/>
+  <xsd:complexType name="TimingPointInJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PointInJourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="TimingPointInJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TimingLinkInJourneyPatternIdType">
+    <xsd:restriction base="LinkInJourneyPatternIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingLinkInJourneyPatternRef" type="TimingLinkInJourneyPatternRefStructure" substitutionGroup="LinkInJourneyPatternRef"/>
+  <xsd:complexType name="TimingLinkInJourneyPatternRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkInJourneyPatternRefStructure">
+        <xsd:attribute name="ref" type="TimingLinkInJourneyPatternIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TimingPointStatusEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="timingPoint"/>
+      <xsd:enumeration value="secondaryTimingPoint"/>
+      <xsd:enumeration value="notTimingPoint"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

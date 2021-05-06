@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.siri.org.uk/siri" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" id="siri">
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="siri_common_services-v2.0.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:complexType name="SiriSchema">
+    <xsd:choice>
+      <xsd:group ref="RequestGroup"/>
+      <xsd:group ref="ResponseGroup"/>
+      <xsd:element ref="Extensions" minOccurs="0"/>
+    </xsd:choice>
+    <xsd:attribute name="version" type="xsd:NMTOKEN" use="optional" default="2.0"/>
+  </xsd:complexType>
+  <!--== Requests ===================================================================== -->
+  <xsd:group name="RequestGroup">
+    <xsd:choice>
+      <xsd:group ref="ServiceRequestGroup"/>
+      <xsd:group ref="DeliveryRequestGroup"/>
+      <xsd:group ref="StatusRequestGroup"/>
+      <xsd:group ref="DiscoveryRequestGroup"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="ServiceRequestGroup">
+    <xsd:choice>
+      <xsd:element ref="ServiceRequest"/>
+      <xsd:element ref="SubscriptionRequest"/>
+      <xsd:element ref="TerminateSubscriptionRequest"/>
+    </xsd:choice>
+  </xsd:group>
+  <!--===GS: Service Request ==================================================================== -->
+  <xsd:element name="ServiceRequest">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="ServiceRequestStructure">
+          <xsd:sequence>
+            <xsd:element ref="AbstractFunctionalServiceRequest" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ServiceRequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ContextualisedRequestStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--===GS: Subscriptions Request=========================================================== -->
+  <xsd:element name="SubscriptionRequest">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="SubscriptionRequestStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="SubscriptionRequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="AbstractSubscriptionRequestStructure">
+        <xsd:sequence>
+          <xsd:element ref="AbstractFunctionalServiceSubscriptionRequest" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===Responses==================================================================== -->
+  <xsd:group name="ResponseGroup">
+    <xsd:choice>
+      <xsd:group ref="ServiceResponseGroup"/>
+      <xsd:group ref="DeliveryResponseGroup"/>
+      <xsd:group ref="StatusResponseGroup"/>
+      <xsd:group ref="DiscoveryResponseGroup"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="ServiceResponseGroup">
+    <xsd:choice>
+      <xsd:element ref="SubscriptionResponse"/>
+      <xsd:element ref="TerminateSubscriptionResponse"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===Data Delivery ============================================================== -->
+  <xsd:group name="DeliveryResponseGroup">
+    <xsd:choice>
+      <xsd:element ref="DataReadyAcknowledgement"/>
+      <xsd:element ref="ServiceDelivery"/>
+      <xsd:element ref="DataReceivedAcknowledgement"/>
+    </xsd:choice>
+  </xsd:group>
+  <!--===GS: Service Delviery -->
+  <xsd:element name="ServiceDelivery" substitutionGroup="ProducerResponse">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="ServiceDeliveryStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ServiceDeliveryStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ProducerResponseStructure">
+        <xsd:sequence>
+          <xsd:group ref="ServiceDeliveryBodyGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="srsName" type="SrsNameType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ServiceDeliveryBodyStructure">
+    <xsd:sequence>
+      <xsd:group ref="ServiceDeliveryBodyGroup"/>
+    </xsd:sequence>
+    <xsd:attribute name="srsName" type="SrsNameType"/>
+  </xsd:complexType>
+  <xsd:group name="ServiceDeliveryBodyGroup">
+    <xsd:sequence>
+      <xsd:group ref="ServiceDeliveryRequestStatusGroup"/>
+      <xsd:element name="MoreData" type="xsd:boolean" default="false" minOccurs="0"/>
+      <xsd:element ref="AbstractFunctionalServiceDelivery" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ===Discovery==================================================================== -->
+  <xsd:group name="DiscoveryRequestGroup">
+    <xsd:choice>
+      <xsd:element ref="CapabilitiesRequest"/>
+      <xsd:element ref="AbstractDiscoveryRequest"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="DiscoveryResponseGroup">
+    <xsd:choice>
+      <xsd:element ref="CapabilitiesResponse"/>
+      <xsd:element ref="AbstractDiscoveryDelivery"/>
+    </xsd:choice>
+  </xsd:group>
+  <!-- ===Capabilities ============================================================== -->
+  <xsd:element name="CapabilitiesRequest" type="CapabilitiesRequestStructure"/>
+  <xsd:complexType name="CapabilitiesRequestStructure">
+    <xsd:complexContent>
+      <xsd:extension base="RequestStructure">
+        <xsd:sequence>
+          <xsd:element ref="AbstractFunctionalServiceCapabilitiesRequest"/>
+        </xsd:sequence>
+        <xsd:attribute name="version" type="VersionString" use="optional" default="2.0"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CapabilitiesResponse" type="CapabilitiesResponseStructure" substitutionGroup="ProducerResponse"/>
+  <xsd:complexType name="CapabilitiesResponseStructure">
+    <xsd:complexContent>
+      <xsd:extension base="ProducerResponseStructure">
+        <xsd:sequence>
+          <xsd:element ref="AbstractFunctionalServiceCapabilitiesResponse"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

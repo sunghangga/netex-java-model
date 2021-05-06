@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_travelSpecificationSummary_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_trainElement_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_transportOrganisation_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_vehicleSeating_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_facility_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_ifopt/netex_ifopt_stopPlace_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_version.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_2/part2_journeyTimes/netex_serviceJourney_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_fareSeries_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_fareProduct_support.xsd"/>
+  <xsd:include schemaLocation="../part3_fares/netex_usageParameterEligibility_support.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_serviceRestrictions_support.xsd"/>
+  <xsd:element name="TravelSpecificationSummaryView" type="TravelSpecificationSummaryViewStructure"/>
+  <xsd:complexType name="TravelSpecificationSummaryViewStructure">
+    <xsd:sequence>
+      <xsd:element name="Origin" type="TravelSpecificationSummaryEndpointStructure" minOccurs="0"/>
+      <xsd:element name="Destination" type="TravelSpecificationSummaryEndpointStructure" minOccurs="0"/>
+      <xsd:group ref="TravelSpecificationSummaryJourneyGroup"/>
+      <xsd:group ref="TravelSpecificationSummaryFareGroup"/>
+      <xsd:group ref="TravelSpecificationSummarySeatingGroup"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TravelSpecificationSummaryEndpointStructure">
+    <xsd:sequence>
+      <xsd:group ref="TravelSpecificationSummaryEndPointPlaceGroup"/>
+      <xsd:element ref="ScheduledStopPointView" minOccurs="0"/>
+      <xsd:element ref="QuayRef" minOccurs="0"/>
+      <xsd:element ref="BoardingPositionRef" minOccurs="0"/>
+      <xsd:element ref="TariffZoneRef" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="TravelSpecificationSummaryEndPointPlaceGroup">
+    <xsd:sequence>
+      <xsd:element ref="TopographicPlaceView" minOccurs="0"/>
+      <xsd:element ref="AddressRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TravelSpecificationSummaryJourneyGroup">
+    <xsd:sequence>
+      <xsd:element name="Start" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="End" type="xsd:dateTime" minOccurs="0"/>
+      <xsd:element name="Duration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="journeys" type="travelSpecificationJourneyRefs_RelStructure" minOccurs="0"/>
+      <xsd:element name="seriesConstraints" type="seriesConstraintRefs_RelStructure" minOccurs="0"/>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="OperatorRef"/>
+        <xsd:element ref="GroupOfOperatorsRef"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="travelSpecificationJourneyRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:sequence>
+            <xsd:element ref="ServiceJourneyRef" minOccurs="0"/>
+            <xsd:element ref="TrainNumberRef" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TravelSpecificationSummaryFareGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfProductCategoryRef" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareProductRef" minOccurs="0"/>
+      <xsd:element ref="FareClass" minOccurs="0"/>
+      <xsd:element ref="ClassOfUseRef" minOccurs="0"/>
+      <xsd:element ref="UserProfileRef" minOccurs="0"/>
+      <xsd:element ref="GroupTicketRef" minOccurs="0"/>
+      <xsd:element name="MaximumNumberOfUsers" type="NumberOfPassengers" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TravelSpecificationSummarySeatingGroup">
+    <xsd:sequence>
+      <xsd:element ref="TrainElementRef" minOccurs="0"/>
+      <xsd:element ref="TrainComponentLabelAssignmentRef" minOccurs="0"/>
+      <xsd:element ref="PassengerSeatRef" minOccurs="0"/>
+      <xsd:element ref="ServiceFacilitySet" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

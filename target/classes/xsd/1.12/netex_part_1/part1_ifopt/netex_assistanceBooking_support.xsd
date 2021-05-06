@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_assistanceBooking_support">
+  <xsd:include schemaLocation="../part1_ifopt/netex_ifopt_localService_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="AssistanceBookingServiceIdType">
+    <xsd:restriction base="LocalServiceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="AssistanceBookingServiceRef" type="AssistanceBookingServiceRefStructure" substitutionGroup="LocalServiceRef"/>
+  <xsd:complexType name="AssistanceBookingServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LocalServiceRefStructure">
+        <xsd:attribute name="ref" type="AssistanceBookingServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

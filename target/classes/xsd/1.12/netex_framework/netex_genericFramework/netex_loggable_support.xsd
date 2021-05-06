@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:core="http://www.govtalk.gov.uk/core" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_loggable_support">
+  <xsd:include schemaLocation="netex_grouping_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ==Log=========================================================== -->
+  <xsd:simpleType name="LogIdType">
+    <xsd:restriction base="GroupOfEntitiesIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LogRef" type="LogRefStructure" abstract="false" substitutionGroup="GroupOfEntitiesRef_"/>
+  <xsd:complexType name="LogRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="GroupOfEntitiesRefStructure">
+        <xsd:attribute name="ref" type="LogIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ==LogEntry=========================================================== -->
+  <xsd:simpleType name="LogEntryIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LogEntryRef" type="LogEntryRefStructure" abstract="false" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="LogEntryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="LogEntryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====Jouurney========================================-->
+</xsd:schema>

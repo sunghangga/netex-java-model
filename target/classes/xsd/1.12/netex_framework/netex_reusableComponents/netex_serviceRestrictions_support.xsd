@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:siri="http://www.siri.org.uk/siri" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_serviceRestrictions_support">
+  <xsd:include schemaLocation="../netex_responsibility/netex_responsibility_support.xsd"/>
+  <xsd:simpleType name="ClassOfUseIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ClassOfUseRef" substitutionGroup="TypeOfValueRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="ClassOfUseRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="ClassOfUseRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="ClassOfUseIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="FareClassEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="firstClass"/>
+      <xsd:enumeration value="secondClass"/>
+      <xsd:enumeration value="thirdClass"/>
+      <xsd:enumeration value="preferente"/>
+      <xsd:enumeration value="premiumClass"/>
+      <xsd:enumeration value="businessClass"/>
+      <xsd:enumeration value="standardClass"/>
+      <xsd:enumeration value="turista"/>
+      <xsd:enumeration value="economyClass"/>
+      <xsd:enumeration value="any"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="ReservationEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="reservationsCompulsory"/>
+      <xsd:enumeration value="reservationsCompulsoryForGroups"/>
+      <xsd:enumeration value="reservationsCompulsoryForFirstClass"/>
+      <xsd:enumeration value="reservationsCompulsoryFromOriginStation"/>
+      <xsd:enumeration value="reservationsRecommended"/>
+      <xsd:enumeration value="reservationsPossible"/>
+      <xsd:enumeration value="reservationsPossibleOnlyInFirstClass"/>
+      <xsd:enumeration value="reservationsPossibleOnlyInSecondClass"/>
+      <xsd:enumeration value="reservationsPossibleForCertainClasses"/>
+      <xsd:enumeration value="groupBookingRestricted"/>
+      <xsd:enumeration value="noGroupsAllowed"/>
+      <xsd:enumeration value="noReservationsPossible"/>
+      <xsd:enumeration value="wheelchairOnlyReservations"/>
+      <xsd:enumeration value="bicycleReservationsCompulsory"/>
+      <xsd:enumeration value="reservationsSupplementCharged"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ReservationListOfEnumerations">
+    <xsd:list itemType="ReservationEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BookingMethodEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="callDriver"/>
+      <xsd:enumeration value="callOffice"/>
+      <xsd:enumeration value="online"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="phoneAtStop"/>
+      <xsd:enumeration value="text"/>
+      <xsd:enumeration value="none"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BookingMethodListOfEnumerations">
+    <xsd:list itemType="BookingMethodEnumeration"/>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="BookingAccessEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="public"/>
+      <xsd:enumeration value="authorisedPublic"/>
+      <xsd:enumeration value="staff"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="PurchaseWhenEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="advanceOnly"/>
+      <xsd:enumeration value="untilPreviousDay"/>
+      <xsd:enumeration value="dayOfTravelOnly"/>
+      <xsd:enumeration value="advanceAndDayOfTravel"/>
+      <xsd:enumeration value="timeOfTravelOnly"/>
+      <xsd:enumeration value="subscriptionChargeMoment"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="PurchaseMomentEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="onReservation"/>
+      <xsd:enumeration value="inAdvance"/>
+      <xsd:enumeration value="inAdvanceOnly"/>
+      <xsd:enumeration value="beforeBoarding"/>
+      <xsd:enumeration value="beforeBoardingOnly"/>
+      <xsd:enumeration value="onBoarding"/>
+      <xsd:enumeration value="onBoardingOnly"/>
+      <xsd:enumeration value="afterBoarding"/>
+      <xsd:enumeration value="onCheckIn"/>
+      <xsd:enumeration value="onCheckOut"/>
+      <xsd:enumeration value="subscriptionOnly"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PurchaseMomentListOfEnumerations">
+    <xsd:list itemType="PurchaseMomentEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="BookingProcessEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="productNotAvailable"/>
+      <xsd:enumeration value="productNotBookable"/>
+      <xsd:enumeration value="bookableThroughInternationalSystem"/>
+      <xsd:enumeration value="bookableThroughNationalSystem"/>
+      <xsd:enumeration value="bookableManuallly"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BookingProcessListOfEnumerations">
+    <xsd:list itemType="BookingProcessEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="GroupBookingEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="groupsAllowed"/>
+      <xsd:enumeration value="groupsNotAllowed"/>
+      <xsd:enumeration value="groupsAllowedWithReservation"/>
+      <xsd:enumeration value="groupBookingsRestricted"/>
+      <xsd:enumeration value="unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="GroupBookingListOfEnumerations">
+    <xsd:list itemType="GroupBookingEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="CateringRightsEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="mealIncluded"/>
+      <xsd:enumeration value="mealIncludedForFirstClassPassengers"/>
+      <xsd:enumeration value="noMealIncluded"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="CateringServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="bar"/>
+      <xsd:enumeration value="beverageVendingMachine"/>
+      <xsd:enumeration value="buffet"/>
+      <xsd:enumeration value="coffeeShop"/>
+      <xsd:enumeration value="firstClassRestaurant"/>
+      <xsd:enumeration value="foodVendingMachine"/>
+      <xsd:enumeration value="hotFoodService"/>
+      <xsd:enumeration value="restaurant"/>
+      <xsd:enumeration value="snacks"/>
+      <xsd:enumeration value="trolleyService"/>
+      <xsd:enumeration value="noBeveragesAvailable"/>
+      <xsd:enumeration value="noFoodServiceAvailable"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CateringServiceListOfEnumerations">
+    <xsd:list itemType="CateringServiceEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="CyclesOnServiceEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="notAllowed"/>
+      <xsd:enumeration value="onlyFoldingAllowed"/>
+      <xsd:enumeration value="allowedSubjectToRestrictions"/>
+      <xsd:enumeration value="mustBook"/>
+      <xsd:enumeration value="allowedAtAllTimes"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="CommunicationServiceEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="freeWifi"/>
+      <xsd:enumeration value="publicWifi"/>
+      <xsd:enumeration value="phone"/>
+      <xsd:enumeration value="internet"/>
+      <xsd:enumeration value="mobileCoverage"/>
+      <xsd:enumeration value="videoEntertainment"/>
+      <xsd:enumeration value="audioEntertainment"/>
+      <xsd:enumeration value="postbox"/>
+      <xsd:enumeration value="postOffice"/>
+      <xsd:enumeration value="businessServices"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="CommunicationServiceListOfEnumerations">
+    <xsd:list itemType="CommunicationServiceEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="GenderLimitationEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="both"/>
+      <xsd:enumeration value="femaleOnly"/>
+      <xsd:enumeration value="maleOnly"/>
+      <xsd:enumeration value="sameSexOnly"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="PaymentMethodEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="cash"/>
+      <xsd:enumeration value="cashExactChangeOnly"/>
+      <xsd:enumeration value="cashAndCard"/>
+      <xsd:enumeration value="coin"/>
+      <xsd:enumeration value="banknote"/>
+      <xsd:enumeration value="cheque"/>
+      <xsd:enumeration value="travellersCheque"/>
+      <xsd:enumeration value="postalOrder"/>
+      <xsd:enumeration value="companyCheque"/>
+      <xsd:enumeration value="creditCard"/>
+      <xsd:enumeration value="debitCard"/>
+      <xsd:enumeration value="cardsOnly"/>
+      <xsd:enumeration value="travelCard"/>
+      <xsd:enumeration value="contactlessPaymentCard"/>
+      <xsd:enumeration value="contactlessTravelCard"/>
+      <xsd:enumeration value="directDebit"/>
+      <xsd:enumeration value="bankTransfer"/>
+      <xsd:enumeration value="epayDevice"/>
+      <xsd:enumeration value="epayAccount"/>
+      <xsd:enumeration value="sms"/>
+      <xsd:enumeration value="mobilePhone"/>
+      <xsd:enumeration value="voucher"/>
+      <xsd:enumeration value="token"/>
+      <xsd:enumeration value="warrant"/>
+      <xsd:enumeration value="mileagePoints"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="PaymentMethodListOfEnumerations">
+    <xsd:list itemType="PaymentMethodEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:complexType name="TypeOfPaymentMethodRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfPaymentMethodRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TypeOfPaymentMethodIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfPaymentMethodRef" substitutionGroup="TypeOfValueRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="TypeOfPaymentMethodRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfPaymentMethodRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfPaymentMethodIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="SanitaryFacilityEnumeration">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="toilet"/>
+      <xsd:enumeration value="wheelChairAccessToilet"/>
+      <xsd:enumeration value="shower"/>
+      <xsd:enumeration value="washingAndChangeFacilities"/>
+      <xsd:enumeration value="babyChange"/>
+      <xsd:enumeration value="wheelchairBabyChange"/>
+      <xsd:enumeration value="shoeShiner"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="SanitaryFacilityListOfEnumerations">
+    <xsd:list itemType="SanitaryFacilityEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="TicketTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="standard"/>
+      <xsd:enumeration value="promotion"/>
+      <xsd:enumeration value="concession"/>
+      <xsd:enumeration value="group"/>
+      <xsd:enumeration value="season"/>
+      <xsd:enumeration value="carnet"/>
+      <xsd:enumeration value="travelCard"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TicketTypeListOfEnumerations">
+    <xsd:list itemType="TicketTypeEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <xsd:simpleType name="TicketingServiceFacilityEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="purchase"/>
+      <xsd:enumeration value="collection"/>
+      <xsd:enumeration value="cardTopUp"/>
+      <xsd:enumeration value="reservations"/>
+      <xsd:enumeration value="exchange"/>
+      <xsd:enumeration value="refund"/>
+      <xsd:enumeration value="renewal"/>
+      <xsd:enumeration value="excessFares"/>
+      <xsd:enumeration value="other"/>
+      <xsd:enumeration value="all"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="TicketingServiceFacilityListOfEnumerations">
+    <xsd:list itemType="TicketingServiceFacilityEnumeration"/>
+  </xsd:simpleType>
+  <!-- =================================================== -->
+  <!-- ====== TYPE OF SERVICE ============================================== -->
+  <xsd:simpleType name="TypeOfServiceIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfServiceRef" type="TypeOfServiceRefStructure" abstract="false" substitutionGroup="TypeOfEntityRef"/>
+  <xsd:complexType name="TypeOfServiceRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfServiceIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="typeOfServiceRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfServiceRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======== TYPE OF PRODUCT CATEGORY ============================================ -->
+  <xsd:simpleType name="TypeOfProductCategoryIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TypeOfProductCategoryRef" type="TypeOfProductCategoryRefStructure" abstract="false" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="TypeOfProductCategoryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TypeOfProductCategoryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="typeOfProductCategoryRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TypeOfProductCategoryRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- =================================================== -->
+</xsd:schema>

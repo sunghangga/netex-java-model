@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:netex="http://www.netex.org.uk/netex" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_ifopt_equipmentWaiting_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_reusableComponents/netex_equipment_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ====SITE EQUIPMENT=============================================== -->
+  <xsd:simpleType name="SiteEquipmentIdType">
+    <xsd:restriction base="EquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SiteEquipmentRef" type="SiteEquipmentRefStructure" substitutionGroup="EquipmentRef"/>
+  <xsd:complexType name="SiteEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="EquipmentRefStructure">
+        <xsd:attribute name="ref" type="SiteEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="WaitingEquipmentIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WaitingEquipmentRef" type="WaitingEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="WaitingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SiteEquipmentRefStructure">
+        <xsd:attribute name="ref" type="WaitingEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="WaitingRoomEquipmentIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="WaitingRoomEquipmentRef" type="WaitingRoomEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="WaitingRoomEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:extension base="SiteEquipmentRefStructure"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="LuggageLockerIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="LuggageLockerEquipmentRef" type="LuggageLockerEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="LuggageLockerEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SiteEquipmentRefStructure">
+        <xsd:attribute name="ref" type="LuggageLockerIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="LockerTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="leftLuggageOffice"/>
+      <xsd:enumeration value="lockers"/>
+      <xsd:enumeration value="oversizeLockers"/>
+      <xsd:enumeration value="bikeRack"/>
+      <xsd:enumeration value="bikeCarriage"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LockingTypeEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="key"/>
+      <xsd:enumeration value="keyboard"/>
+      <xsd:enumeration value="mechanicalNumbering"/>
+      <xsd:enumeration value="contactless"/>
+      <xsd:enumeration value="mobileApp"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="LuggageServiceEnumeration">
+    <xsd:restriction base="xsd:normalizedString">
+      <xsd:enumeration value="leftLuggage"/>
+      <xsd:enumeration value="porterage"/>
+      <xsd:enumeration value="freeTrolleys"/>
+      <xsd:enumeration value="paidTrolleys"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="ShelterEquipmentIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ShelterEquipmentRef" type="ShelterEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="ShelterEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SiteEquipmentRefStructure">
+        <xsd:attribute name="ref" type="ShelterEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="SeatingEquipmentIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SeatingEquipmentRef" type="SeatingEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="SeatingEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SiteEquipmentRefStructure">
+        <xsd:attribute name="ref" type="SeatingEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrolleyStandEquipmentIdType">
+    <xsd:restriction base="SiteEquipmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrolleyStandEquipmentRef" type="TrolleyStandEquipmentRefStructure" substitutionGroup="SiteEquipmentRef"/>
+  <xsd:complexType name="TrolleyStandEquipmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="SiteEquipmentRefStructure">
+        <xsd:attribute name="ref" type="TrolleyStandEquipmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

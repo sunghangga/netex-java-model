@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_timeStuctureFactor_version">
+  <xsd:include schemaLocation="netex_timeStructureFactor_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructure_support.xsd"/>
+  <xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_qualityStructureFactor_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME==== ================================================== -->
+  <xsd:group name="TimeFactorsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="timeUnits" type="timeUnits_RelStructure" minOccurs="0"/>
+      <xsd:element name="timeIntervals" type="timeIntervals_RelStructure" minOccurs="0"/>
+      <xsd:element name="timeStructureFactors" type="timeStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TIME UNIT======================================== -->
+  <xsd:complexType name="timeUnits_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimeUnitRef"/>
+          <xsd:element ref="TimeUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimeUnit" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeUnit_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="Type" type="xsd:NCName" minOccurs="0"/>
+              <xsd:element name="Duration" type="xsd:duration" minOccurs="0"/>
+              <xsd:element name="prices" type="timeUnitPrices_RelStructure" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeUnitIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeUnit_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareUnit_VersionStructure">
+        <xsd:group ref="TimeUnitlGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeUnitlGroup">
+    <xsd:sequence>
+      <xsd:element name="Type" type="xsd:NCName" minOccurs="0"/>
+      <xsd:element name="Duration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="prices" type="timeUnitPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TIME INTERVAL ========================================== -->
+  <xsd:complexType name="timeIntervals_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimeIntervalRef"/>
+          <xsd:element ref="TimeInterval"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimeInterval" abstract="false" substitutionGroup="PriceableObject_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeInterval_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeIntervalGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeIntervalIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TimeInterval_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareInterval_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeIntervalGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeIntervalGroup">
+    <xsd:sequence>
+      <xsd:element name="StartTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="EndTime" type="xsd:time" minOccurs="0"/>
+      <xsd:element name="DayOffset" type="DayOffsetType" default="0" minOccurs="0"/>
+      <xsd:element name="Duration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="MinimumDuration" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="prices" type="timeIntervalPrices_RelStructure" minOccurs="0"/>
+      <xsd:element name="timeStructureFactors" type="timeStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="timeStructureFactors_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimeStructureFactorRef"/>
+          <xsd:element ref="TimeStructureFactor" maxOccurs="unbounded"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TimeStructureFactor" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeStructureFactor_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="PrivateCode" minOccurs="0"/>
+              <xsd:element ref="TypeOfFareStructureFactorRef" minOccurs="0"/>
+              <xsd:element name="Factor" type="xsd:anyType" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeStructureFactorGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeStructureFactorIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- ==== TIME STRUCTURE FACTOR.============================= -->
+  <xsd:complexType name="TimeStructureFactor_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareStructureFactor_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeStructureFactorGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeStructureFactorGroup">
+    <xsd:sequence>
+      <xsd:element ref="TariffRef" minOccurs="0"/>
+      <xsd:element ref="TimeIntervalRef" minOccurs="0"/>
+      <xsd:element ref="TimeUnitRef" minOccurs="0"/>
+      <xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == TIME UNIT PRICE.================================ -->
+  <xsd:element name="TimeUnitPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeUnitPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeUnitPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeUnitPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="timeUnitPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimeUnitPriceRef"/>
+          <xsd:element name="TimeUnitPrice" type="TimeUnitPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TimeUnitPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeUnitPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeUnitPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimeUnitRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == TIME INTERVAL PRICE.================================ -->
+  <xsd:element name="TimeIntervalPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TimeIntervalPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TimeIntervalPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TimeIntervalPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="timeIntervalPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="TimeIntervalPriceRef"/>
+          <xsd:element name="TimeIntervalPrice" type="TimeIntervalPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TimeIntervalPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="TimeIntervalPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TimeIntervalPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimeIntervalRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>

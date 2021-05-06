@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_piQuery_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_support.xsd"/>
+  <!-- =============================================================== -->
+  <!-- ====PASSENGER QUERY.======================================================== -->
+  <xsd:simpleType name="PassengerQueryIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="PassengerQueryRef" type="PassengerQueryRefStructure" abstract="true" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="PassengerQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="PassengerQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====TRIP PLAN  QUERY .======================================================== -->
+  <xsd:simpleType name="TripPlanQueryIdType">
+    <xsd:restriction base="PassengerQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TripPlanQueryRef" type="TripPlanQueryRefStructure" abstract="false" substitutionGroup="PassengerQueryRef"/>
+  <xsd:complexType name="TripPlanQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerQueryRefStructure">
+        <xsd:attribute name="ref" type="TripPlanQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====SCHEDULE  QUERY .======================================================== -->
+  <xsd:simpleType name="ScheduleQueryIdType">
+    <xsd:restriction base="PassengerQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="ScheduleQueryRef" type="ScheduleQueryRefStructure" abstract="false" substitutionGroup="PassengerQueryRef"/>
+  <xsd:complexType name="ScheduleQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerQueryRefStructure">
+        <xsd:attribute name="ref" type="ScheduleQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- STOP DEPARTURE QUERY .======================================================== -->
+  <xsd:simpleType name="StopDepartureQueryIdType">
+    <xsd:restriction base="PassengerQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StopDepartureQueryRef" type="StopDepartureQueryRefStructure" abstract="false" substitutionGroup="PassengerQueryRef"/>
+  <xsd:complexType name="StopDepartureQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerQueryRefStructure">
+        <xsd:attribute name="ref" type="StopDepartureQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====SCHEDULE  QUERY .======================================================== -->
+  <xsd:simpleType name="StopFinderQueryIdType">
+    <xsd:restriction base="PassengerQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="StopFinderQueryRef" type="StopFinderQueryRefStructure" abstract="false" substitutionGroup="PassengerQueryRef"/>
+  <xsd:complexType name="StopFinderQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerQueryRefStructure">
+        <xsd:attribute name="ref" type="StopFinderQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====FARE QUERY .======================================================== -->
+  <xsd:simpleType name="FareQueryIdType">
+    <xsd:restriction base="PassengerQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="FareQueryRef" type="FareQueryRefStructure" abstract="false" substitutionGroup="PassengerQueryRef"/>
+  <xsd:complexType name="FareQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerQueryRefStructure">
+        <xsd:attribute name="ref" type="FareQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====SINGLE TRIP FARE QUERY.======================================================== -->
+  <xsd:simpleType name="SingleTripFareQueryIdType">
+    <xsd:restriction base="FareQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="SingleTripFareQueryRef" type="SingleTripFareQueryRefStructure" abstract="false" substitutionGroup="FareQueryRef"/>
+  <xsd:complexType name="SingleTripFareQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareQueryRefStructure">
+        <xsd:attribute name="ref" type="SingleTripFareQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ====REPEATED TRIP FARE QUERY.======================================================== -->
+  <xsd:simpleType name="RepeatedTripFareQueryIdType">
+    <xsd:restriction base="FareQueryIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="RepeatedTripFareQueryRef" type="RepeatedTripFareQueryRefStructure" abstract="false" substitutionGroup="FareQueryRef"/>
+  <xsd:complexType name="RepeatedTripFareQueryRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="FareQueryRefStructure">
+        <xsd:attribute name="ref" type="RepeatedTripFareQueryIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

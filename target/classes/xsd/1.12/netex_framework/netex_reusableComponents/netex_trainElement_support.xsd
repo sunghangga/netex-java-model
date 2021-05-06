@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Nicholas Knowles Knowles (Kizoom Ltd) -->
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_trainElement_support">
+  <xsd:include schemaLocation="netex_vehicleType_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainIdType">
+    <xsd:restriction base="VehicleTypeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainRef" type="TrainRefStructure" substitutionGroup="VehicleTypeRef"/>
+  <xsd:complexType name="TrainRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleTypeRefStructure">
+        <xsd:attribute name="ref" type="TrainIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="CompoundTrainIdType">
+    <xsd:restriction base="VehicleTypeIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="CompoundTrainRef" substitutionGroup="VehicleTypeRef">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="CompoundTrainRefStructure"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="CompoundTrainRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleTypeRefStructure">
+        <xsd:attribute name="ref" type="CompoundTrainIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainInCompoundTrainIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainInCompoundTrainRef" type="TrainInCompoundTrainRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TrainInCompoundTrainRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TrainInCompoundTrainIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainElementIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainElementRef" type="TrainElementRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TrainElementRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TrainElementIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="TrainElementTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="buffetCar"/>
+      <xsd:enumeration value="carriage"/>
+      <xsd:enumeration value="engine"/>
+      <xsd:enumeration value="carTransporter"/>
+      <xsd:enumeration value="sleeperCarriage"/>
+      <xsd:enumeration value="luggageVan"/>
+      <xsd:enumeration value="restaurantCarriage"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainComponentIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainComponentRef" type="TrainComponentRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TrainComponentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="OrderedVersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TrainComponentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <xsd:simpleType name="TrainSizeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="short"/>
+      <xsd:enumeration value="long"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- ======================================================================= -->
+</xsd:schema>

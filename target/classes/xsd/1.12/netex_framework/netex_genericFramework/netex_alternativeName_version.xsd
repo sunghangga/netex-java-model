@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" id="netex_alternativeName_version">
+  <xsd:include schemaLocation="../../netex_framework/netex_responsibility/netex_responsibility_version.xsd"/>
+  <xsd:include schemaLocation="netex_alternativeName_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- Simple Type Definitions -->
+  <xsd:complexType name="alternativeNames_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:sequence>
+          <xsd:element ref="AlternativeName" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AlternativeName" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="AlternativeName_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element name="NamedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+              <xsd:element name="Lang" type="xsd:language" minOccurs="0"/>
+              <xsd:element name="NameType" type="NameTypeEnumeration" default="alias" minOccurs="0"/>
+              <xsd:element name="TypeOfName" type="xsd:normalizedString" minOccurs="0"/>
+              <xsd:element name="Name" type="MultilingualString"/>
+              <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="Abbreviation" type="MultilingualString" minOccurs="0"/>
+              <xsd:element name="QualifierName" type="MultilingualString" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="nameOfClass" type="NameOfClass" use="optional"/>
+          <xsd:attribute name="id" type="AlternativeNameIdType"/>
+          <xsd:attribute name="dataSourceRef" type="DataSourceIdType" use="optional"/>
+          <xsd:attribute name="order" type="xsd:integer"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="AlternativeName_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:element name="NamedObjectRef" type="VersionOfObjectRefStructure" minOccurs="0"/>
+          <xsd:element name="Lang" type="xsd:language" minOccurs="0"/>
+          <xsd:element name="NameType" type="NameTypeEnumeration" default="alias" minOccurs="0"/>
+          <xsd:element name="TypeOfName" type="xsd:normalizedString" minOccurs="0"/>
+          <xsd:element name="Name" type="MultilingualString"/>
+          <xsd:element name="ShortName" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="Abbreviation" type="MultilingualString" minOccurs="0"/>
+          <xsd:element name="QualifierName" type="MultilingualString" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="order" type="xsd:integer"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ======================================================================= -->
+</xsd:schema>

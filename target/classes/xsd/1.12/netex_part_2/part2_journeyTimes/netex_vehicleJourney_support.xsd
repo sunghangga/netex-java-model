@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_vehicleJourney_support">
+  <xsd:include schemaLocation="../../netex_framework/netex_genericFramework/netex_pointAndLinkSequence_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_stopAssignment_support.xsd"/>
+  <xsd:include schemaLocation="../../netex_part_1/part1_tacticalPlanning/netex_servicePattern_support.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- =====JOURNEY=== ============================== -->
+  <xsd:simpleType name="JourneyIdType">
+    <xsd:restriction base="LinkSequenceIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="JourneyRef" type="JourneyRefStructure" abstract="true" substitutionGroup="LinkSequenceRef"/>
+  <xsd:complexType name="JourneyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="LinkSequenceRefStructure">
+        <xsd:attribute name="ref" type="JourneyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+  <!-- ===VEHICLE JOURNEY====================================================== -->
+  <xsd:simpleType name="VehicleJourneyIdType">
+    <xsd:restriction base="JourneyIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleJourneyRef" type="VehicleJourneyRefStructure" substitutionGroup="JourneyRef"/>
+  <xsd:complexType name="VehicleJourneyRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="JourneyRefStructure">
+        <xsd:attribute name="ref" type="VehicleJourneyIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="vehicleJourneyRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="VehicleJourneyRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ===DEAD RUN====================================================== -->
+  <xsd:simpleType name="DeadRunIdType">
+    <xsd:restriction base="VehicleJourneyIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="DeadRunRef" type="DeadRunRefStructure" substitutionGroup="VehicleJourneyRef"/>
+  <xsd:complexType name="DeadRunRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VehicleJourneyRefStructure">
+        <xsd:attribute name="ref" type="DeadRunIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="DeadRunTypeEnumeration">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="garageRunOut"/>
+      <xsd:enumeration value="garageRunIn"/>
+      <xsd:enumeration value="turningManoeuvre"/>
+      <xsd:enumeration value="other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- === TRAIN NUMBER ====================================================== -->
+  <xsd:simpleType name="TrainNumberIdType">
+    <xsd:restriction base="ObjectIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainNumberRef" type="TrainNumberRefStructure" substitutionGroup="VersionOfObjectRef"/>
+  <xsd:complexType name="TrainNumberRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="VersionOfObjectRefStructure">
+        <xsd:attribute name="ref" type="TrainNumberIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="trainNumberRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TrainNumberRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ==== TRAIN COMPONENT LABEL ASSIGNMENT ================================= -->
+  <xsd:simpleType name="TrainComponentLabelAssignmentIdType">
+    <xsd:restriction base="AssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TrainComponentLabelAssignmentRef" type="TrainComponentLabelAssignmentRefStructure" substitutionGroup="AssignmentRef"/>
+  <xsd:complexType name="TrainComponentLabelAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="AssignmentRefStructure">
+        <xsd:attribute name="ref" type="TrainComponentLabelAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="TrainComponentLabelAssignmentRefs_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="oneToManyRelationshipStructure">
+        <xsd:sequence>
+          <xsd:element ref="TrainComponentLabelAssignmentRef" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====VEHICLE TYPE STOP ASSIGNMENT================================== -->
+  <xsd:simpleType name="VehicleTypeStopAssignmentIdType">
+    <xsd:restriction base="StopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleTypeStopAssignmentRef" type="VehicleTypeStopAssignmentRefStructure" substitutionGroup="StopAssignmentRef"/>
+  <xsd:complexType name="VehicleTypeStopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="StopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="VehicleTypeStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ========== TIMING ALGORITHM  ============================== -->
+  <xsd:simpleType name="TimingAlgorithmTypeIdType">
+    <xsd:restriction base="TypeOfValueIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="TimingAlgorithmTypeRef" type="TimingAlgorithmTypeRefStructure" abstract="false" substitutionGroup="TypeOfValueRef"/>
+  <xsd:complexType name="TimingAlgorithmTypeRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="TypeOfValueRefStructure">
+        <xsd:attribute name="ref" type="TimingAlgorithmTypeIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- =====VEHICLE JOURNEY STOP ASSIGNMENT=================================== -->
+  <xsd:simpleType name="VehicleJourneyStopAssignmentIdType">
+    <xsd:restriction base="PassengerStopAssignmentIdType"/>
+  </xsd:simpleType>
+  <xsd:element name="VehicleJourneyStopAssignmentRef" type="VehicleJourneyStopAssignmentRefStructure" substitutionGroup="PassengerStopAssignmentRef"/>
+  <xsd:complexType name="VehicleJourneyStopAssignmentRefStructure">
+    <xsd:simpleContent>
+      <xsd:restriction base="PassengerStopAssignmentRefStructure">
+        <xsd:attribute name="ref" type="VehicleJourneyStopAssignmentIdType" use="required"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- ======================================================================= -->
+</xsd:schema>

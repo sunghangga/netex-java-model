@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.netex.org.uk/netex" xmlns:netex="http://www.netex.org.uk/netex" xmlns:siri="http://www.siri.org.uk/siri" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" targetNamespace="http://www.netex.org.uk/netex" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1" id="netex_fareStructureElement_version">
+  <xsd:include schemaLocation="netex_fareStructureElement_support.xsd"/>
+  <xsd:include schemaLocation="netex_validableElement_version.xsd"/>
+  <!-- ======================================================================= -->
+  <xsd:include schemaLocation="netex_timeStructureFactor_version.xsd"/>
+  <xsd:include schemaLocation="netex_distanceMatrixElement_version.xsd"/>
+  <!-- ======================================================================= -->
+  <!-- ===ENTIITY IN VERSION IN FRAME==== ================================================== -->
+  <xsd:group name="FareFactorsInFrameGroup">
+    <xsd:sequence>
+      <xsd:group ref="GeographicFactorsInFrameGroup"/>
+      <xsd:group ref="TimeFactorsInFrameGroup"/>
+      <xsd:group ref="QualityFactorsInFrameGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareStructureElementsInFrameGroup">
+    <xsd:sequence>
+      <xsd:element name="fareStructureElements" type="fareStructureElementsInFrame_RelStructure" minOccurs="0"/>
+      <xsd:element name="tariffs" type="tariffsInFrame_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="fareStructureElementsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="FareStructureElement" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="tariffsInFrame_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="frameContainmentStructure">
+        <xsd:sequence>
+          <xsd:element ref="Tariff" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====FARE STRUCTURE=================================================== -->
+  <xsd:element name="Tariff" abstract="false" substitutionGroup="DataManagedObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="Tariff_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TariffGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TariffIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="Tariff_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="DataManagedObjectStructure">
+        <xsd:sequence>
+          <xsd:group ref="TariffGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TariffGroup">
+    <xsd:sequence>
+      <xsd:group ref="TariffDescriptionGroup"/>
+      <xsd:element ref="PrivateCode" minOccurs="0"/>
+      <xsd:group ref="TariffOrganisationGroup" minOccurs="0"/>
+      <xsd:group ref="TariffApplicabilityGroup" minOccurs="0"/>
+      <xsd:group ref="TariffCalculationGroup"/>
+      <xsd:group ref="TariffGeographicalGroup"/>
+      <xsd:group ref="TariffTimeGroup"/>
+      <xsd:group ref="TariffQualityGroup"/>
+      <xsd:group ref="TariffStructureGroup"/>
+      <xsd:group ref="TariffPriceGroup"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffDescriptionGroup">
+    <xsd:sequence>
+      <xsd:element name="Name" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="alternativeNames" type="alternativeNames_RelStructure" minOccurs="0"/>
+      <xsd:element name="Description" type="MultilingualString" minOccurs="0"/>
+      <xsd:element name="noticeAssignments" type="noticeAssignments_RelStructure" minOccurs="0"/>
+      <xsd:element name="documentLinks" type="infoLinks_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffCalculationGroup">
+    <xsd:sequence>
+      <xsd:element ref="TypeOfTariffRef" minOccurs="0"/>
+      <xsd:element name="TariffBasis" type="TariffBasisEnumeration" default="route" minOccurs="0"/>
+      <xsd:element name="ReturnFareTwiceSingle" type="xsd:boolean" default="true" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffOrganisationGroup">
+    <xsd:choice>
+      <xsd:element ref="OrganisationRef"/>
+      <xsd:element ref="GroupOfOperatorsRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="TariffApplicabilityGroup">
+    <xsd:choice>
+      <xsd:element ref="LineRef"/>
+      <xsd:element ref="GroupOfLinesRef"/>
+    </xsd:choice>
+  </xsd:group>
+  <xsd:group name="TariffGeographicalGroup">
+    <xsd:sequence>
+      <xsd:element ref="GeographicalUnitRef" minOccurs="0"/>
+      <xsd:element name="geographicalIntervals" type="geographicalIntervals_RelStructure" minOccurs="0"/>
+      <xsd:element name="geographicalStructureFactors" type="geographicalStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffTimeGroup">
+    <xsd:sequence>
+      <xsd:element ref="TimeUnitRef" minOccurs="0"/>
+      <xsd:element name="timeIntervals" type="timeIntervals_RelStructure" minOccurs="0"/>
+      <xsd:element name="timeStructureFactors" type="timeStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffQualityGroup">
+    <xsd:sequence>
+      <xsd:element name="qualityStructureFactors" type="qualityStructureFactors_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffStructureGroup">
+    <xsd:sequence>
+      <xsd:element name="fareStructureElements" type="fareStructureElements_RelStructure" minOccurs="0"/>
+      <xsd:element name="distanceMatrixElements" type="distanceMatrixElements_RelStructure" minOccurs="0"/>
+      <xsd:element name="groupsOfDistanceMatrixElements" type="groupsOfDistanceMatrixElements_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="TariffPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="PriceUnitRef" minOccurs="0"/>
+      <xsd:element name="priceGroups" type="priceGroups_RelStructure" minOccurs="0"/>
+      <xsd:element name="fareTables" type="fareTables_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ==TYPE OF TARIFF======================================================= -->
+  <xsd:element name="TypeOfTariff" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfTariff_ValueStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfTariffIdType"/>
+          <xsd:attribute name="nameOfClassifiedEntityClass" type="NameOfClass" use="optional" fixed="Tariff"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfTariff_ValueStructure" abstract="false">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- ====FARE STRUCTURE ELEMENT.============================================= -->
+  <xsd:complexType name="fareStructureElements_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="containmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareStructureElementRef"/>
+          <xsd:element ref="FareStructureElement"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareStructureElement" abstract="false" substitutionGroup="PriceableObject">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareStructureElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="PriceableObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareStructureElementGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareStructureElementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareStructureElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="PriceableObject_VersionStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareStructureElementGroup"/>
+        </xsd:sequence>
+        <xsd:attribute name="nameOfClassOfUnit" type="NameOfClass"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareStructureElementGroup">
+    <xsd:sequence>
+      <xsd:element name="TariffBasis" type="TariffBasisEnumeration" minOccurs="0"/>
+      <xsd:element ref="TypeOfFareStructureElementRef" minOccurs="0"/>
+      <xsd:group ref="FareStructureElementFactorGroup"/>
+      <xsd:group ref="FareStructureComponentGroup"/>
+      <xsd:element name="prices" type="fareStructureElementPrices_RelStructure" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareStructureElementFactorGroup">
+    <xsd:sequence>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="GeographicalIntervalRef"/>
+        <xsd:element name="geographicalIntervals" type="geographicalIntervals_RelStructure"/>
+        <xsd:element name="geographicalStructureFactors" type="geographicalStructureFactors_RelStructure" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="TimeIntervalRef" minOccurs="0"/>
+        <xsd:element name="timeIntervals" type="timeIntervals_RelStructure" minOccurs="0"/>
+        <xsd:element name="timeStructureFactors" type="timeStructureFactors_RelStructure" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="QualityStructureFactorRef" minOccurs="0"/>
+        <xsd:element name="qualityStructureFactors" type="qualityStructureFactors_RelStructure" minOccurs="0"/>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:element ref="DistanceMatrixElementRef"/>
+        <xsd:element name="distanceMatrixElements" type="distanceMatrixElements_RelStructure"/>
+        <xsd:element ref="GroupOfDistanceMatrixElementsRef"/>
+        <xsd:element ref="GroupOfDistanceMatrixElements" minOccurs="0"/>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="FareStructureComponentGroup">
+    <xsd:sequence>
+      <xsd:element name="fareStructureElementsInSequence" type="fareStructureElementsInSequence_RelStructure" minOccurs="0"/>
+      <xsd:group ref="OptimisedOneManyAssignmentGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====FARE STRUCTURE ELEMENT IN SEQUENCE.============================= -->
+  <xsd:complexType name="fareStructureElementsInSequence_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareStructureElementInSequence"/>
+          <xsd:element ref="ControllableElementInSequence"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareStructureElementInSequence" abstract="false" substitutionGroup="VersionedChild">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareStructureElementInSequence_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareElementInSequenceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareStructureElementInSequenceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareStructureElementInSequenceIdType" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareStructureElementInSequence_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FareElementInSequence_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareStructureElementInSequenceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareStructureElementInSequenceGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareStructureElementRef" minOccurs="0"/>
+      <xsd:element ref="ValidableElementRef" minOccurs="0"/>
+      <xsd:group ref="OptimisedOneManyAssignmentGroup" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- == FARE STRUCTURE ELEMENT PRICE.================================ -->
+  <xsd:complexType name="fareStructureElementPrices_RelStructure">
+    <xsd:complexContent>
+      <xsd:extension base="strictContainmentAggregationStructure">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element ref="FareStructureElementPriceRef"/>
+          <xsd:element name="FareStructureElementPrice" type="FareStructureElementPrice_VersionedChildStructure"/>
+          <xsd:element ref="CellRef_"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FareStructureElementPrice" substitutionGroup="FarePrice_">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="FareStructureElementPrice_VersionedChildStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="VersionedChildGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FarePriceGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="FareStructureElementPriceGroup"/>
+            </xsd:sequence>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="FareStructureElementPriceIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="FareStructureElementPrice_VersionedChildStructure">
+    <xsd:complexContent>
+      <xsd:extension base="FarePrice_VersionedChildStructure">
+        <xsd:sequence>
+          <xsd:group ref="FareStructureElementPriceGroup"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="FareStructureElementPriceGroup">
+    <xsd:sequence>
+      <xsd:element ref="FareStructureElementRef" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:group>
+  <!-- ====TYPE OF FARE STRUCTURE ELEMENT======================================= -->
+  <xsd:element name="TypeOfFareStructureElement" abstract="false" substitutionGroup="TypeOfEntity">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="TypeOfFareStructureElement_VersionStructure">
+          <xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="EntityInVersionGroup" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="DataManagedObjectGroup"/>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:group ref="TypeOfValueGroup"/>
+            </xsd:sequence>
+            <xsd:sequence/>
+          </xsd:sequence>
+          <xsd:attribute name="id" type="TypeOfFareStructureElementIdType"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:complexType name="TypeOfFareStructureElement_VersionStructure">
+    <xsd:complexContent>
+      <xsd:extension base="TypeOfEntity_VersionStructure">
+        <xsd:group ref="TypeOfFareStructureElementGroup"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:group name="TypeOfFareStructureElementGroup">
+    <xsd:sequence/>
+  </xsd:group>
+  <!-- ======================================================================= -->
+</xsd:schema>
