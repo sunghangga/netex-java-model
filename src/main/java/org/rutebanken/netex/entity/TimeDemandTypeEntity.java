@@ -15,11 +15,15 @@ public class TimeDemandTypeEntity {
 	
     @Column(name = "version")
     private String version;
+    
+    @Column(name = "name")
+    private String name;
 
-	public TimeDemandTypeEntity(String id, String version) {
+	public TimeDemandTypeEntity(String id, String version, String name) {
 		super();
 		this.id = id;
 		this.version = version;
+		this.name = name;
 	}
 
 	public String getId() {
@@ -38,9 +42,17 @@ public class TimeDemandTypeEntity {
 		this.version = version;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "TimeDemandTypeEntity [id=" + id + ", version=" + version + "]";
+		return "TimeDemandTypeEntity [id=" + id + ", version=" + version + ", name=" + name + "]";
 	}
-    
+
 }

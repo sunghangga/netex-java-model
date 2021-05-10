@@ -4,9 +4,11 @@ import java.time.Duration;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.rutebanken.netex.model.JourneyLayover;
 import org.rutebanken.netex.model.JourneyRunTime;
 import org.rutebanken.netex.model.JourneyWaitTime;
 import org.rutebanken.netex.model.TimeDemandType;
+import org.rutebanken.netex.entity.JourneyLayoverEntity;
 import org.rutebanken.netex.entity.JourneyRunTimeEntity;
 import org.rutebanken.netex.entity.JourneyWaitTimeEntity;
 import org.rutebanken.netex.entity.TimeDemandTypeEntity;
@@ -20,11 +22,13 @@ class TimeDemandTypeParser {
 			TimeDemandType actualValue = (TimeDemandType) actual.get(i);
 			String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 			String version = (versions == null) ?  null : versions;
+			String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
 			TimeDemandTypeEntity timeDemandType = new TimeDemandTypeEntity(
 					id, 
-					version);
+					version,
+					name);
 			// Save object
-			session.save(timeDemandType);
+			session.saveOrUpdate(timeDemandType);
 			
 			// RunTime parser
 			if (actualValue.getRunTimes() != null) {
@@ -42,7 +46,7 @@ class TimeDemandTypeParser {
 												runTime,
 												timeDemandTypeRef);
 				    // Save object
-				    session.save(journeyRunTime);
+				    session.saveOrUpdate(journeyRunTime);
 				}
 			}
 			// WaitTime parser
@@ -61,7 +65,26 @@ class TimeDemandTypeParser {
 												waitTime,
 												timeDemandTypeRef);
 				    // Save object
-				    session.save(journeyWaitTime);
+				    session.saveOrUpdate(journeyWaitTime);
+				}
+			}
+			// Layovers parser
+			if (actualValue.getLayovers() != null) {
+				for (int j = 0; j < actualValue.getLayovers().getJourneyLayover().size(); j = j + 1) {
+					JourneyLayover layoverValue = (JourneyLayover) actualValue.getLayovers().getJourneyLayover().get(j);
+					String idLayover = (layoverValue.getId() == null) ?  null : layoverValue.getId();
+					String versionWaitTime = (versions == null) ?  null : versions;
+					String scheduledStopPointRef = (layoverValue.getPointRef() == null) ?  null : layoverValue.getPointRef().getValue().getRef();
+					Duration layover = (layoverValue.getLayover() == null) ?  null : layoverValue.getLayover();
+					String timeDemandTypeRef = id;
+					JourneyLayoverEntity journeyLayover = new JourneyLayoverEntity(
+												idLayover, 
+												versionWaitTime,  
+												scheduledStopPointRef, 
+												layover,
+												timeDemandTypeRef);
+				    // Save object
+				    session.saveOrUpdate(journeyLayover);
 				}
 			}
 		}

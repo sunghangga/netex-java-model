@@ -16,15 +16,20 @@ public class RouteEntity {
     @Column(name = "version")
     private String version;
     
+    @Column(name = "name")
+    private String name;
+    
     @Column(name = "direction_type")
     private String directionType;
     
     @Column(name = "line_ref")
     private String lineRef;
 
-	public RouteEntity(String id, String version, String directionType, String lineRef) {
+	public RouteEntity(String id, String version, String name, String directionType, String lineRef) {
+		super();
 		this.id = id;
 		this.version = version;
+		this.name = name;
 		this.directionType = directionType;
 		this.lineRef = lineRef;
 	}
@@ -45,6 +50,14 @@ public class RouteEntity {
 		this.version = version;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getDirectionType() {
 		return directionType;
 	}
@@ -63,8 +76,8 @@ public class RouteEntity {
 
 	@Override
 	public String toString() {
-		return "RoutesEntity [id=" + id + ", version=" + version + ", directionType=" + directionType + ", lineRef="
-				+ lineRef + "]";
+		return "RouteEntity [id=" + id + ", version=" + version + ", name=" + name + ", directionType=" + directionType
+				+ ", lineRef=" + lineRef + "]";
 	}
-    
+
 }

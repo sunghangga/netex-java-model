@@ -17,19 +17,32 @@ class ScheduledStopPointParser {
 			String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 			String version = (versions == null) ?  null : versions;
 			String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
-			
-			String projectToPointRef = null;
+			Double rdX = (actualValue.getLocation() == null) ?  null : actualValue.getLocation().getPos().getValue().get(0);
+			Double rdY = (actualValue.getLocation() == null) ?  null : actualValue.getLocation().getPos().getValue().get(1);
+			String routePointRef = null;
 			if (actualValue.getProjections() != null) {
 				PointProjection pointProjection = (PointProjection) actualValue.getProjections().getProjectionRefOrProjection().get(0).getValue();
-				projectToPointRef = pointProjection.getProjectToPointRef().getRef();
+				routePointRef = pointProjection.getProjectToPointRef().getRef();
 			}
+			String stopAreaRef = (actualValue.getStopAreas() == null) ?  null : actualValue.getStopAreas().getStopAreaRef().get(0).getRef();
+			String tariffZoneRef = (actualValue.getTariffZones() == null) ?  null : actualValue.getTariffZones().getTariffZoneRef().get(0).getRef();
+			String privateCode = (actualValue.getPrivateCode() == null) ? null : actualValue.getPrivateCode().getValue();
+			Boolean forAlighting = (actualValue.isForAlighting() == null) ? null : actualValue.isForAlighting();
+			Boolean forBoarding = (actualValue.isForBoarding() == null) ? null : actualValue.isForBoarding();
 			ScheduledStopPointEntity scheduledStopPoint = new ScheduledStopPointEntity(
 										id, 
 										version,  
 										name, 
-										projectToPointRef);
+										rdX,
+										rdY,
+										routePointRef,
+										stopAreaRef,
+										tariffZoneRef,
+										privateCode,
+										forAlighting,
+										forBoarding);
 		    // Save object
-		    session.save(scheduledStopPoint);
+		    session.saveOrUpdate(scheduledStopPoint);
 		}
 	}
 	

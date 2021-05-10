@@ -9,7 +9,7 @@
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.password">Maestronic123</property>
-        <property name="connection.url">jdbc:postgresql:netex_timetable_v2?useSSL=false</property>
+        <property name="connection.url">jdbc:postgresql:netex_timetable?useSSL=false</property>
         <property name="connection.username">postgres</property>
 
         <!-- Select our SQL dialect -->

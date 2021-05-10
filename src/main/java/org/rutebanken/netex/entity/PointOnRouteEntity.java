@@ -27,17 +27,18 @@ public class PointOnRouteEntity {
     @Column(name = "route_point_ref")
     private String routePointRef;
     
-    @Column(name = "onward_route_link_ref")
-    private String onwardRouteLinkRef;
+    @Column(name = "route_link_ref")
+    private String routeLinkRef;
 
 	public PointOnRouteEntity(String id, String version, BigInteger orders, String routeRef, String routePointRef,
-			String onwardRouteLinkRef) {
+			String routeLinkRef) {
+		super();
 		this.id = id;
 		this.version = version;
 		this.orders = orders;
 		this.routeRef = routeRef;
 		this.routePointRef = routePointRef;
-		this.onwardRouteLinkRef = onwardRouteLinkRef;
+		this.routeLinkRef = routeLinkRef;
 	}
 
 	public String getId() {
@@ -56,11 +57,11 @@ public class PointOnRouteEntity {
 		this.version = version;
 	}
 
-	public BigInteger getOrder() {
+	public BigInteger getOrders() {
 		return orders;
 	}
 
-	public void setOrder(BigInteger orders) {
+	public void setOrders(BigInteger orders) {
 		this.orders = orders;
 	}
 
@@ -80,18 +81,18 @@ public class PointOnRouteEntity {
 		this.routePointRef = routePointRef;
 	}
 
-	public String getOnwardRouteLinkRef() {
-		return onwardRouteLinkRef;
+	public String getRouteLinkRef() {
+		return routeLinkRef;
 	}
 
-	public void setOnwardRouteLinkRef(String onwardRouteLinkRef) {
-		this.onwardRouteLinkRef = onwardRouteLinkRef;
+	public void setRouteLinkRef(String routeLinkRef) {
+		this.routeLinkRef = routeLinkRef;
 	}
 
 	@Override
 	public String toString() {
 		return "PointOnRouteEntity [id=" + id + ", version=" + version + ", orders=" + orders + ", routeRef=" + routeRef
-				+ ", routePointRef=" + routePointRef + ", onwardRouteLinkRef=" + onwardRouteLinkRef + "]";
+				+ ", routePointRef=" + routePointRef + ", routeLinkRef=" + routeLinkRef + "]";
 	}
-    
+
 }

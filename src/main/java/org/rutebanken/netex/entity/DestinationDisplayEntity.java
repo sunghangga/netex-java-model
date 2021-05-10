@@ -22,11 +22,33 @@ public class DestinationDisplayEntity {
     @Column(name = "short_name")
     private String shortName;
 
-	public DestinationDisplayEntity(String id, String version, String name, String shortName) {
+    @Column(name = "side_text")
+    private String sideText;
+    
+    @Column(name = "front_text")
+    private String frontText;
+    
+    @Column(name = "private_code")
+    private String privateCode;
+    
+    @Column(name = "via")
+    private String via;
+    
+    @Column(name = "variant")
+    private String variant;
+
+	public DestinationDisplayEntity(String id, String version, String name, String shortName, String sideText,
+			String frontText, String privateCode, String via, String variant) {
+		super();
 		this.id = id;
 		this.version = version;
 		this.name = name;
 		this.shortName = shortName;
+		this.sideText = sideText;
+		this.frontText = frontText;
+		this.privateCode = privateCode;
+		this.via = via;
+		this.variant = variant;
 	}
 
 	public String getId() {
@@ -61,10 +83,51 @@ public class DestinationDisplayEntity {
 		this.shortName = shortName;
 	}
 
+	public String getSideText() {
+		return sideText;
+	}
+
+	public void setSideText(String sideText) {
+		this.sideText = sideText;
+	}
+
+	public String getFrontText() {
+		return frontText;
+	}
+
+	public void setFrontText(String frontText) {
+		this.frontText = frontText;
+	}
+
+	public String getPrivateCode() {
+		return privateCode;
+	}
+
+	public void setPrivateCode(String privateCode) {
+		this.privateCode = privateCode;
+	}
+
+	public String getVia() {
+		return via;
+	}
+
+	public void setVia(String via) {
+		this.via = via;
+	}
+
+	public String getVariant() {
+		return variant;
+	}
+
+	public void setVariant(String variant) {
+		this.variant = variant;
+	}
+
 	@Override
 	public String toString() {
 		return "DestinationDisplayEntity [id=" + id + ", version=" + version + ", name=" + name + ", shortName="
-				+ shortName + "]";
+				+ shortName + ", sideText=" + sideText + ", frontText=" + frontText + ", privateCode=" + privateCode
+				+ ", via=" + via + ", variant=" + variant + "]";
 	}
 	
 }

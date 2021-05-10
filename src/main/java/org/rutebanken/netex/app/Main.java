@@ -47,14 +47,14 @@ public class Main {
 		
 		@SuppressWarnings("unchecked")
 		JAXBElement<PublicationDeliveryStructure> jaxbElement = (JAXBElement<PublicationDeliveryStructure>) unmarshaller
-				.unmarshal(new FileInputStream(new File("D:/Maestronic/Netex Dataset/NeTEx_CXX_2021-04-18_baseline_2021005_new.xml")));
+				.unmarshal(new FileInputStream(new File("D:/Maestronic/Netex Dataset/NeTEx_CXX_2021-05-02_baseline_2021008_new.xml")));
 		
 		// Start session
 		SessionFactory factory = new Configuration()
 								.configure("hibernate.cfg.xml")
-								.setProperty(AvailableSettings.HBM2DDL_AUTO, "create-drop")
+								.setProperty(AvailableSettings.HBM2DDL_AUTO, "none")
 								.setProperty(AvailableSettings.HBM2DDL_HALT_ON_ERROR, "true")
-								.addAnnotatedClass(FrameDefaultEntity.class)
+//								.addAnnotatedClass(FrameDefaultEntity.class)
 								.addAnnotatedClass(VersionEntity.class)
 								.addAnnotatedClass(RoutePointEntity.class)
 								.addAnnotatedClass(RouteEntity.class)
@@ -66,7 +66,7 @@ public class Main {
 								.addAnnotatedClass(ScheduledStopPointEntity.class)
 								.addAnnotatedClass(TimingLinkEntity.class)
 								.addAnnotatedClass(ServiceJourneyPatternEntity.class)
-								.addAnnotatedClass(PointJourneyPatternEntity.class)
+								.addAnnotatedClass(StopPointJourneyPatternEntity.class)
 								.addAnnotatedClass(TimeDemandTypeEntity.class)
 								.addAnnotatedClass(JourneyRunTimeEntity.class)
 								.addAnnotatedClass(JourneyWaitTimeEntity.class)
@@ -78,6 +78,22 @@ public class Main {
 								.addAnnotatedClass(TypeOfProductCategoryEntity.class)
 								.addAnnotatedClass(OperatorEntity.class)
 								.addAnnotatedClass(AuthorityEntity.class)
+								.addAnnotatedClass(ResponsibilityRoleAssignmentEntity.class)
+								.addAnnotatedClass(BrandingEntity.class)
+								.addAnnotatedClass(OperationalContextEntity.class)
+								.addAnnotatedClass(VehicleEntity.class)
+								.addAnnotatedClass(VehicleTypeEntity.class)
+								.addAnnotatedClass(AdministrativeZoneEntity.class)
+								.addAnnotatedClass(ActivationPointEntity.class)
+								.addAnnotatedClass(RouteLinkEntity.class)
+								.addAnnotatedClass(PointOnLinkEntity.class)
+								.addAnnotatedClass(StopAreaEntity.class)
+								.addAnnotatedClass(PassengerStopAssignmentEntity.class)
+								.addAnnotatedClass(TimingPointEntity.class)
+								.addAnnotatedClass(TimingPointJourneyPatternEntity.class)
+								.addAnnotatedClass(JourneyLayoverEntity.class)
+								.addAnnotatedClass(DayTypeEntity.class)
+								.addAnnotatedClass(DayTypeAssignmentEntity.class)
 								.buildSessionFactory();
 					
 		// Initial session variable
@@ -99,9 +115,9 @@ public class Main {
 			// Initial version
 			String version = compositeFrameValue.getVersion();
 			
-			// Frame Defaults parser
-			FrameDefaultParser frameDefaults = new FrameDefaultParser();
-			frameDefaults.parser(compositeFrameValue.getFrameDefaults(), version, session);
+//			// Frame Defaults parser
+//			FrameDefaultParser frameDefaults = new FrameDefaultParser();
+//			frameDefaults.parser(compositeFrameValue.getFrameDefaults(), version, session);
 			
 			// Version parser
 			VersionParser versions = new VersionParser();
@@ -112,7 +128,6 @@ public class Main {
 				// Check resource frame object
 				if (compositeFrameValue.getFrames().getCommonFrame().get(i).getValue() instanceof ResourceFrame) {
 					ResourceFrame resourceFrameValue = (ResourceFrame) compositeFrameValue.getFrames().getCommonFrame().get(i).getValue();
-					System.out.println(resourceFrameValue.getDataSources().getDataSource());
 					// DataSource parser
 					if (resourceFrameValue.getDataSources() != null) {
 						DataSourceParser dataSource = new DataSourceParser();
@@ -123,7 +138,7 @@ public class Main {
 						ResponsibilitySetParser responsibilitySet = new ResponsibilitySetParser();
 						responsibilitySet.parser(resourceFrameValue.getResponsibilitySets().getResponsibilitySet(), version, session);
 					}
-					// TypeOfProductCategory parser
+					// Branding and TypeOfProductCategory parser
 					if (resourceFrameValue.getTypesOfValue() != null) {
 						TypeOfProductCategoryParser typeOfProductCategory = new TypeOfProductCategoryParser();
 						typeOfProductCategory.parser(resourceFrameValue.getTypesOfValue().getValueSetOrTypeOfValue(), version, session);
@@ -132,6 +147,35 @@ public class Main {
 					if (resourceFrameValue.getOrganisations() != null) {
 						OperatorParser operator = new OperatorParser();
 						operator.parser(resourceFrameValue.getOrganisations().getOrganisation_(), version, session);
+					}
+					// OperationalContexts parser
+					if (resourceFrameValue.getOperationalContexts() != null) {
+						OperationalContextParser operationalContext = new OperationalContextParser();
+						operationalContext.parser(resourceFrameValue.getOperationalContexts().getOperationalContext(), version, session);
+					}
+					// Vehicles parser
+					if (resourceFrameValue.getVehicles() != null) {
+						VehicleParser vehicle = new VehicleParser();
+						vehicle.parser(resourceFrameValue.getVehicles().getTrainElementOrVehicle(), version, session);
+					}
+					// VehicleTypes parser
+					if (resourceFrameValue.getVehicleTypes() != null) {
+						VehicleTypeParser vehicleType = new VehicleTypeParser();
+						vehicleType.parser(resourceFrameValue.getVehicleTypes().getCompoundTrainOrTrainOrVehicleType(), version, session);
+					}
+					// Administrative zone parser
+					if (resourceFrameValue.getZones() != null) {
+						AdministrativeZoneParser administrativeZone = new AdministrativeZoneParser();
+						administrativeZone.parser(resourceFrameValue.getZones().getZone(), version, session);
+					}
+				}
+				// Check infrastructure frame object
+				else if (compositeFrameValue.getFrames().getCommonFrame().get(i).getValue() instanceof InfrastructureFrame) {
+					InfrastructureFrame infrastructureFrameValue = (InfrastructureFrame) compositeFrameValue.getFrames().getCommonFrame().get(i).getValue();
+					// ActivationPoints parser
+					if (infrastructureFrameValue.getActivationPoints() != null) {
+						ActivationPointParser infrastructure = new ActivationPointParser();
+						infrastructure.parser(infrastructureFrameValue.getActivationPoints().getActivationPoint_(), version, session);
 					}
 				}
 				// Check service frame object
@@ -142,11 +186,10 @@ public class Main {
 						RoutePointParser routePoints = new RoutePointParser();
 						routePoints.parser(serviceFrameValue.getRoutePoints().getRoutePoint(), version, session);
 					}
-					// RouteLink parser (BELUM)
+					// RouteLink parser
 					if (serviceFrameValue.getRouteLinks() != null) {
-						// System.out.println(serviceFrameValue.routeLinks.routeLink.get(0));
-						// RouteLinkParser routelinks = new RouteLinkParser();
-						// routelinks.parser(serviceFrameValue.routeLinks.routeLink, version, session);
+						 RouteLinkParser routelinks = new RouteLinkParser();
+						 routelinks.parser(serviceFrameValue.getRouteLinks().getRouteLink(), version, session);
 					}
 					// Route parser
 					if (serviceFrameValue.getRoutes() != null) {
@@ -167,6 +210,21 @@ public class Main {
 					if (serviceFrameValue.getScheduledStopPoints() != null) {
 						ScheduledStopPointParser scheduledStopPoint = new ScheduledStopPointParser();
 						scheduledStopPoint.parser(serviceFrameValue.getScheduledStopPoints().getScheduledStopPoint(), version, session);
+					}
+					// StopArea parser
+					if (serviceFrameValue.getStopAreas() != null) {
+						StopAreaParser stopArea = new StopAreaParser();
+						stopArea.parser(serviceFrameValue.getStopAreas().getStopArea(), version, session);
+					}
+					// PassengerStopAssignment parser
+					if (serviceFrameValue.getStopAssignments() != null) {
+						PassengerStopAssignmentParser stopAssignment = new PassengerStopAssignmentParser();
+						stopAssignment.parser(serviceFrameValue.getStopAssignments().getStopAssignment(), version, session);
+					}
+					// TimingPoint parser
+					if (serviceFrameValue.getTimingPoints() != null) {
+						TimingPointParser timingPoint = new TimingPointParser();
+						timingPoint.parser(serviceFrameValue.getTimingPoints().getTimingPoint(), version, session);
 					}
 					// TimingLink parser
 					if (serviceFrameValue.getTimingLinks() != null) {
@@ -207,6 +265,20 @@ public class Main {
 					if (timetableFrameValue.getVehicleJourneys() != null) {
 						ServiceJourneyParser serviceJourney = new ServiceJourneyParser();
 						serviceJourney.parser(timetableFrameValue, version, session);
+					}
+				}
+				// Check ServiceCalendarFrame object
+				else if (compositeFrameValue.getFrames().getCommonFrame().get(i).getValue() instanceof ServiceCalendarFrame) {
+					ServiceCalendarFrame serviceCalendarFrameValue = (ServiceCalendarFrame) compositeFrameValue.getFrames().getCommonFrame().get(i).getValue();
+					// DayType parser
+					if (serviceCalendarFrameValue.getDayTypes() != null) {
+						DayTypeParser dayType = new DayTypeParser();
+						dayType.parser(serviceCalendarFrameValue.getDayTypes().getDayType_(), version, session);
+					}
+					// DayTypeAssignment parser
+					if (serviceCalendarFrameValue.getDayTypeAssignments() != null) {
+						DayTypeAssignmentParser dayTypeAssignment = new DayTypeAssignmentParser();
+						dayTypeAssignment.parser(serviceCalendarFrameValue.getDayTypeAssignments().getDayTypeAssignment(), version, session);
 					}
 				}
 				// Check VehicleScheduleFrame object

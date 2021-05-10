@@ -32,7 +32,7 @@ class VersionParser {
 										description,
 										derivedFromVersionRef);
 		    // Save object
-		    session.save(versions);
+		    session.saveOrUpdate(versions);
 		}
 	}
 	

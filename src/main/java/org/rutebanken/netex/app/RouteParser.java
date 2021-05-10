@@ -21,15 +21,17 @@ class RouteParser {
 			Route actualValue = (Route) actual.get(i).getValue();
 			String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 			String version = (versions == null) ?  null : versions;
+			String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
 			String directionType = (actualValue.getDirectionType() == null) ?  null : actualValue.getDirectionType().toString();
 			String lineRef = (actualValue.getLineRef() == null) ?  null : actualValue.getLineRef().getValue().getRef();
 		    RouteEntity routes = new RouteEntity(
 										id, 
 										version,  
+										name,
 										directionType, 
 										lineRef);
 		    // Save object
-		    session.save(routes);
+		    session.saveOrUpdate(routes);
 		    
 		    if (actualValue.getPointsInSequence() != null && actualValue.getPointsInSequence().getPointOnRoute() != null) {
 		    	for (int j = 0; j < actualValue.getPointsInSequence().getPointOnRoute().size(); j = j + 1) {
@@ -38,16 +40,16 @@ class RouteParser {
 					BigInteger orders = (actualValue.getPointsInSequence().getPointOnRoute().get(j).getOrder() == null) ?  null : actualValue.getPointsInSequence().getPointOnRoute().get(j).getOrder();
 					String routeRef = (actualValue.getId() == null) ?  null : actualValue.getId();
 					String routePointRef = (actualValue.getPointsInSequence().getPointOnRoute().get(j).getPointRef() == null) ?  null : actualValue.getPointsInSequence().getPointOnRoute().get(j).getPointRef().getValue().getRef();
-					String onwardRouteLinkRef = (actualValue.getPointsInSequence().getPointOnRoute().get(j).getOnwardRouteLinkRef() == null) ?  null : actualValue.getPointsInSequence().getPointOnRoute().get(j).getOnwardRouteLinkRef().getRef();
+					String routeLinkRef = (actualValue.getPointsInSequence().getPointOnRoute().get(j).getOnwardRouteLinkRef() == null) ?  null : actualValue.getPointsInSequence().getPointOnRoute().get(j).getOnwardRouteLinkRef().getRef();
 					PointOnRouteEntity pointOnRoute = new PointOnRouteEntity(
 							idPointOnRoute, 
 							versionPointOnRoute,  
 							orders, 
 							routeRef, 
 							routePointRef,
-							onwardRouteLinkRef);
+							routeLinkRef);
 					// Save object
-				    session.save(pointOnRoute);
+				    session.saveOrUpdate(pointOnRoute);
 				}
 		    }
 		}

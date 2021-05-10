@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="point_journey_pattern")
-public class PointJourneyPatternEntity {
+@Table(name="stop_point_journey_pattern")
+public class StopPointJourneyPatternEntity {
 	
 	@Id
 	@Column(name = "id")
@@ -42,7 +42,7 @@ public class PointJourneyPatternEntity {
     @Column(name = "destination_display_ref")
     private String destinationDisplayRefPointJourneyPattern;
 
-	public PointJourneyPatternEntity(String id, String version, Boolean forAlighting, Boolean forBoarding,
+	public StopPointJourneyPatternEntity(String id, String version, Boolean forAlighting, Boolean forBoarding,
 			Boolean isWaitPoint, String onwardTimingLinkRef, String scheduledStopPointRef, BigInteger orders,
 			String serviceJourneyPatternRef, String destinationDisplayRefPointJourneyPattern) {
 		super();

@@ -25,7 +25,7 @@ public class ServiceJourneyEntity {
     @Column(name = "departure_time")
     private LocalTime departureTime;
     
-    @Column(name = "journey_pattern_ref")
+    @Column(name = "service_journey_pattern_ref")
     private String journeyPatternRef;
     
     @Column(name = "time_demand_type_ref")
@@ -39,9 +39,36 @@ public class ServiceJourneyEntity {
     
     @Column(name = "operator_ref")
     private String operatorRef;
+    
+    @Column(name = "private_code")
+    private String privateCode;
+    
+    @Column(name = "monitored")
+    private Boolean monitored;
+    
+    @Column(name = "day_type")
+    private String dayType;
+    
+    @Column(name = "vehicle_type")
+    private String vehicleType;
+    
+    @Column(name = "print")
+    private Boolean print;
+    
+    @Column(name = "dynamic")
+    private String dynamic;
+
+    @Column(name = "data_source_ref")
+    private String dataSourceRef;
+    
+    @Column(name = "block_ref")
+    private String blockRef;
 
 	public ServiceJourneyEntity(String id, String version, BigInteger departureDayOffset, LocalTime departureTime,
-			String journeyPatternRef, String timeDemandTypeRef, String typeOfProductCategoryRef, String availabilityConditionRef, String operatorRef) {
+			String journeyPatternRef, String timeDemandTypeRef, String typeOfProductCategoryRef,
+			String availabilityConditionRef, String operatorRef, String privateCode, Boolean monitored, String dayType,
+			String vehicleType, Boolean print, String dynamic, String dataSourceRef, String blockRef) {
+		super();
 		this.id = id;
 		this.version = version;
 		this.departureDayOffset = departureDayOffset;
@@ -51,6 +78,14 @@ public class ServiceJourneyEntity {
 		this.typeOfProductCategoryRef = typeOfProductCategoryRef;
 		this.availabilityConditionRef = availabilityConditionRef;
 		this.operatorRef = operatorRef;
+		this.privateCode = privateCode;
+		this.monitored = monitored;
+		this.dayType = dayType;
+		this.vehicleType = vehicleType;
+		this.print = print;
+		this.dynamic = dynamic;
+		this.dataSourceRef = dataSourceRef;
+		this.blockRef = blockRef;
 	}
 
 	public String getId() {
@@ -125,12 +160,79 @@ public class ServiceJourneyEntity {
 		this.operatorRef = operatorRef;
 	}
 
+	public String getPrivateCode() {
+		return privateCode;
+	}
+
+	public void setPrivateCode(String privateCode) {
+		this.privateCode = privateCode;
+	}
+
+	public Boolean getMonitored() {
+		return monitored;
+	}
+
+	public void setMonitored(Boolean monitored) {
+		this.monitored = monitored;
+	}
+
+	public String getDayType() {
+		return dayType;
+	}
+
+	public void setDayType(String dayType) {
+		this.dayType = dayType;
+	}
+
+	public String getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public Boolean getPrint() {
+		return print;
+	}
+
+	public void setPrint(Boolean print) {
+		this.print = print;
+	}
+
+	public String getDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(String dynamic) {
+		this.dynamic = dynamic;
+	}
+
+	public String getDataSourceRef() {
+		return dataSourceRef;
+	}
+
+	public void setDataSourceRef(String dataSourceRef) {
+		this.dataSourceRef = dataSourceRef;
+	}
+
+	public String getBlockRef() {
+		return blockRef;
+	}
+
+	public void setBlockRef(String blockRef) {
+		this.blockRef = blockRef;
+	}
+
 	@Override
 	public String toString() {
-		return "VehicleJourneyEntity [id=" + id + ", version=" + version + ", departureDayOffset=" + departureDayOffset
+		return "ServiceJourneyEntity [id=" + id + ", version=" + version + ", departureDayOffset=" + departureDayOffset
 				+ ", departureTime=" + departureTime + ", journeyPatternRef=" + journeyPatternRef
 				+ ", timeDemandTypeRef=" + timeDemandTypeRef + ", typeOfProductCategoryRef=" + typeOfProductCategoryRef
-				+ ", availabilityConditionRef=" + availabilityConditionRef + ", operatorRef=" + operatorRef + "]";
+				+ ", availabilityConditionRef=" + availabilityConditionRef + ", operatorRef=" + operatorRef
+				+ ", privateCode=" + privateCode + ", monitored=" + monitored + ", dayType=" + dayType
+				+ ", vehicleType=" + vehicleType + ", print=" + print + ", dynamic=" + dynamic + ", dataSourceRef="
+				+ dataSourceRef + ", blockRef=" + blockRef + "]";
 	}
-    
+	
 }

@@ -26,7 +26,15 @@ class ServiceJourneyParser {
 			AvailabilityConditionRefStructure vailabilityCondition = (AvailabilityConditionRefStructure) actualValue.getValidityConditions().getAvailabilityConditionRefOrAvailabilityConditionOrValidDuring().get(0);
 			String availabilityConditionRef = (actualValue.getValidityConditions() == null) ? null : vailabilityCondition.getRef();
 			String operatorRef = (actualValue.getOperatorRef() != null) ? actualValue.getOperatorRef().getRef() : (actual.getOperatorView().getOperatorRef().getRef());
-		    ServiceJourneyEntity vehicleJourney = new ServiceJourneyEntity(
+			String privateCode = (actualValue.getPrivateCode() == null) ? null : actualValue.getPrivateCode().getValue();
+			Boolean monitored = (actualValue.isMonitored() == null) ? null : actualValue.isMonitored();
+			String dayType = (actualValue.getDayTypes() == null) ? null : actualValue.getDayTypes().getDayTypeRef().toString();
+			String vehicleType = (actualValue.getVehicleTypeRef() == null) ? null : actualValue.getVehicleTypeRef().getValue().getRef();
+			Boolean print = (actualValue.isPrint() == null) ? null : actualValue.isPrint();
+			String dynamic = (actualValue.getDynamic() == null) ? null : actualValue.getDynamic().toString();
+			String dataSourceRef = (actualValue.getDataSourceRef() == null) ? null : actualValue.getDataSourceRef();
+			String blockRef = (actualValue.getBlockRef() == null) ? null : actualValue.getBlockRef().getValue().getRef();
+			ServiceJourneyEntity vehicleJourney = new ServiceJourneyEntity(
 										id, 
 										version,  
 										departureDayOffset, 
@@ -35,9 +43,17 @@ class ServiceJourneyParser {
 										timeDemandTypeRef,
 										typeOfProductCategoryRef,
 										availabilityConditionRef,
-										operatorRef);
+										operatorRef,
+										privateCode,
+										monitored,
+										dayType,
+										vehicleType,
+										print,
+										dynamic,
+										dataSourceRef,
+										blockRef);
 		    // Save object
-		    session.save(vehicleJourney);
+		    session.saveOrUpdate(vehicleJourney);
 		}
 	}
 	

@@ -20,15 +20,17 @@ class TimingLinkParser {
 			String fromPointRef = (actualValue.getFromPointRef() == null) ?  null : actualValue.getFromPointRef().getRef();
 			String toPointRef = (actualValue.getToPointRef() == null) ?  null : actualValue.getToPointRef().getRef();
 			BigDecimal distance = (actualValue.getDistance() == null) ?  null : actualValue.getDistance();
+			String operationalContextRef = (actualValue.getOperationalContextRef() == null) ?  null : actualValue.getOperationalContextRef().getRef();
 			TimingLinkEntity timingLink = new TimingLinkEntity(
 										id, 
 										version,  
 										responsibilitySetRef, 
 										fromPointRef,
 										toPointRef,
-										distance);
+										distance,
+										operationalContextRef);
 		    // Save object
-		    session.save(timingLink);
+		    session.saveOrUpdate(timingLink);
 		}
 	}
 	

@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name="timing_link")
-public class TimingLinkEntity {
+@Table(name="route_link")
+public class RouteLinkEntity {
 	
 	@Id
 	@Column(name = "id")
@@ -18,8 +20,12 @@ public class TimingLinkEntity {
     @Column(name = "version")
     private String version;
     
-    @Column(name = "responsibility_set_ref")
-    private String responsibilitySetRef;
+    @Column(name = "distance")
+    private BigDecimal distance;
+    
+    @Column(name = "line_string")
+    @Type(type="text")
+    private String lineString;
     
     @Column(name = "from_point_ref")
     private String fromPointRef;
@@ -27,21 +33,18 @@ public class TimingLinkEntity {
     @Column(name = "to_point_ref")
     private String toPointRef;
     
-    @Column(name = "distance")
-    private BigDecimal distance;
-    
     @Column(name = "operational_context_ref")
     private String operationalContextRef;
 
-	public TimingLinkEntity(String id, String version, String responsibilitySetRef, String fromPointRef,
-			String toPointRef, BigDecimal distance, String operationalContextRef) {
+	public RouteLinkEntity(String id, String version, BigDecimal distance, String lineString, String fromPointRef,
+			String toPointRef, String operationalContextRef) {
 		super();
 		this.id = id;
 		this.version = version;
-		this.responsibilitySetRef = responsibilitySetRef;
+		this.distance = distance;
+		this.lineString = lineString;
 		this.fromPointRef = fromPointRef;
 		this.toPointRef = toPointRef;
-		this.distance = distance;
 		this.operationalContextRef = operationalContextRef;
 	}
 
@@ -61,12 +64,20 @@ public class TimingLinkEntity {
 		this.version = version;
 	}
 
-	public String getResponsibilitySetRef() {
-		return responsibilitySetRef;
+	public BigDecimal getDistance() {
+		return distance;
 	}
 
-	public void setResponsibilitySetRef(String responsibilitySetRef) {
-		this.responsibilitySetRef = responsibilitySetRef;
+	public void setDistance(BigDecimal distance) {
+		this.distance = distance;
+	}
+
+	public String getLineString() {
+		return lineString;
+	}
+
+	public void setLineString(String lineString) {
+		this.lineString = lineString;
 	}
 
 	public String getFromPointRef() {
@@ -85,14 +96,6 @@ public class TimingLinkEntity {
 		this.toPointRef = toPointRef;
 	}
 
-	public BigDecimal getDistance() {
-		return distance;
-	}
-
-	public void setDistance(BigDecimal distance) {
-		this.distance = distance;
-	}
-
 	public String getOperationalContextRef() {
 		return operationalContextRef;
 	}
@@ -103,9 +106,9 @@ public class TimingLinkEntity {
 
 	@Override
 	public String toString() {
-		return "TimingLinkEntity [id=" + id + ", version=" + version + ", responsibilitySetRef=" + responsibilitySetRef
-				+ ", fromPointRef=" + fromPointRef + ", toPointRef=" + toPointRef + ", distance=" + distance
+		return "RouteLinkEntity [id=" + id + ", version=" + version + ", distance=" + distance + ", lineString="
+				+ lineString + ", fromPointRef=" + fromPointRef + ", toPointRef=" + toPointRef
 				+ ", operationalContextRef=" + operationalContextRef + "]";
 	}
-    
+	
 }

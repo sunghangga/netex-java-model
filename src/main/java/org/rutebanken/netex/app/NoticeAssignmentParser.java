@@ -29,7 +29,7 @@ class NoticeAssignmentParser {
 										noticeRef,
 										noticedObjectRef);
 		    // Save object
-		    session.save(noticeAssignment);
+		    session.saveOrUpdate(noticeAssignment);
 		}
 	}
 	

@@ -23,7 +23,7 @@ class RoutePointParser {
 										rdX, 
 										rdY);
 		    // Save object
-		    session.save(routePoints);
+		    session.saveOrUpdate(routePoints);
 		}
 	}
 	

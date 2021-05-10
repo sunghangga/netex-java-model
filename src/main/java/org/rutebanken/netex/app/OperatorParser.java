@@ -22,24 +22,34 @@ class OperatorParser {
 				String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 				String version = (versions == null) ?  null : versions;
 				String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
+				String shortName = (actualValue.getShortName() == null) ?  null : actualValue.getShortName().getValue();
+				String contactEmail = (actualValue.getContactDetails() == null) ?  null : actualValue.getContactDetails().getEmail();
+				String contactPhone = (actualValue.getContactDetails() == null) ?  null : actualValue.getContactDetails().getPhone();
+				String contactUrl = (actualValue.getContactDetails() == null) ?  null : actualValue.getContactDetails().getUrl();
 				OperatorEntity operator = new OperatorEntity(
 											id, 
 											version,  
-											name);
+											name,
+											shortName,
+											contactEmail,
+											contactPhone,
+											contactUrl);
 			    // Save object
-			    session.save(operator);
+			    session.saveOrUpdate(operator);
 			}
 			else if (actual.get(i).getValue() instanceof Authority) {
 				Authority actualValue = (Authority) actual.get(i).getValue();
 				String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 				String version = (versions == null) ?  null : versions;
 				String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
+				String shortName = (actualValue.getShortName() == null) ?  null : actualValue.getShortName().getValue();
 				AuthorityEntity authority = new AuthorityEntity(
 											id, 
 											version,  
-											name);
+											name,
+											shortName);
 			    // Save object
-			    session.save(authority);
+			    session.saveOrUpdate(authority);
 			}
 		}
 	}

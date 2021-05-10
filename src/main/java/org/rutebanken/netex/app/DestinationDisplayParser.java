@@ -17,13 +17,26 @@ class DestinationDisplayParser {
 			String version = (versions == null) ?  null : versions;
 			String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
 			String shortName = (actualValue.getShortName() == null) ?  null : actualValue.getShortName().getValue();
+			String sideText = (actualValue.getSideText() == null) ?  null : actualValue.getSideText().getValue();
+			String frontText = (actualValue.getFrontText() == null) ?  null : actualValue.getFrontText().getValue();
+			String privateCode = (actualValue.getPrivateCode() == null) ?  null : actualValue.getPrivateCode().getValue();
+			String via = (actualValue.getVias() == null) ?  null : actualValue.getVias().getVia().get(0).getName().getValue();
+			String variant = null;
+			if (actualValue.getVariants() != null && actualValue.getVariants().getDestinationDisplayVariant().get(0).getName() != null) {
+				variant = actualValue.getVariants().getDestinationDisplayVariant().get(0).getName().getValue();
+			}
 			DestinationDisplayEntity destinationDisplays = new DestinationDisplayEntity(
 										id, 
 										version,  
 										name, 
-										shortName);
+										shortName,
+										sideText,
+										frontText,
+										privateCode,
+										via,
+										variant);
 		    // Save object
-		    session.save(destinationDisplays);
+		    session.saveOrUpdate(destinationDisplays);
 		}
 	}
 	

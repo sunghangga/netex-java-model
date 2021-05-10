@@ -20,23 +20,39 @@ class LineParser {
 			Line actualValue = (Line) actual.get(i).getValue();
 			String id = (actualValue.getId() == null) ?  null : actualValue.getId();
 			String version = (versions == null) ?  null : versions;
-			LimitationStatusEnumeration accessibilityAssessment = (actualValue.getAccessibilityAssessment() == null) ?  null : actualValue.getAccessibilityAssessment().getMobilityImpairedAccess();
-			String authorityRef = (actualValue.getAuthorityRef() == null) ?  null : actualValue.getAuthorityRef().getRef();
-			Boolean monitored = (actualValue.isMonitored() == null) ?  null : actualValue.isMonitored();
+			String responsibilitySetRef = (actualValue.getResponsibilitySetRef() == null) ?  null : actualValue.getResponsibilitySetRef();
+			String brandingRef = (actualValue.getBrandingRef() == null) ?  null : actualValue.getBrandingRef().getRef();
 			String name = (actualValue.getName() == null) ?  null : actualValue.getName().getValue();
-			String publicCode = (actualValue.getPublicCode() == null) ?  null : actualValue.getPublicCode();
+			String description = (actualValue.getDescription() == null) ?  null : actualValue.getDescription().getValue();
 			String transportMode = (actualValue.getTransportMode() == null) ?  null : actualValue.getTransportMode().toString();
-		    LineEntity lines = new LineEntity(
+			String operationalContextRef = (actualValue.getOperationalContextRef() == null) ?  null : actualValue.getOperationalContextRef().getRef();
+			String publicCode = (actualValue.getPublicCode() == null) ?  null : actualValue.getPublicCode();
+			String privateCode = (actualValue.getPrivateCode() == null) ?  null : actualValue.getPrivateCode().getValue();
+			String externalLineRef = (actualValue.getExternalLineRef() == null) ?  null : actualValue.getExternalLineRef().getRef();
+			String authorityRef = (actualValue.getAuthorityRef() == null) ?  null : actualValue.getAuthorityRef().getRef();
+			String typeOfProductCategoryRef = (actualValue.getTypeOfProductCategoryRef() == null) ?  null : actualValue.getTypeOfProductCategoryRef().getRef();
+			String typeOfServiceRef = (actualValue.getTypeOfServiceRef() == null) ?  null : actualValue.getTypeOfServiceRef().getRef();
+			Boolean monitored = (actualValue.isMonitored() == null) ?  null : actualValue.isMonitored();
+			LimitationStatusEnumeration accessibilityAssessment = (actualValue.getAccessibilityAssessment() == null) ?  null : actualValue.getAccessibilityAssessment().getMobilityImpairedAccess();
+			LineEntity lines = new LineEntity(
 										id, 
 										version,  
-										accessibilityAssessment, 
-										authorityRef,
-										monitored,
+										responsibilitySetRef,
+										brandingRef,
 										name,
+										description,
+										transportMode,
+										operationalContextRef,
 										publicCode,
-										transportMode);
+										privateCode,
+										externalLineRef,
+										authorityRef,
+										typeOfProductCategoryRef,
+										typeOfServiceRef,
+										monitored,
+										accessibilityAssessment);
 		    // Save object
-		    session.save(lines);
+		    session.saveOrUpdate(lines);
 		}
 	}
 	

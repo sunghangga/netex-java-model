@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="authority")
-public class AuthorityEntity {
+@Table(name="day_type")
+public class DayTypeEntity {
 	
 	@Id
 	@Column(name = "id")
@@ -21,13 +21,17 @@ public class AuthorityEntity {
     
     @Column(name = "short_name")
     private String shortName;
+    
+    @Column(name = "property_of_day")
+    private String propertyOfDay;
 
-	public AuthorityEntity(String id, String version, String name, String shortName) {
+	public DayTypeEntity(String id, String version, String name, String shortName, String propertyOfDay) {
 		super();
 		this.id = id;
 		this.version = version;
 		this.name = name;
 		this.shortName = shortName;
+		this.propertyOfDay = propertyOfDay;
 	}
 
 	public String getId() {
@@ -62,10 +66,18 @@ public class AuthorityEntity {
 		this.shortName = shortName;
 	}
 
-	@Override
-	public String toString() {
-		return "AuthorityEntity [id=" + id + ", version=" + version + ", name=" + name + ", shortName=" + shortName
-				+ "]";
+	public String getPropertyOfDay() {
+		return propertyOfDay;
 	}
 
+	public void setPropertyOfDay(String propertyOfDay) {
+		this.propertyOfDay = propertyOfDay;
+	}
+
+	@Override
+	public String toString() {
+		return "DayTypeEntity [id=" + id + ", version=" + version + ", name=" + name + ", shortName=" + shortName
+				+ ", propertyOfDay=" + propertyOfDay + "]";
+	}
+    
 }

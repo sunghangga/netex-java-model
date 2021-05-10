@@ -18,34 +18,69 @@ public class LineEntity {
     @Column(name = "version")
     private String version;
     
-    @Column(name = "accessibility_assessment")
-    private LimitationStatusEnumeration accessibilityAssessment;
+    @Column(name = "responsibility_set_ref")
+    private String responsibilitySetRef;
     
-    @Column(name = "authority_ref")
-    private String authorityRef;
-    
-    @Column(name = "monitored")
-    private Boolean monitored;
+    @Column(name = "branding_ref")
+    private String brandingRef;
     
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "transport_mode")
+    private String transportMode;
+
+    @Column(name = "operational_context_ref")
+    private String operationalContextRef;
     
     @Column(name = "public_code")
     private String publicCode;
     
-    @Column(name = "transport_mode")
-    private String transportMode;
+    @Column(name = "private_code")
+    private String privateCode;
+	
+    @Column(name = "external_line_ref")
+    private String externalLineRef;
+    
+    @Column(name = "authority_ref")
+    private String authorityRef;
+    
+    @Column(name = "type_of_product_category_ref")
+    private String typeOfProductCategoryRef;
+    
+    @Column(name = "type_of_service_ref")
+    private String typeOfServiceRef;
 
-	public LineEntity(String id, String version, LimitationStatusEnumeration accessibilityAssessment,
-			String authorityRef, Boolean monitored, String name, String publicCode, String transportMode) {
+    @Column(name = "monitored")
+    private Boolean monitored;
+
+    @Column(name = "accessibility_assessment")
+    private LimitationStatusEnumeration accessibilityAssessment;
+
+	public LineEntity(String id, String version, String responsibilitySetRef, String brandingRef, String name,
+			String description, String transportMode, String operationalContextRef, String publicCode,
+			String privateCode, String externalLineRef, String authorityRef, String typeOfProductCategoryRef,
+			String typeOfServiceRef, Boolean monitored, LimitationStatusEnumeration accessibilityAssessment) {
+		super();
 		this.id = id;
 		this.version = version;
-		this.accessibilityAssessment = accessibilityAssessment;
-		this.authorityRef = authorityRef;
-		this.monitored = monitored;
+		this.responsibilitySetRef = responsibilitySetRef;
+		this.brandingRef = brandingRef;
 		this.name = name;
-		this.publicCode = publicCode;
+		this.description = description;
 		this.transportMode = transportMode;
+		this.operationalContextRef = operationalContextRef;
+		this.publicCode = publicCode;
+		this.privateCode = privateCode;
+		this.externalLineRef = externalLineRef;
+		this.authorityRef = authorityRef;
+		this.typeOfProductCategoryRef = typeOfProductCategoryRef;
+		this.typeOfServiceRef = typeOfServiceRef;
+		this.monitored = monitored;
+		this.accessibilityAssessment = accessibilityAssessment;
 	}
 
 	public String getId() {
@@ -64,28 +99,20 @@ public class LineEntity {
 		this.version = version;
 	}
 
-	public LimitationStatusEnumeration getAccessibilityAssessment() {
-		return accessibilityAssessment;
+	public String getResponsibilitySetRef() {
+		return responsibilitySetRef;
 	}
 
-	public void setAccessibilityAssessment(LimitationStatusEnumeration accessibilityAssessment) {
-		this.accessibilityAssessment = accessibilityAssessment;
+	public void setResponsibilitySetRef(String responsibilitySetRef) {
+		this.responsibilitySetRef = responsibilitySetRef;
 	}
 
-	public String getAuthorityRef() {
-		return authorityRef;
+	public String getBrandingRef() {
+		return brandingRef;
 	}
 
-	public void setAuthorityRef(String authorityRef) {
-		this.authorityRef = authorityRef;
-	}
-
-	public Boolean getMonitored() {
-		return monitored;
-	}
-
-	public void setMonitored(Boolean monitored) {
-		this.monitored = monitored;
+	public void setBrandingRef(String brandingRef) {
+		this.brandingRef = brandingRef;
 	}
 
 	public String getName() {
@@ -96,12 +123,12 @@ public class LineEntity {
 		this.name = name;
 	}
 
-	public String getPublicCode() {
-		return publicCode;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setPublicCode(String publicCode) {
-		this.publicCode = publicCode;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getTransportMode() {
@@ -112,11 +139,87 @@ public class LineEntity {
 		this.transportMode = transportMode;
 	}
 
+	public String getOperationalContextRef() {
+		return operationalContextRef;
+	}
+
+	public void setOperationalContextRef(String operationalContextRef) {
+		this.operationalContextRef = operationalContextRef;
+	}
+
+	public String getPublicCode() {
+		return publicCode;
+	}
+
+	public void setPublicCode(String publicCode) {
+		this.publicCode = publicCode;
+	}
+
+	public String getPrivateCode() {
+		return privateCode;
+	}
+
+	public void setPrivateCode(String privateCode) {
+		this.privateCode = privateCode;
+	}
+
+	public String getExternalLineRef() {
+		return externalLineRef;
+	}
+
+	public void setExternalLineRef(String externalLineRef) {
+		this.externalLineRef = externalLineRef;
+	}
+
+	public String getAuthorityRef() {
+		return authorityRef;
+	}
+
+	public void setAuthorityRef(String authorityRef) {
+		this.authorityRef = authorityRef;
+	}
+
+	public String getTypeOfProductCategoryRef() {
+		return typeOfProductCategoryRef;
+	}
+
+	public void setTypeOfProductCategoryRef(String typeOfProductCategoryRef) {
+		this.typeOfProductCategoryRef = typeOfProductCategoryRef;
+	}
+
+	public String getTypeOfServiceRef() {
+		return typeOfServiceRef;
+	}
+
+	public void setTypeOfServiceRef(String typeOfServiceRef) {
+		this.typeOfServiceRef = typeOfServiceRef;
+	}
+
+	public Boolean getMonitored() {
+		return monitored;
+	}
+
+	public void setMonitored(Boolean monitored) {
+		this.monitored = monitored;
+	}
+
+	public LimitationStatusEnumeration getAccessibilityAssessment() {
+		return accessibilityAssessment;
+	}
+
+	public void setAccessibilityAssessment(LimitationStatusEnumeration accessibilityAssessment) {
+		this.accessibilityAssessment = accessibilityAssessment;
+	}
+
 	@Override
 	public String toString() {
-		return "LineEntity [id=" + id + ", version=" + version + ", accessibilityAssessment=" + accessibilityAssessment
-				+ ", authorityRef=" + authorityRef + ", monitored=" + monitored + ", name=" + name + ", publicCode="
-				+ publicCode + ", transportMode=" + transportMode + "]";
+		return "LineEntity [id=" + id + ", version=" + version + ", responsibilitySetRef=" + responsibilitySetRef
+				+ ", brandingRef=" + brandingRef + ", name=" + name + ", description=" + description
+				+ ", transportMode=" + transportMode + ", operationalContextRef=" + operationalContextRef
+				+ ", publicCode=" + publicCode + ", privateCode=" + privateCode + ", externalLineRef=" + externalLineRef
+				+ ", authorityRef=" + authorityRef + ", typeOfProductCategoryRef=" + typeOfProductCategoryRef
+				+ ", typeOfServiceRef=" + typeOfServiceRef + ", monitored=" + monitored + ", accessibilityAssessment="
+				+ accessibilityAssessment + "]";
 	}
     
 }

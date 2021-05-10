@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="type_of_product_category")
-public class TypeOfProductCategoryEntity {
+@Table(name="branding")
+public class BrandingEntity {
 	
 	@Id
 	@Column(name = "id")
@@ -28,8 +28,7 @@ public class TypeOfProductCategoryEntity {
     @Column(name = "url")
     private String url;
 
-	public TypeOfProductCategoryEntity(String id, String version, String name, String description, String image,
-			String url) {
+	public BrandingEntity(String id, String version, String name, String description, String image, String url) {
 		super();
 		this.id = id;
 		this.version = version;
@@ -89,8 +88,8 @@ public class TypeOfProductCategoryEntity {
 
 	@Override
 	public String toString() {
-		return "TypeOfProductCategoryEntity [id=" + id + ", version=" + version + ", name=" + name + ", description="
-				+ description + ", image=" + image + ", url=" + url + "]";
+		return "BrandingEntity [id=" + id + ", version=" + version + ", name=" + name + ", description=" + description
+				+ ", image=" + image + ", url=" + url + "]";
 	}
-	
+    
 }

@@ -16,17 +16,26 @@ public class ServiceJourneyPatternEntity {
     @Column(name = "version")
     private String version;
     
+    @Column(name = "name")
+    private String name;
+    
     @Column(name = "route_ref")
     private String routeRef;
+    
+    @Column(name = "direction_type")
+    private String directionType;
     
     @Column(name = "destination_display_ref")
     private String destinationDisplayRef;
 
-	public ServiceJourneyPatternEntity(String id, String version, String routeRef, String destinationDisplayRef) {
+	public ServiceJourneyPatternEntity(String id, String version, String name, String routeRef, String directionType,
+			String destinationDisplayRef) {
 		super();
 		this.id = id;
 		this.version = version;
+		this.name = name;
 		this.routeRef = routeRef;
+		this.directionType = directionType;
 		this.destinationDisplayRef = destinationDisplayRef;
 	}
 
@@ -46,12 +55,28 @@ public class ServiceJourneyPatternEntity {
 		this.version = version;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getRouteRef() {
 		return routeRef;
 	}
 
 	public void setRouteRef(String routeRef) {
 		this.routeRef = routeRef;
+	}
+
+	public String getDirectionType() {
+		return directionType;
+	}
+
+	public void setDirectionType(String directionType) {
+		this.directionType = directionType;
 	}
 
 	public String getDestinationDisplayRef() {
@@ -64,8 +89,9 @@ public class ServiceJourneyPatternEntity {
 
 	@Override
 	public String toString() {
-		return "ServiceJourneyPatternEntity [id=" + id + ", version=" + version + ", routeRef=" + routeRef
-				+ ", destinationDisplayRef=" + destinationDisplayRef + "]";
+		return "ServiceJourneyPatternEntity [id=" + id + ", version=" + version + ", name=" + name + ", routeRef="
+				+ routeRef + ", directionType=" + directionType + ", destinationDisplayRef=" + destinationDisplayRef
+				+ "]";
 	}
 
 }

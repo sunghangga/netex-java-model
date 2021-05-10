@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="authority")
-public class AuthorityEntity {
+@Table(name="administrative_zone")
+public class AdministrativeZoneEntity {
 	
 	@Id
 	@Column(name = "id")
@@ -21,13 +21,17 @@ public class AuthorityEntity {
     
     @Column(name = "short_name")
     private String shortName;
+    
+    @Column(name = "description")
+    private String description;
 
-	public AuthorityEntity(String id, String version, String name, String shortName) {
+	public AdministrativeZoneEntity(String id, String version, String name, String shortName, String description) {
 		super();
 		this.id = id;
 		this.version = version;
 		this.name = name;
 		this.shortName = shortName;
+		this.description = description;
 	}
 
 	public String getId() {
@@ -62,10 +66,17 @@ public class AuthorityEntity {
 		this.shortName = shortName;
 	}
 
-	@Override
-	public String toString() {
-		return "AuthorityEntity [id=" + id + ", version=" + version + ", name=" + name + ", shortName=" + shortName
-				+ "]";
+	public String getDescription() {
+		return description;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "AdministrativeZoneEntity [id=" + id + ", version=" + version + ", name=" + name + ", shortName="
+				+ shortName + ", description=" + description + "]";
+	}
 }

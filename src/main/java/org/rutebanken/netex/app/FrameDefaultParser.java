@@ -27,7 +27,7 @@ class FrameDefaultParser {
 	    											defaultSystemOfUnits);
 		
 		// Save object
-		session.save(frameDefaults);
+		session.saveOrUpdate(frameDefaults);
 	}
 	
 }

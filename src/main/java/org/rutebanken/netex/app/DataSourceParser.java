@@ -29,7 +29,7 @@ class DataSourceParser {
 										privateCode,
 										description);
 		    // Save object
-		    session.save(dataSource);
+		    session.saveOrUpdate(dataSource);
 		}
 	}
 	
