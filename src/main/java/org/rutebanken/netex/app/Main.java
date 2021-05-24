@@ -52,7 +52,7 @@ public class Main {
 		// Start session
 		SessionFactory factory = new Configuration()
 								.configure("hibernate.cfg.xml")
-								.setProperty(AvailableSettings.HBM2DDL_AUTO, "none")
+								.setProperty(AvailableSettings.HBM2DDL_AUTO, "update")
 								.setProperty(AvailableSettings.HBM2DDL_HALT_ON_ERROR, "true")
 //								.addAnnotatedClass(FrameDefaultEntity.class)
 								.addAnnotatedClass(VersionEntity.class)

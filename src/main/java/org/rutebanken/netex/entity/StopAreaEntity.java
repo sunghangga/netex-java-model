@@ -19,16 +19,16 @@ public class StopAreaEntity {
     @Column(name = "name")
     private String name;
     
-    @Column(name = "publicCode")
+    @Column(name = "public_code")
     private String publicCode;
     
-    @Column(name = "privateCode")
+    @Column(name = "private_code")
     private String privateCode;
     
     @Column(name = "description")
     private String description;
     
-    @Column(name = "topographicPlaceView")
+    @Column(name = "topographic_place_view")
     private String topographicPlaceView;
 
 	public StopAreaEntity(String id, String version, String name, String publicCode, String privateCode,

@@ -68,7 +68,7 @@ public class BlockEntity {
     @Column(name = "journey")
     private String journey;
     
-    @Column(name = "courseOfJourney")
+    @Column(name = "course_of_journey")
     private String courseOfJourney;
 
 	public BlockEntity(String id, String version, String name, String description, String privateCode,
