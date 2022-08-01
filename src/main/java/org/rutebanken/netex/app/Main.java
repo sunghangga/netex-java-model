@@ -47,7 +47,7 @@ public class Main {
 		
 		@SuppressWarnings("unchecked")
 		JAXBElement<PublicationDeliveryStructure> jaxbElement = (JAXBElement<PublicationDeliveryStructure>) unmarshaller
-				.unmarshal(new FileInputStream(new File("D:/Maestronic/Netex Dataset/NeTEx_CXX_2021-05-02_baseline_2021008_new.xml")));
+				.unmarshal(new FileInputStream(new File("D:/Netex Dataset/NeTEx_CXX_2021-05-02_baseline_2021008_new.xml")));
 		
 		// Start session
 		SessionFactory factory = new Configuration()
